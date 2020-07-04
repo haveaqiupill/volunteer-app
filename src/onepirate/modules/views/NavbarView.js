@@ -34,7 +34,7 @@ const styles = theme => ({
     }
 });
 
-const NavbarView = ({ classes }) => {
+const NavbarView = ({ classes, title }) => {
     return (
         <div>
             <AppBar position="fixed">
@@ -45,20 +45,20 @@ const NavbarView = ({ classes }) => {
                         underline="none"
                         color="inherit"
                         className={classes.title}
-                        href="/premium-themes/onepirate/"
+                        href="/"
                     >
-                        {"onepirate"}
+                        {title}
                     </Link>
                     <div className={classes.right}>
-                        {/* <Link
+                        <Link
               color="inherit"
               variant="h6"
               underline="none"
               className={classes.rightLink}
-              href="/premium-themes/onepirate/sign-in/"
+              href="/"
             >
               {"Sign In"}
-            </Link> */}
+            </Link>
                         {/* <Link
               variant="h6"
               underline="none"
