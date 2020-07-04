@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment } from 'react';
+import withRoot from "./onepirate/modules/withRoot";
+
+import NavbarView from "./onepirate/modules/views/NavbarView";
+import ProductHero from "./onepirate/modules/views/ProductHero";
+import ProductValues from "./onepirate/modules/views/ProductValues";
+import ProductCategories from "./onepirate/modules/views/ProductCategories";
+import ProductHowItWorks from "./onepirate/modules/views/ProductHowItWorks";
+import ProductCTA from "./onepirate/modules/views/ProductCTA";
+import ProductSmokingHero from "./onepirate/modules/views/ProductSmokingHero";
+import AppFooter from "./onepirate/modules/views/AppFooter";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Fragment>
+          <NavbarView title=""/>
+          <ProductHero />
+          <ProductValues />
+          <ProductCategories />
+          <ProductHowItWorks />
+          <ProductCTA />
+          <ProductSmokingHero />
+          <AppFooter />
+      </Fragment>
   );
 }
 
-export default App;
+export default withRoot(App);
