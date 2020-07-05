@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from "react";
 import withRoot from "./onepirate/modules/withRoot";
 
 import NavbarView from "./onepirate/modules/views/NavbarView";
@@ -10,19 +10,20 @@ import ProductCTA from "./onepirate/modules/views/ProductCTA";
 import ProductSmokingHero from "./onepirate/modules/views/ProductSmokingHero";
 import AppFooter from "./onepirate/modules/views/AppFooter";
 
+import "./util/firebase.js";
 
 function App() {
   return (
-      <Fragment>
-          <NavbarView title=""/>
-          <ProductHero />
-          <ProductValues />
-          <ProductCategories />
-          <ProductHowItWorks />
-          <ProductCTA />
-          <ProductSmokingHero />
-          <AppFooter />
-      </Fragment>
+    <Fragment>
+      <NavbarView title="" />
+      <ProductHero />
+      <ProductValues />
+      <ProductCategories />
+      <ProductHowItWorks />
+      <ProductCTA />
+      <ProductSmokingHero />
+      <AppFooter />
+    </Fragment>
   );
 }
 
