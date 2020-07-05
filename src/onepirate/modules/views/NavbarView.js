@@ -6,51 +6,51 @@ import AppBar from "../components/AppBar";
 import Toolbar, { styles as toolbarStyles } from "../components/Toolbar";
 
 const styles = theme => ({
-    title: {
-        fontSize: 24
-    },
-    placeholder: toolbarStyles(theme).root,
-    toolbar: {
-        justifyContent: "space-between"
-    },
-    left: {
-        flex: 1
-    },
-    leftLinkActive: {
-        color: theme.palette.common.white
-    },
-    right: {
-        flex: 1,
-        display: "flex",
-        justifyContent: "flex-end"
-    },
-    rightLink: {
-        fontSize: 16,
-        color: theme.palette.common.white,
-        marginLeft: theme.spacing(3)
-    },
-    linkSecondary: {
-        color: theme.palette.secondary.main
-    }
+  title: {
+    fontSize: 24,
+  },
+  placeholder: toolbarStyles(theme).root,
+  toolbar: {
+    justifyContent: "space-between",
+  },
+  left: {
+    flex: 1,
+  },
+  leftLinkActive: {
+    color: theme.palette.common.white,
+  },
+  right: {
+    flex: 1,
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  rightLink: {
+    fontSize: 16,
+    color: theme.palette.common.white,
+    marginLeft: theme.spacing(3),
+  },
+  linkSecondary: {
+    color: theme.palette.secondary.main,
+  },
 });
 
 const NavbarView = ({ classes, title }) => {
-    return (
-        <div>
-            <AppBar position="fixed">
-                <Toolbar className={classes.toolbar}>
-                    <div className={classes.left} />
-                    <Link
-                        variant="h6"
-                        underline="none"
-                        color="inherit"
-                        className={classes.title}
-                        href="/"
-                    >
-                        {title}
-                    </Link>
-                    <div className={classes.right}>
-                        <Link
+  return (
+    <div>
+      <AppBar position="fixed">
+        <Toolbar className={classes.toolbar}>
+          <div className={classes.left} />
+          <Link
+            variant="h6"
+            underline="none"
+            color="inherit"
+            className={classes.title}
+            href="/"
+          >
+            {title}
+          </Link>
+          <div className={classes.right}>
+            <Link
               color="inherit"
               variant="h6"
               underline="none"
@@ -59,7 +59,7 @@ const NavbarView = ({ classes, title }) => {
             >
               {"Sign In"}
             </Link>
-                        {/* <Link
+            {/* <Link
               variant="h6"
               underline="none"
               className={clsx(classes.rightLink, classes.linkSecondary)}
@@ -67,16 +67,16 @@ const NavbarView = ({ classes, title }) => {
             >
               {"Sign Up"}
             </Link> */}
-                    </div>
-                </Toolbar>
-            </AppBar>
-            <div className={classes.placeholder} />
-        </div>
-    );
+          </div>
+        </Toolbar>
+      </AppBar>
+      <div className={classes.placeholder} />
+    </div>
+  );
 };
 
 NavbarView.propTypes = {
-    classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(NavbarView);
