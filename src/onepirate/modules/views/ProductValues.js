@@ -4,6 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Typography from '../components/Typography';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
+import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined';
 
 const styles = (theme) => ({
   root: {
@@ -35,6 +38,10 @@ const styles = (theme) => ({
     position: 'absolute',
     top: -180,
   },
+  largeIcon: {
+    width: 80,
+    height: 80,
+  },
 });
 
 function ProductValues(props) {
@@ -44,56 +51,41 @@ function ProductValues(props) {
     <section className={classes.root}>
       <Container className={classes.container}>
         <img
-          src="/static/themes/onepirate/productCurvyLines.png"
+          src={require("../../images/productCurvyLines.png")}
           className={classes.curvyLines}
           alt="curvy lines"
         />
         <Grid container spacing={5}>
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
-              <img
-                className={classes.image}
-                src="/static/themes/onepirate/productValues1.svg"
-                alt="suitcase"
-              />
+              <AccountCircleOutlinedIcon className={classes.largeIcon}/>
               <Typography variant="h6" className={classes.title}>
-                The best luxury hotels
+                Sign up for Free
               </Typography>
               <Typography variant="h5">
-                {'From the latest trendy boutique hotel to the iconic palace with XXL pool'}
-                {', go for a mini-vacation just a few subway stops away from your home.'}
+                {'Join Singapore\'s very own centralised survey platform. It\'s fast, easy and 100% free!'}
               </Typography>
             </div>
           </Grid>
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
-              <img
-                className={classes.image}
-                src="/static/themes/onepirate/productValues2.svg"
-                alt="graph"
-              />
+              <AssignmentOutlinedIcon className={classes.largeIcon}/>
               <Typography variant="h6" className={classes.title}>
-                New experiences
+                Complete Surveys Online
               </Typography>
               <Typography variant="h5">
-                {'Privatize a pool, take a Japanese bath or wake up in 900m2 of garden… '}
-                {'your Sundays will not be alike.'}
+                {'Receive surveys by email and complete them online.'}
               </Typography>
             </div>
           </Grid>
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
-              <img
-                className={classes.image}
-                src="/static/themes/onepirate/productValues3.svg"
-                alt="clock"
-              />
+              <MonetizationOnOutlinedIcon className={classes.largeIcon}/>
               <Typography variant="h6" className={classes.title}>
-                Exclusive rates
+                Get Rewarded!
               </Typography>
               <Typography variant="h5">
-                {'By registering, you will access specially negotiated rates '}
-                {'that you will not find anywhere else.'}
+                {'Earn cold hard cash for each survey you complete.'}
               </Typography>
             </div>
           </Grid>

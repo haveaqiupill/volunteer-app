@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '../components/Typography';
+import QuestionAnswerOutlinedIcon from '@material-ui/icons/QuestionAnswerOutlined';
 
 const styles = (theme) => ({
   root: {
@@ -23,8 +24,9 @@ const styles = (theme) => ({
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
   },
-  buoy: {
-    width: 60,
+  largeIcon: {
+    width: 50,
+    height: 50,
   },
 });
 
@@ -41,7 +43,7 @@ function ProductSmokingHero(props) {
       <Typography variant="subtitle1" className={classes.link}>
         We are here to help. Get in touch!
       </Typography>
-      <img src="/static/themes/onepirate/producBuoy.svg" className={classes.buoy} alt="buoy" />
+      <QuestionAnswerOutlinedIcon className={classes.largeIcon}/>
     </Container>
   );
 }

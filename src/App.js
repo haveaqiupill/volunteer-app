@@ -5,8 +5,6 @@ import NavbarView from "./onepirate/modules/views/NavbarView";
 import ProductHero from "./onepirate/modules/views/ProductHero";
 import ProductValues from "./onepirate/modules/views/ProductValues";
 import ProductCategories from "./onepirate/modules/views/ProductCategories";
-import ProductHowItWorks from "./onepirate/modules/views/ProductHowItWorks";
-import ProductCTA from "./onepirate/modules/views/ProductCTA";
 import ProductSmokingHero from "./onepirate/modules/views/ProductSmokingHero";
 import AppFooter from "./onepirate/modules/views/AppFooter";
 
@@ -14,16 +12,14 @@ import "./util/firebase.js";
 
 function App() {
   return (
-    <Fragment>
-      <NavbarView title="" />
-      <ProductHero />
-      <ProductValues />
-      <ProductCategories />
-      <ProductHowItWorks />
-      <ProductCTA />
-      <ProductSmokingHero />
-      <AppFooter />
-    </Fragment>
+      <Fragment>
+          <NavbarView title="RSearchV"/>
+          <ProductHero />
+          <ProductValues />
+          <ProductCategories />
+          <ProductSmokingHero />
+          <AppFooter />
+      </Fragment>
   );
 }
 
