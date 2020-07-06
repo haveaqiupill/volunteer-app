@@ -15,6 +15,8 @@ import FormButton from "./modules/form/FormButton";
 import FormFeedback from "./modules/form/FormFeedback";
 import CheckBox from "./modules/form/CheckBox";
 
+import Authentication from "../util/Authentication";
+
 const useStyles = makeStyles((theme) => ({
   form: {
     marginTop: theme.spacing(6),
@@ -48,7 +50,15 @@ function SignUp() {
     return errors;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (values) => {
+    console.log(values); // TODO: get radio buttons value as userType
+    const { email, password, firstName, lastName, userType } = values;
+
+    try {
+      Authentication.signUp(email, password, firstName, lastName, userType);
+    } catch (error) {
+      // TODO: show the error message to user
+    }
     setSent(true);
   };
 
@@ -71,8 +81,8 @@ function SignUp() {
           subscription={{ submitting: true }}
           validate={validate}
         >
-          {({ handleSubmit2, submitting }) => (
-            <form onSubmit={handleSubmit2} className={classes.form} noValidate>
+          {({ handleSubmit, submitting }) => (
+            <form onSubmit={handleSubmit} className={classes.form} noValidate>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={7}>
                   <Typography variant="h5">I am a...</Typography>

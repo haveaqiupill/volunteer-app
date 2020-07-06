@@ -1,29 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import Typography from '../components/Typography';
-import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
-import AssignmentOutlinedIcon from '@material-ui/icons/AssignmentOutlined';
-import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined';
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Container from "@material-ui/core/Container";
+import Typography from "../components/Typography";
+import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
+import AssignmentOutlinedIcon from "@material-ui/icons/AssignmentOutlined";
+import MonetizationOnOutlinedIcon from "@material-ui/icons/MonetizationOnOutlined";
 
 const styles = (theme) => ({
   root: {
-    display: 'flex',
-    overflow: 'hidden',
+    display: "flex",
+    overflow: "hidden",
     backgroundColor: theme.palette.secondary.light,
   },
   container: {
     marginTop: theme.spacing(15),
     marginBottom: theme.spacing(30),
-    display: 'flex',
-    position: 'relative',
+    display: "flex",
+    position: "relative",
   },
   item: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
     padding: theme.spacing(0, 5),
   },
   image: {
@@ -34,8 +34,8 @@ const styles = (theme) => ({
     marginBottom: theme.spacing(5),
   },
   curvyLines: {
-    pointerEvents: 'none',
-    position: 'absolute',
+    pointerEvents: "none",
+    position: "absolute",
     top: -180,
   },
   largeIcon: {
@@ -58,34 +58,36 @@ function ProductValues(props) {
         <Grid container spacing={5}>
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
-              <AccountCircleOutlinedIcon className={classes.largeIcon}/>
+              <AccountCircleOutlinedIcon className={classes.largeIcon} />
               <Typography variant="h6" className={classes.title}>
                 Sign up for Free
               </Typography>
               <Typography variant="h5">
-                {'Join Singapore\'s very own centralised survey platform. It\'s fast, easy and 100% free!'}
+                {
+                  "Join Singapore's very own centralised survey platform. It's fast, easy and 100% free!"
+                }
               </Typography>
             </div>
           </Grid>
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
-              <AssignmentOutlinedIcon className={classes.largeIcon}/>
+              <AssignmentOutlinedIcon className={classes.largeIcon} />
               <Typography variant="h6" className={classes.title}>
                 Complete Surveys Online
               </Typography>
               <Typography variant="h5">
-                {'Receive surveys by email and complete them online.'}
+                {"Receive surveys by email and complete them online."}
               </Typography>
             </div>
           </Grid>
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
-              <MonetizationOnOutlinedIcon className={classes.largeIcon}/>
+              <MonetizationOnOutlinedIcon className={classes.largeIcon} />
               <Typography variant="h6" className={classes.title}>
                 Get Rewarded!
               </Typography>
               <Typography variant="h5">
-                {'Earn cold hard cash for each survey you complete.'}
+                {"Earn cold hard cash for each survey you complete."}
               </Typography>
             </div>
           </Grid>

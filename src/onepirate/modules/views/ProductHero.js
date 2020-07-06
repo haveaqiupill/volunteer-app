@@ -27,9 +27,9 @@ const styles = (theme) => ({
   more: {
     marginTop: theme.spacing(2),
   },
-    logo: {
-        height: 300,
-    },
+  logo: {
+    height: 300,
+  },
 });
 
 function ProductHero(props) {
@@ -44,7 +44,11 @@ function ProductHero(props) {
         alt="increase priority"
       />
       <Typography color="inherit" align="center" variant="h2" marked="center">
-          <img src={require("../../images/logo.png")} alt="logo" className={classes.logo}/>
+        <img
+          src={require("../../images/logo.png")}
+          alt="logo"
+          className={classes.logo}
+        />
       </Typography>
 
       <Typography
