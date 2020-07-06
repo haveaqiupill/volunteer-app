@@ -11,10 +11,12 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "clsx": "^1.1.1",
+    "final-form": "^4.20.1",
     "firebase": "^7.15.5",
     "markdown-to-jsx": "^6.11.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-final-form": "^6.5.0",
     "react-scripts": "3.4.1",
     "validator": "^13.1.1"
   },
