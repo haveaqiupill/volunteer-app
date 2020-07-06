@@ -1,6 +1,6 @@
 import React from "react";
 import withRoot from "./onepirate/modules/withRoot";
-import { Router } from "@reach/router"
+import { Router } from "@reach/router";
 
 import Home from "./onepirate/Home";
 import SignUp from "./onepirate/SignUp";
@@ -10,12 +10,12 @@ import "./util/firebase.js";
 
 function App() {
   return (
-      <Router>
-          <Home path="/"/>
+    <Router>
+      <Home path="/" />
 
-          <SignUp path="/sign-up"/>
-          <SignIn path="/sign-in"/>
-      </Router>
+      <SignUp path="/sign-up" />
+      <SignIn path="/sign-in" />
+    </Router>
   );
 }
 
