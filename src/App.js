@@ -9,17 +9,19 @@ import ProductSmokingHero from "./onepirate/modules/views/ProductSmokingHero";
 import AppFooter from "./onepirate/modules/views/AppFooter";
 
 import "./util/firebase.js";
+import SignUp from "./onepirate/modules/views/SignUp";
 
 function App() {
   return (
-      <Fragment>
-          <NavbarView title="RSearchV"/>
-          <ProductHero />
-          <ProductValues />
-          <ProductCategories />
-          <ProductSmokingHero />
-          <AppFooter />
-      </Fragment>
+    <Fragment>
+      <NavbarView title="RSearchV" />
+      <ProductHero />
+      <ProductValues />
+      <ProductCategories />
+      <ProductSmokingHero />
+      <SignUp />
+      <AppFooter />
+    </Fragment>
   );
 }
 
