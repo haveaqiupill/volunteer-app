@@ -1,25 +1,21 @@
-import React, { Fragment } from "react";
+import React from "react";
 import withRoot from "./onepirate/modules/withRoot";
+import { Router } from "@reach/router"
 
-import NavbarView from "./onepirate/modules/views/NavbarView";
-import ProductHero from "./onepirate/modules/views/ProductHero";
-import ProductValues from "./onepirate/modules/views/ProductValues";
-import ProductCategories from "./onepirate/modules/views/ProductCategories";
-import ProductSmokingHero from "./onepirate/modules/views/ProductSmokingHero";
-import AppFooter from "./onepirate/modules/views/AppFooter";
+import Home from "./onepirate/Home";
+import SignUp from "./onepirate/SignUp";
+import SignIn from "./onepirate/SignIn";
 
 import "./util/firebase.js";
 
 function App() {
   return (
-      <Fragment>
-          <NavbarView title="RSearchV"/>
-          <ProductHero />
-          <ProductValues />
-          <ProductCategories />
-          <ProductSmokingHero />
-          <AppFooter />
-      </Fragment>
+      <Router>
+          <Home path="/"/>
+
+          <SignUp path="/sign-up"/>
+          <SignIn path="/sign-in"/>
+      </Router>
   );
 }
 
