@@ -1,46 +1,41 @@
 import React from 'react';
-import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Grid from '@material-ui/core/Grid';
+import Radio from '@material-ui/core/Radio';
 
 export default function CheckboxLabels() {
-
-  const [state, setState] = React.useState({
-    checkedA: true,
-    checkedB: false,
-  });
-
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
-
+  
+    const [selectedValue, setSelectedValue] = React.useState('a');
+  
+    const handleChange = (event) => {
+      setSelectedValue(event.target.value);
+    }
+  
   return (
-    <FormGroup row>
-      <Grid item xs={6}>
+    <div>
       <FormControlLabel
-        control={
-        <Checkbox 
-            checked={state.checkedA} 
-            onChange={handleChange} 
-            name="checkedA" 
-        />
+        control = {
+        <Radio
+        checked={selectedValue === 'a'}
+        onChange={handleChange}
+        value="a"
+        name="Reseacher"
+        inputProps={{ 'aria-label': 'A' }}
+      />
         }
         label="Researcher"
       />
-      </Grid>
-      <Grid item xs={6}>
-        <FormControlLabel
-            control={
-            <Checkbox
-                checked={state.checkedB}
-                onChange={handleChange}
-                name="checkedB"
-            />
-            }
-            label="Volunteer"
-        />
-        </Grid>
-    </FormGroup>
-  );
-}
+      <FormControlLabel
+        control = {
+        <Radio
+        checked={selectedValue === 'b'}
+        onChange={handleChange}
+        value="b"
+        name="Volunteer"
+        inputProps={{ 'aria-label': 'B' }}
+      />
+        }
+        label="Volunteer"
+      />
+    </div>
+  )
+ }
