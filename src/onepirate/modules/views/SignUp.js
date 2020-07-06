@@ -1,22 +1,24 @@
-import withRoot from '../withRoot';
+import withRoot from "../withRoot";
 // --- Post bootstrap -----
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
-import { Field, Form, FormSpy } from 'react-final-form';
-import Typography from '../components/Typography';
-import AppFooter from './AppFooter';
-import AppAppBar from './AppAppBar';
-import AppForm from './AppForm';
-import { email, required } from '../form/validation';
-import RFTextField from '../form/RFTextField';
-import FormButton from '../form/FormButton';
-import FormFeedback from '../form/FormFeedback';
-import CheckBox from '../form/CheckBox';
-import Radio from '@material-ui/core/Radio';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
+import { Field, Form, FormSpy } from "react-final-form";
+import Typography from "../components/Typography";
+import AppFooter from "./AppFooter";
+import AppAppBar from "./AppAppBar";
+import AppForm from "./AppForm";
+import { email, required } from "../form/validation";
+import RFTextField from "../form/RFTextField";
+import FormButton from "../form/FormButton";
+import FormFeedback from "../form/FormFeedback";
+import CheckBox from "../form/CheckBox";
+import Radio from "@material-ui/core/Radio";
 
-const useStyles = makeStyles((theme) => ({
+import Authentication from "../../../util/Authentication";
+
+const useStyles = makeStyles(theme => ({
   form: {
     marginTop: theme.spacing(6),
   },
@@ -33,8 +35,11 @@ function SignUp() {
   const classes = useStyles();
   const [sent, setSent] = React.useState(false);
 
-  const validate = (values) => {
-    const errors = required(['firstName', 'lastName', 'email', 'password'], values);
+  const validate = values => {
+    const errors = required(
+      ["firstName", "lastName", "email", "password"],
+      values
+    );
 
     if (!errors.email) {
       const emailError = email(values.email, values);
@@ -46,7 +51,15 @@ function SignUp() {
     return errors;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = values => {
+    console.log(values); // TODO: get radio buttons value as userType
+    const { email, password, firstName, lastName, userType } = values;
+
+    try {
+      Authentication.signUp(email, password, firstName, lastName, userType);
+    } catch (error) {
+      // TODO: show the error message to user
+    }
     setSent(true);
   };
 
@@ -64,15 +77,17 @@ function SignUp() {
             </Link>
           </Typography>
         </React.Fragment>
-        <Form onSubmit={handleSubmit} subscription={{ submitting: true }} validate={validate}>
-          {({ handleSubmit2, submitting }) => (
-            <form onSubmit={handleSubmit2} className={classes.form} noValidate>
+        <Form
+          onSubmit={handleSubmit}
+          subscription={{ submitting: true }}
+          validate={validate}
+        >
+          {({ handleSubmit, submitting }) => (
+            <form onSubmit={handleSubmit} className={classes.form} noValidate>
               <Grid container spacing={2}>
-              <Grid item xs={12} sm={7}>
-              <Typography variant="h5">
-                I am a...  
-              </Typography>          
-              </Grid>     
+                <Grid item xs={12} sm={7}>
+                  <Typography variant="h5">I am a...</Typography>
+                </Grid>
                 <Grid item xs={3} sm={12}>
                   <Field
                     autoFocus
@@ -143,7 +158,7 @@ function SignUp() {
                 color="secondary"
                 fullWidth
               >
-                {submitting || sent ? 'In progress…' : 'Sign Up'}
+                {submitting || sent ? "In progress…" : "Sign Up"}
               </FormButton>
             </form>
           )}
