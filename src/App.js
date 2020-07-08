@@ -1,10 +1,11 @@
 import React from "react";
-import withRoot from "./onepirate/modules/withRoot";
+import withRoot from "./modules/withRoot";
 import { Router } from "@reach/router";
 
-import Home from "./onepirate/Home";
-import SignUp from "./onepirate/SignUp";
-import SignIn from "./onepirate/SignIn";
+import Home from "./pages/Home";
+import SignUp from "./pages/SignUp";
+import SignIn from "./pages/SignIn";
+import ListView from "./pages/ListView";
 
 import "./util/firebase.js";
 
@@ -15,6 +16,8 @@ function App() {
 
       <SignUp path="/sign-up" />
       <SignIn path="/sign-in" />
+
+      <ListView path="/programs" />
     </Router>
   );
 }
