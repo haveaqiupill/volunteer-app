@@ -18,7 +18,7 @@ function App() {
       <SignUp path="/sign-up" />
       <SignIn path="/sign-in" />
 
-      <ProgramsMain path="/programs" />
+      <ProgramsMain path="/programs/*" />
     </Router>
   );
 }

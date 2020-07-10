@@ -4,8 +4,9 @@ import { BookOutlined, HomeOutlined } from "@ant-design/icons";
 import { Space, Layout, Menu, Divider } from "antd";
 
 import AppAppBar from "../../modules/views/AppAppBar";
-import AppFooter from "../../modules/views/AppFooter";
 import ProgramsItems from "./ProgramItems";
+import ItemApply from "./ItemApply";
+import { Router } from "@reach/router";
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
@@ -82,10 +83,12 @@ const ProgramsMain = () => {
       <Layout>
         {sider}
         <Layout style={{ marginLeft: 200 }}>
-          <ProgramsItems />
+          <Router>
+            <ProgramsItems path="/" />
+            <ItemApply path=":id" />
+          </Router>
         </Layout>
       </Layout>
-      <AppFooter />
     </Fragment>
   );
 };

@@ -106,7 +106,7 @@ const ProgramItems = () => {
                       variant="contained"
                       size="small"
                       component="a"
-                      onClick={() => navigate(`/`)}
+                      onClick={() => navigate(`/programs/${item.id}`)}
                     >
                       Apply
                     </Button>
