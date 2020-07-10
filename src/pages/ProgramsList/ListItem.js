@@ -11,9 +11,6 @@ const ListItem = ({ item, showModal }) => {
     </Space>
   );
 
-  //Index of random photo to be inserted
-  const index = Math.floor(Math.random() * 3);
-
   const tagMapping = {
     Psychology: "magenta",
     Healthcare: "red",
@@ -53,9 +50,9 @@ const ListItem = ({ item, showModal }) => {
         <img
           height={200}
           alt="logo"
-          src={require(index === 0
+          src={require(item.image === 0
             ? "../../images/nus_logo.png"
-            : index === 1
+            : item.image === 1
             ? "../../images/ntu_logo.png"
             : "../../images/smu_logo.png")}
         />

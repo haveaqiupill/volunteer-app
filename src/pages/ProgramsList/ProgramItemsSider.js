@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProgramsItemsSider = ({ items, setItems }) => {
+const ProgramsItemsSider = ({ data, items, setItems }) => {
   const { SubMenu } = Menu;
   const { Sider } = Layout;
 
@@ -29,7 +29,7 @@ const ProgramsItemsSider = ({ items, setItems }) => {
   const joinedMenuItems = [...categories, ...locations];
 
   const filterItem = (tag) => {
-    const filteredItems = items.filter((item) => item.tags.includes(tag));
+    const filteredItems = data.filter((item) => item.tags.includes(tag));
     setItems(filteredItems);
   };
   const classes = useStyles();

@@ -37,6 +37,7 @@ for (let i = 0; i < 23; i++) {
       locations[Math.floor(Math.random() * locations.length)],
     ],
     avatar: "https://image.flaticon.com/icons/svg/3163/3163231.svg",
+    image: Math.floor(Math.random() * 3),
     description:
       "This is part of a research study to investigate the correlation between eating habits and stress levels.",
     content:
@@ -48,13 +49,17 @@ for (let i = 0; i < 23; i++) {
 const ProgramItems = () => {
   const [currentTab, setCurrentTab] = useState("1");
   const [items, setItems] = useState(dummyData);
-  const [registeredPrograms, setRegisteredPrograms] = useState(
-    dummyData.slice(3, 5)
-  );
+  const registeredPrograms = dummyData.slice(10, 16);
 
-  const handleClick = (e) => {
-    console.log("click ", e);
-    setCurrentTab(e.key);
+  const handleClick = (key) => {
+    setCurrentTab(key);
+    console.log(key);
+    if (key === "1") {
+      setItems(dummyData);
+      console.log(dummyData);
+    } else {
+      setItems(registeredPrograms);
+    }
   };
 
   const [isModalVisible, setModalVisible] = useState(false);
@@ -75,7 +80,7 @@ const ProgramItems = () => {
             <Tabs
               defaultActiveKey="1"
               selectedKeys={currentTab}
-              onClick={handleClick}
+              onChange={handleClick}
             >
               <TabPane tab="All Programs" key="1" />
               <TabPane tab="Registered Programs" key="2" />
