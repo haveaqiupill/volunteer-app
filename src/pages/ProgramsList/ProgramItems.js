@@ -1,9 +1,10 @@
 import React, { Fragment, useState } from "react";
-import { Layout, List, Tabs, PageHeader, Space, Avatar } from "antd";
+import { Input, Layout, List, Tabs, PageHeader, Space, Avatar } from "antd";
 import { StarOutlined, LikeOutlined, MessageOutlined } from "@ant-design/icons";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
+const { Search } = Input;
 
 const dummyData = [];
 for (let i = 0; i < 23; i++) {
@@ -13,7 +14,6 @@ for (let i = 0; i < 23; i++) {
     compensation: "$10/hr",
     venue: "NTU North Spine ...",
     duration: "2 hours",
-    href: "https://ant.design",
     title: `Survey ${i}`,
     avatar: "https://image.flaticon.com/icons/svg/3163/3163231.svg",
     description:
@@ -54,6 +54,11 @@ const ProgramItems = () => {
           </Tabs>
         }
       >
+        <Search
+          placeholder="input search text"
+          onSearch={(value) => console.log(value)}
+          style={{ width: 700 }}
+        />
         <Content
           className="site-layout-background"
           style={{
@@ -101,7 +106,7 @@ const ProgramItems = () => {
               >
                 <List.Item.Meta
                   avatar={<Avatar src={item.avatar} />}
-                  title={<a href={item.href}>{item.title}</a>}
+                  title={item.title}
                   description={item.description}
                 />
                 {item.content}
