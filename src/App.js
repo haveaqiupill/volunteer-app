@@ -5,9 +5,10 @@ import { Router } from "@reach/router";
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
-import ListView from "./pages/ListView";
+import ProgramsMain from "./pages/ProgramsList/ProgramsMain";
 
 import "./util/firebase.js";
+import "./App.css";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
       <SignUp path="/sign-up" />
       <SignIn path="/sign-in" />
 
-      <ListView path="/programs" />
+      <ProgramsMain path="/programs" />
     </Router>
   );
 }
