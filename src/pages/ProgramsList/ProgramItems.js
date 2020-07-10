@@ -51,12 +51,13 @@ const ProgramItems = () => {
   const [items, setItems] = useState(dummyData);
   const registeredPrograms = dummyData.slice(10, 16);
 
+  const [filteredItems, setFilteredItems] = useState();
+  const [isFiltered, setIsFiltered] = useState(false);
+
   const handleClick = (key) => {
     setCurrentTab(key);
-    console.log(key);
     if (key === "1") {
       setItems(dummyData);
-      console.log(dummyData);
     } else {
       setItems(registeredPrograms);
     }
@@ -72,7 +73,12 @@ const ProgramItems = () => {
   return (
     <Fragment>
       <Layout style={{ marginLeft: 200 }}>
-        <ProgramsItemsSider items={dummyData} setItems={setItems} />
+        <ProgramsItemsSider
+          items={items}
+          isFiltered={isFiltered}
+          setIsFiltered={setIsFiltered}
+          setItems={setFilteredItems}
+        />
         <PageHeader
           title="Programs"
           className="site-page-header"
@@ -103,12 +109,9 @@ const ProgramItems = () => {
               itemLayout="vertical"
               size="large"
               pagination={{
-                onChange: (page) => {
-                  console.log(page);
-                },
                 pageSize: 7,
               }}
-              dataSource={items}
+              dataSource={isFiltered ? filteredItems : items}
               renderItem={(item) => (
                 <ListItem item={item} showModal={showModal} />
               )}
