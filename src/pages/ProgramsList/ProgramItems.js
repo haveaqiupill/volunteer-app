@@ -1,6 +1,8 @@
 import React, { Fragment, useState } from "react";
+import Button from "../../modules/components/Button";
 import { Input, Layout, List, Tabs, PageHeader, Space, Avatar } from "antd";
 import { StarOutlined, LikeOutlined, MessageOutlined } from "@ant-design/icons";
+import { useNavigate } from "@reach/router";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -27,6 +29,7 @@ for (let i = 0; i < 23; i++) {
 
 const ProgramItems = () => {
   const [current, setCurrent] = useState("1");
+  const navigate = useNavigate();
 
   const handleClick = (e) => {
     console.log("click ", e);
@@ -97,6 +100,17 @@ const ProgramItems = () => {
                     text="2"
                     key="list-vertical-message"
                   />,
+                  <Fragment>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      size="small"
+                      component="a"
+                      onClick={() => navigate(`/`)}
+                    >
+                      Apply
+                    </Button>
+                  </Fragment>,
                 ]}
                 extra={
                   <img
@@ -118,7 +132,7 @@ const ProgramItems = () => {
                   key = key.charAt(0).toUpperCase() + key.slice(1);
                   return (
                     <Fragment>
-                      {key}: {value}
+                      <b>{key}:</b> {value}
                       <br />
                     </Fragment>
                   );
