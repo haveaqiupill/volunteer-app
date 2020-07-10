@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import ListView from "./pages/ListView";
+import SignUpResearcher from "./pages/SignUpResearcher";
 
 import "./util/firebase.js";
 
@@ -16,7 +17,7 @@ function App() {
 
       <SignUp path="/sign-up" />
       <SignIn path="/sign-in" />
-
+      <SignUpResearcher path="/sign-up-researcher" />
       <ListView path="/programs" />
     </Router>
   );
