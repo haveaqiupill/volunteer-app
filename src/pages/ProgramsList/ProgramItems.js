@@ -8,7 +8,20 @@ const { Content } = Layout;
 const { TabPane } = Tabs;
 const { Search } = Input;
 
+// The data below is for testing and will be deleted once the API is up
 const dummyData = [];
+const categories = [
+  "Psychology",
+  "Healthcare",
+  "Sports",
+  "Food",
+  "Education",
+  "Arts & Heritage",
+  "Lifestyle",
+  "Environment",
+  "Elderly",
+];
+const locations = ["North", "South", "East", "West", "Central"];
 for (let i = 0; i < 23; i++) {
   dummyData.push({
     id: i,
@@ -19,7 +32,10 @@ for (let i = 0; i < 23; i++) {
       venue: "NTU North Spine ...",
       duration: "2 hours",
     },
-    tags: ["Food", "Lifestyle"],
+    tags: [
+      categories[Math.floor(Math.random() * categories.length)],
+      locations[Math.floor(Math.random() * locations.length)],
+    ],
     avatar: "https://image.flaticon.com/icons/svg/3163/3163231.svg",
     description:
       "This is part of a research study to investigate the correlation between eating habits and stress levels.",
@@ -27,13 +43,15 @@ for (let i = 0; i < 23; i++) {
       "A team of student researchers from the Faculty of Science of XXX University wants to investigate the correlation between eating habits and stress levels as part of their FYP.",
   });
 }
+// The data above is for testing and will be deleted once the API is up
 
 const ProgramItems = () => {
-  const [current, setCurrent] = useState("1");
+  const [currentTab, setCurrentTab] = useState("1");
+  const [items, setItems] = useState(dummyData);
 
   const handleClick = (e) => {
     console.log("click ", e);
-    setCurrent(e.key);
+    setCurrentTab(e.key);
   };
 
   const [isModalVisible, setModalVisible] = useState(false);
@@ -46,14 +64,14 @@ const ProgramItems = () => {
   return (
     <Fragment>
       <Layout style={{ marginLeft: 200 }}>
-        <ProgramsItemsSider />
+        <ProgramsItemsSider items={dummyData} setItems={setItems} />
         <PageHeader
           title="Programs"
           className="site-page-header"
           extra={
             <Tabs
               defaultActiveKey="1"
-              selectedKeys={current}
+              selectedKeys={currentTab}
               onClick={handleClick}
             >
               <TabPane tab="All Programs" key="1" />
@@ -82,7 +100,7 @@ const ProgramItems = () => {
                 },
                 pageSize: 7,
               }}
-              dataSource={dummyData}
+              dataSource={items}
               renderItem={(item) => (
                 <ListItem item={item} showModal={showModal} />
               )}

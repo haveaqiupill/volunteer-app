@@ -47,7 +47,12 @@ function AppAppBar(props) {
 
   return (
     <div>
-      <AppBar position="fixed">
+      <AppBar
+        position="fixed"
+        style={{
+          height: "9vh",
+        }}
+      >
         <Toolbar className={classes.toolbar}>
           <div className={classes.left}>
             <img

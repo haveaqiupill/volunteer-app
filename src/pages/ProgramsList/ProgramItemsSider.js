@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProgramsItemsSider = () => {
+const ProgramsItemsSider = ({ items, setItems }) => {
   const { SubMenu } = Menu;
   const { Sider } = Layout;
 
@@ -26,7 +26,12 @@ const ProgramsItemsSider = () => {
     "Elderly",
   ];
   const locations = ["North", "South", "East", "West", "Central"];
+  const joinedMenuItems = [...categories, ...locations];
 
+  const filterItem = (tag) => {
+    const filteredItems = items.filter((item) => item.tags.includes(tag));
+    setItems(filteredItems);
+  };
   const classes = useStyles();
 
   return (
@@ -34,7 +39,7 @@ const ProgramsItemsSider = () => {
       width={200}
       style={{
         overflow: "auto",
-        height: "100vh",
+        height: "95vh",
         position: "fixed",
         left: 0,
       }}
@@ -43,6 +48,9 @@ const ProgramsItemsSider = () => {
         mode="inline"
         defaultOpenKeys={["sub1"]}
         style={{ height: "100%", borderRight: 0 }}
+        onSelect={({ key }) => {
+          filterItem(joinedMenuItems[key]);
+        }}
       >
         <Space className={classes.title}>
           <h4>FILTER BY</h4>
@@ -55,7 +63,9 @@ const ProgramsItemsSider = () => {
         </SubMenu>
         <SubMenu key="sub2" title="Location" icon={<HomeOutlined />}>
           {locations.map((location, i) => {
-            return <Menu.Item key={i}>{location}</Menu.Item>;
+            return (
+              <Menu.Item key={i + categories.length}>{location}</Menu.Item>
+            );
           })}
         </SubMenu>
       </Menu>
