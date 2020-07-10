@@ -80,7 +80,7 @@ const ProgramItems = () => {
             dataSource={dummyData}
             renderItem={(item) => (
               <List.Item
-                key={item.title}
+                key={item.id}
                 actions={[
                   <IconText
                     icon={StarOutlined}

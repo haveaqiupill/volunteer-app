@@ -30,11 +30,29 @@ const useStyles = makeStyles((theme) => ({
 
 const ProgramsMain = () => {
   const classes = useStyles();
-  const categories = ["Psychology", "Healthcare", "Sports", "Food"];
+  const categories = [
+    "Psychology",
+    "Healthcare",
+    "Sports",
+    "Food",
+    "Education",
+    "Arts & Heritage",
+    "Lifestyle",
+    "Environment",
+    "Elderly",
+  ];
   const locations = ["North", "South", "East", "West", "Central"];
 
   const sider = (
-    <Sider width={200} className="site-layout-background">
+    <Sider
+      width={200}
+      style={{
+        overflow: "auto",
+        height: "100vh",
+        position: "fixed",
+        left: 0,
+      }}
+    >
       <Menu
         mode="inline"
         defaultOpenKeys={["sub1"]}
@@ -63,7 +81,9 @@ const ProgramsMain = () => {
       <AppAppBar />
       <Layout>
         {sider}
-        <ProgramsItems />
+        <Layout style={{ marginLeft: 200 }}>
+          <ProgramsItems />
+        </Layout>
       </Layout>
       <AppFooter />
     </Fragment>
