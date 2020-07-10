@@ -16,6 +16,7 @@ import FormFeedback from "../modules/form/FormFeedback";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import Authentication from "../util/Authentication";
+import { useNavigate } from "@reach/router";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -57,6 +58,8 @@ function SignUp() {
       console.log(event.target.value);
     }
 
+  const navigate = useNavigate();
+  
   const handleSubmit = (values) => {
     // TODO: get radio buttons value as userType
     const { email, password, firstName, lastName, userType } = values;
@@ -66,6 +69,14 @@ function SignUp() {
     } catch (error) {
     // TODO: show the error message to user
     }
+
+    if(selectedValue==="researcher"){
+      navigate(`/sign-up/researcher`);
+    }
+    else{
+      navigate(`/sign-up/volunteer`);
+    }
+    
     // TODO: Redirect base on userType
     setSent(true);
   };

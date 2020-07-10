@@ -33,7 +33,7 @@ function SignUpResearcher() {
 
   const validate = (values) => {
     const errors = required(
-      ["organization", "researchArea", "shortIntroduction"],
+      ["organization", "faculty", "shortIntroduction","age","nationality"],
       values
     )
 
@@ -84,6 +84,26 @@ function SignUpResearcher() {
                     fullWidth
                     label="Faculty"
                     name="Faculty"
+                    required
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Field
+                    autoFocus
+                    component={RFTextField}
+                    halfWidth
+                    label="Age"
+                    name="age"
+                    required
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Field
+                    autoFocus
+                    component={RFTextField}
+                    halfWidth
+                    label="Nationality"
+                    name="nationality"
                     required
                   />
                 </Grid>
