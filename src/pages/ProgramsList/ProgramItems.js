@@ -10,11 +10,13 @@ const dummyData = [];
 for (let i = 0; i < 23; i++) {
   dummyData.push({
     id: i,
-    date: "2020-11-12",
-    compensation: "$10/hr",
-    venue: "NTU North Spine ...",
-    duration: "2 hours",
     title: `Survey ${i}`,
+    details: {
+      date: "2020-11-12",
+      compensation: "$10/hr",
+      venue: "NTU North Spine ...",
+      duration: "2 hours",
+    },
     avatar: "https://image.flaticon.com/icons/svg/3163/3163231.svg",
     description:
       "This is part of a research study to investigate the correlation between eating habits and stress levels.",
@@ -112,13 +114,15 @@ const ProgramItems = () => {
                 {item.content}
                 <br />
                 <br />
-                {`Date: ${item.date}`}
-                <br />
-                {`Compensation: ${item.compensation}`}
-                <br />
-                {`Venue: ${item.venue}`}
-                <br />
-                {`Duration: ${item.duration}`}
+                {Object.entries(item.details).map(([key, value]) => {
+                  key = key.charAt(0).toUpperCase() + key.slice(1);
+                  return (
+                    <Fragment>
+                      {key}: {value}
+                      <br />
+                    </Fragment>
+                  );
+                })}
               </List.Item>
             )}
           />

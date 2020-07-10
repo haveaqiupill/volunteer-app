@@ -30,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
 
 const ProgramsMain = () => {
   const classes = useStyles();
+  const categories = ["Psychology", "Healthcare", "Sports", "Food"];
+  const locations = ["North", "South", "East", "West", "Central"];
 
   const sider = (
     <Sider width={200} className="site-layout-background">
@@ -43,17 +45,14 @@ const ProgramsMain = () => {
           <Divider />
         </Space>
         <SubMenu key="sub1" title="Categories" icon={<BookOutlined />}>
-          <Menu.Item key="1">Psychology</Menu.Item>
-          <Menu.Item key="2">Healthcare</Menu.Item>
-          <Menu.Item key="3">Sports</Menu.Item>
-          <Menu.Item key="4">Food</Menu.Item>
+          {categories.map((category, i) => {
+            return <Menu.Item key={i}>{category}</Menu.Item>;
+          })}
         </SubMenu>
         <SubMenu key="sub2" title="Location" icon={<HomeOutlined />}>
-          <Menu.Item key="5">North</Menu.Item>
-          <Menu.Item key="6">South</Menu.Item>
-          <Menu.Item key="7">East</Menu.Item>
-          <Menu.Item key="8">West</Menu.Item>
-          <Menu.Item key="8">Central</Menu.Item>
+          {locations.map((location, i) => {
+            return <Menu.Item key={i}>{location}</Menu.Item>;
+          })}
         </SubMenu>
       </Menu>
     </Sider>
