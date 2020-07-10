@@ -55,13 +55,11 @@ function SignUp() {
   
   const handleChange = (event) => {
       setSelectedValue(event.target.value);
-      console.log(event.target.value);
     }
 
   const navigate = useNavigate();
-  
+
   const handleSubmit = (values) => {
-    // TODO: get radio buttons value as userType
     const { email, password, firstName, lastName, userType } = values;
     
     try {
@@ -76,8 +74,7 @@ function SignUp() {
     else{
       navigate(`/sign-up/volunteer`);
     }
-    
-    // TODO: Redirect base on userType
+  
     setSent(true);
   };
 
