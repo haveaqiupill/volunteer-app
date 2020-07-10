@@ -1,8 +1,7 @@
 import React, { Fragment, useState } from "react";
-import Button from "../../modules/components/Button";
-import { Input, Layout, List, Tabs, PageHeader, Space, Avatar } from "antd";
-import { StarOutlined, LikeOutlined, MessageOutlined } from "@ant-design/icons";
-import { useNavigate } from "@reach/router";
+import { Input, Layout, List, Tabs, PageHeader } from "antd";
+import ItemDetailsModal from "./ItemDetailsModal";
+import ListItem from "./ListItem";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -29,19 +28,18 @@ for (let i = 0; i < 23; i++) {
 
 const ProgramItems = () => {
   const [current, setCurrent] = useState("1");
-  const navigate = useNavigate();
 
   const handleClick = (e) => {
     console.log("click ", e);
     setCurrent(e.key);
   };
 
-  const IconText = ({ icon, text }) => (
-    <Space>
-      {React.createElement(icon)}
-      {text}
-    </Space>
-  );
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [modalItem, setModalItem] = useState();
+  const showModal = (item) => {
+    setModalItem(item);
+    setModalVisible(true);
+  };
 
   return (
     <Fragment>
@@ -82,64 +80,16 @@ const ProgramItems = () => {
             }}
             dataSource={dummyData}
             renderItem={(item) => (
-              <List.Item
-                key={item.id}
-                actions={[
-                  <IconText
-                    icon={StarOutlined}
-                    text="156"
-                    key="list-vertical-star-o"
-                  />,
-                  <IconText
-                    icon={LikeOutlined}
-                    text="156"
-                    key="list-vertical-like-o"
-                  />,
-                  <IconText
-                    icon={MessageOutlined}
-                    text="2"
-                    key="list-vertical-message"
-                  />,
-                  <Fragment>
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      size="small"
-                      component="a"
-                      onClick={() => navigate(`/programs/${item.id}`)}
-                    >
-                      Apply
-                    </Button>
-                  </Fragment>,
-                ]}
-                extra={
-                  <img
-                    height={200}
-                    alt="logo"
-                    src="https://previews.123rf.com/images/fleren/fleren1708/fleren170800019/84888074-cute-food-seamless-pattern-childish-vector-illustration-food-illustration-for-kids-menu-wallpapper-c.jpg"
-                  />
-                }
-              >
-                <List.Item.Meta
-                  avatar={<Avatar src={item.avatar} />}
-                  title={item.title}
-                  description={item.description}
-                />
-                {item.content}
-                <br />
-                <br />
-                {Object.entries(item.details).map(([key, value]) => {
-                  key = key.charAt(0).toUpperCase() + key.slice(1);
-                  return (
-                    <Fragment>
-                      <b>{key}:</b> {value}
-                      <br />
-                    </Fragment>
-                  );
-                })}
-              </List.Item>
+              <ListItem item={item} showModal={showModal} />
             )}
           />
+          {isModalVisible && (
+            <ItemDetailsModal
+              isModalVisible={isModalVisible}
+              setModalVisible={setModalVisible}
+              item={modalItem}
+            />
+          )}
         </Content>
       </PageHeader>
     </Fragment>
