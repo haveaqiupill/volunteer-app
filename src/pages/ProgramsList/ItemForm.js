@@ -1,7 +1,7 @@
 import { PageHeader } from "antd";
 import React, { Fragment } from "react";
 
-const ItemApply = ({ id }) => {
+const ItemForm = ({ id }) => {
   const dummyData = {
     id: id,
     title: `Survey ${id}`,
@@ -27,4 +27,4 @@ const ItemApply = ({ id }) => {
   );
 };
 
-export default ItemApply;
+export default ItemForm;

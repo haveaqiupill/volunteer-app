@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
 import Button from "../../modules/components/Button";
-import { Avatar, List, Space } from "antd";
+import { Tag, Avatar, List, Space } from "antd";
 
 const ListItem = ({ item, showModal }) => {
   const IconText = ({ icon, text }) => (
@@ -10,6 +10,18 @@ const ListItem = ({ item, showModal }) => {
       {text}
     </Space>
   );
+
+  const tagMapping = {
+    Psychology: "magenta",
+    Healthcare: "red",
+    Sports: "volcano",
+    Food: "orange",
+    Education: "lime",
+    "Arts & Heritage": "green",
+    Lifestyle: "cyan",
+    Environment: "blue",
+    Elderly: "purple",
+  };
 
   return (
     <List.Item
@@ -44,7 +56,16 @@ const ListItem = ({ item, showModal }) => {
     >
       <List.Item.Meta
         avatar={<Avatar src={item.avatar} />}
-        title={item.title}
+        title={
+          <Fragment>
+            <Space>
+              {item.title}
+              {item.tags.map((tag) => {
+                return <Tag color={tagMapping[tag]}>{tag}</Tag>;
+              })}
+            </Space>
+          </Fragment>
+        }
         description={item.description}
       />
       {item.content}
