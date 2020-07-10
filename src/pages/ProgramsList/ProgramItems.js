@@ -48,6 +48,9 @@ for (let i = 0; i < 23; i++) {
 const ProgramItems = () => {
   const [currentTab, setCurrentTab] = useState("1");
   const [items, setItems] = useState(dummyData);
+  const [registeredPrograms, setRegisteredPrograms] = useState(
+    dummyData.slice(3, 5)
+  );
 
   const handleClick = (e) => {
     console.log("click ", e);
