@@ -41,7 +41,7 @@ function SignUpResearcher() {
   };
 
   const handleSubmit = (values) => {
-    //TODO
+    //TODO: authenticate to allow login
     setSent(true);
   };
 
@@ -54,7 +54,7 @@ function SignUpResearcher() {
             Sign Up
           </Typography>
           <Typography variant="body2" align="center">
-            <Link href="/premium-themes/onepirate/sign-in/" underline="always">
+            <Link href="/sign-in" underline="always">
               Already have an account?
             </Link>
           </Typography>

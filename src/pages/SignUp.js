@@ -51,12 +51,10 @@ function SignUp() {
     return errors;
   };
 
-  const [selectedValue, setSelectedValue] = React.useState('researcher');
-  
-  const handleChange = (event) => {
-      setSelectedValue(event.target.value);
-    }
+  const [selectedValue, setSelectedValue] = React.useState("researcher");
 
+  const handleChange = (event) => setSelectedValue(event.target.value);
+    
   const navigate = useNavigate();
 
   const handleSubmit = (values) => {
@@ -68,10 +66,10 @@ function SignUp() {
     // TODO: show the error message to user
     }
 
-    if(selectedValue==="researcher"){
+    if (selectedValue === "researcher"){
       navigate(`/sign-up/researcher`);
     }
-    else{
+    else {
       navigate(`/sign-up/volunteer`);
     }
   
@@ -108,7 +106,7 @@ function SignUp() {
                   value="researcher"
                   control = {
                   <Radio
-                  checked={selectedValue === 'researcher'}
+                  checked={selectedValue === "researcher"}
                   onChange={handleChange}
                   inputProps={{ 'aria-label': 'A' }}
                 />
@@ -119,7 +117,7 @@ function SignUp() {
                   value="volunteer"
                   control = {
                   <Radio
-                  checked={selectedValue === 'volunteer'}
+                  checked={selectedValue === "volunteer"}
                   onChange={handleChange}
                   inputProps={{ 'aria-label': 'B' }}
                 />
