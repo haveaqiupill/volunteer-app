@@ -1,7 +1,13 @@
 import { PageHeader } from "antd";
 import React, { Fragment } from "react";
 
-const ItemForm = ({ id }) => {
+/**
+ * Creates a form for volunteers to apply for a program.
+ * @param id The unique program id
+ * @returns {*}
+ * @constructor
+ */
+const ProgramAppForm = ({ id }) => {
   const dummyData = {
     id: id,
     title: `Survey ${id}`,
@@ -27,4 +33,4 @@ const ItemForm = ({ id }) => {
   );
 };
 
-export default ItemForm;
+export default ProgramAppForm;
