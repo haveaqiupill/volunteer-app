@@ -13,9 +13,10 @@ import { email, required } from "../modules/form/validation";
 import RFTextField from "../modules/form/RFTextField";
 import FormButton from "../modules/form/FormButton";
 import FormFeedback from "../modules/form/FormFeedback";
-import CheckBox from "../modules/form/CheckBox";
-
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
 import Authentication from "../util/Authentication";
+import { useNavigate } from "@reach/router";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -50,15 +51,28 @@ function SignUp() {
     return errors;
   };
 
-  const handleSubmit = (values) => {
-    console.log(values); // TODO: get radio buttons value as userType
-    const { email, password, firstName, lastName, userType } = values;
+  const [selectedValue, setSelectedValue] = React.useState("researcher");
 
+  const handleChange = (event) => setSelectedValue(event.target.value);
+    
+  const navigate = useNavigate();
+
+  const handleSubmit = (values) => {
+    const { email, password, firstName, lastName, userType } = values;
+    
     try {
       Authentication.signUp(email, password, firstName, lastName, userType);
     } catch (error) {
-      // TODO: show the error message to user
+    // TODO: show the error message to user
     }
+
+    if (selectedValue === "researcher"){
+      navigate(`/sign-up/researcher`);
+    }
+    else {
+      navigate(`/sign-up/volunteer`);
+    }
+  
     setSent(true);
   };
 
@@ -88,15 +102,28 @@ function SignUp() {
                   <Typography variant="h5">I am a...</Typography>
                 </Grid>
                 <Grid item xs={3} sm={12}>
-                  <Field
-                    autoFocus
-                    component={CheckBox}
-                    autoComplete="fname"
-                    halfWidth
-                    label="First name"
-                    name="firstName"
-                    required
-                  />
+                <FormControlLabel
+                  value="researcher"
+                  control = {
+                  <Radio
+                  checked={selectedValue === "researcher"}
+                  onChange={handleChange}
+                  inputProps={{ 'aria-label': 'A' }}
+                />
+                }
+                  label="Researcher"
+                />
+                <FormControlLabel
+                  value="volunteer"
+                  control = {
+                  <Radio
+                  checked={selectedValue === "volunteer"}
+                  onChange={handleChange}
+                  inputProps={{ 'aria-label': 'B' }}
+                />
+                  }
+                  label="Volunteer"
+                />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Field
@@ -157,7 +184,7 @@ function SignUp() {
                 color="secondary"
                 fullWidth
               >
-                {submitting || sent ? "In progress…" : "Sign Up"}
+                {submitting || sent ? "In progress…" : "Next"}
               </FormButton>
             </form>
           )}
