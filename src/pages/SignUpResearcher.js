@@ -6,10 +6,8 @@ import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
 import { Field, Form, FormSpy } from "react-final-form";
 import Typography from "../modules/components/Typography";
-import AppFooter from "../modules/views/AppFooter";
-import AppAppBar from "../modules/views/AppAppBar";
 import AppForm from "../modules/views/AppForm";
-import {required } from "../modules/form/validation";
+import { required } from "../modules/form/validation";
 import RFTextField from "../modules/form/RFTextField";
 import FormButton from "../modules/form/FormButton";
 import FormFeedback from "../modules/form/FormFeedback";
@@ -35,7 +33,7 @@ function SignUpResearcher() {
     const errors = required(
       ["organization", "researchArea", "shortIntroduction"],
       values
-    )
+    );
 
     return errors;
   };
@@ -47,7 +45,6 @@ function SignUpResearcher() {
 
   return (
     <React.Fragment>
-      <AppAppBar />
       <AppForm>
         <React.Fragment>
           <Typography variant="h3" gutterBottom marked="center" align="center">
@@ -118,9 +115,7 @@ function SignUpResearcher() {
           )}
         </Form>
       </AppForm>
-      <AppFooter />
     </React.Fragment>
   );
-
 }
 export default withRoot(SignUpResearcher);
