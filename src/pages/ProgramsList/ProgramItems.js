@@ -1,124 +1,131 @@
 import React, { Fragment, useState } from "react";
-import { Layout, List, Tabs, PageHeader, Space, Avatar } from "antd";
-import { StarOutlined, LikeOutlined, MessageOutlined } from "@ant-design/icons";
+import { Input, Layout, List, Tabs, PageHeader } from "antd";
+import ItemDetailsModal from "./ItemDetailsModal";
+import ListItem from "./ListItem";
+import ProgramsItemsSider from "./ProgramItemsSider";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
+const { Search } = Input;
 
+// The data below is for testing and will be deleted once the API is up
 const dummyData = [];
+const categories = [
+  "Psychology",
+  "Healthcare",
+  "Sports",
+  "Food",
+  "Education",
+  "Arts & Heritage",
+  "Lifestyle",
+  "Environment",
+  "Elderly",
+];
+const locations = ["North", "South", "East", "West", "Central"];
 for (let i = 0; i < 23; i++) {
   dummyData.push({
     id: i,
-    date: "2020-11-12",
-    compensation: "$10/hr",
-    venue: "NTU North Spine ...",
-    duration: "2 hours",
-    href: "https://ant.design",
     title: `Survey ${i}`,
+    details: {
+      date: "2020-11-12",
+      compensation: "$10/hr",
+      venue: "NTU North Spine ...",
+      duration: "2 hours",
+    },
+    tags: [
+      categories[Math.floor(Math.random() * categories.length)],
+      locations[Math.floor(Math.random() * locations.length)],
+    ],
     avatar: "https://image.flaticon.com/icons/svg/3163/3163231.svg",
+    image: Math.floor(Math.random() * 3),
     description:
       "This is part of a research study to investigate the correlation between eating habits and stress levels.",
     content:
       "A team of student researchers from the Faculty of Science of XXX University wants to investigate the correlation between eating habits and stress levels as part of their FYP.",
   });
 }
+// The data above is for testing and will be deleted once the API is up
 
 const ProgramItems = () => {
-  const [current, setCurrent] = useState("1");
+  const [currentTab, setCurrentTab] = useState("1");
+  const [items, setItems] = useState(dummyData);
+  const registeredPrograms = dummyData.slice(10, 16);
 
-  const handleClick = (e) => {
-    console.log("click ", e);
-    setCurrent(e.key);
+  const [filteredItems, setFilteredItems] = useState();
+  const [isFiltered, setIsFiltered] = useState(false);
+
+  const handleClick = (key) => {
+    setCurrentTab(key);
+    if (key === "1") {
+      setItems(dummyData);
+    } else {
+      setItems(registeredPrograms);
+    }
   };
 
-  const IconText = ({ icon, text }) => (
-    <Space>
-      {React.createElement(icon)}
-      {text}
-    </Space>
-  );
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [modalItem, setModalItem] = useState();
+  const showModal = (item) => {
+    setModalItem(item);
+    setModalVisible(true);
+  };
 
   return (
     <Fragment>
-      <PageHeader
-        title="Programs"
-        className="site-page-header"
-        extra={
-          <Tabs
-            defaultActiveKey="1"
-            selectedKeys={current}
-            onClick={handleClick}
-          >
-            <TabPane tab="All Programs" key="1" />
-            <TabPane tab="Registered Programs" key="2" />
-          </Tabs>
-        }
-      >
-        <Content
-          className="site-layout-background"
-          style={{
-            padding: 24,
-            margin: 0,
-          }}
+      <Layout style={{ marginLeft: 200 }}>
+        <ProgramsItemsSider
+          items={items}
+          isFiltered={isFiltered}
+          setIsFiltered={setIsFiltered}
+          setItems={setFilteredItems}
+        />
+        <PageHeader
+          title="Programs"
+          className="site-page-header"
+          extra={
+            <Tabs
+              defaultActiveKey="1"
+              selectedKeys={currentTab}
+              onChange={handleClick}
+            >
+              <TabPane tab="All Programs" key="1" />
+              <TabPane tab="Registered Programs" key="2" />
+            </Tabs>
+          }
         >
-          <List
-            itemLayout="vertical"
-            size="large"
-            pagination={{
-              onChange: (page) => {
-                console.log(page);
-              },
-              pageSize: 7,
-            }}
-            dataSource={dummyData}
-            renderItem={(item) => (
-              <List.Item
-                key={item.title}
-                actions={[
-                  <IconText
-                    icon={StarOutlined}
-                    text="156"
-                    key="list-vertical-star-o"
-                  />,
-                  <IconText
-                    icon={LikeOutlined}
-                    text="156"
-                    key="list-vertical-like-o"
-                  />,
-                  <IconText
-                    icon={MessageOutlined}
-                    text="2"
-                    key="list-vertical-message"
-                  />,
-                ]}
-                extra={
-                  <img
-                    height={200}
-                    alt="logo"
-                    src="https://previews.123rf.com/images/fleren/fleren1708/fleren170800019/84888074-cute-food-seamless-pattern-childish-vector-illustration-food-illustration-for-kids-menu-wallpapper-c.jpg"
-                  />
-                }
-              >
-                <List.Item.Meta
-                  avatar={<Avatar src={item.avatar} />}
-                  title={<a href={item.href}>{item.title}</a>}
-                  description={item.description}
-                />
-                {item.content}
-                <br />
-                <br />
-                {`Date: ${item.date}`}
-                <br />
-                {`Compensation: ${item.compensation}`}
-                <br />
-                {`Venue: ${item.venue}`}
-                <br />
-                {`Duration: ${item.duration}`}
-              </List.Item>
-            )}
+          <Search
+            placeholder="input search text"
+            onSearch={(value) => console.log(value)}
+            style={{ width: 700 }}
           />
-        </Content>
-      </PageHeader>
+          <Content
+            className="site-layout-background"
+            style={{
+              padding: 24,
+              margin: 0,
+            }}
+          >
+            <List
+              itemLayout="vertical"
+              size="large"
+              pagination={{
+                pageSize: 7,
+              }}
+              dataSource={isFiltered ? filteredItems : items}
+              renderItem={(item) => (
+                <ListItem item={item} showModal={showModal} />
+              )}
+            />
+            {isModalVisible && (
+              <ItemDetailsModal
+                isModalVisible={isModalVisible}
+                setModalVisible={setModalVisible}
+                item={modalItem}
+              />
+            )}
+          </Content>
+        </PageHeader>
+      </Layout>
     </Fragment>
   );
 };

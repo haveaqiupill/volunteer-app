@@ -16,12 +16,13 @@ function App() {
   return (
     <Router>
       <Home path="/" />
+
       <SignUp path="/sign-up"/>
       <SignUpResearcher path="/sign-up/researcher"/>
       <SignUpVolunteer path="/sign-up/volunteer" />
       <SignIn path="/sign-in" />
-      <ListView path="/programs" />
-      <ProgramsMain path="/programs" />
+
+      <ProgramsMain path="/programs/*" />
     </Router>
   );
 }
