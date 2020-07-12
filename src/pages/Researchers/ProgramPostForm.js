@@ -117,6 +117,7 @@ const ProgramPostForm = () => {
                     autoFocus
                     component={RFTextField}
                     fullWidth
+                    disabled={submitting || sent}
                     label="Program Title"
                     name="title"
                     required
@@ -127,6 +128,7 @@ const ProgramPostForm = () => {
                     autoFocus
                     component={RFTextField}
                     fullWidth
+                    disabled={submitting || sent}
                     label="Date"
                     name="date"
                     required
@@ -136,6 +138,7 @@ const ProgramPostForm = () => {
                   <Field
                     component={RFTextField}
                     fullWidth
+                    disabled={submitting || sent}
                     label="Venue"
                     name="venue"
                     required
@@ -145,6 +148,7 @@ const ProgramPostForm = () => {
                   <Field
                     component={RFTextField}
                     fullWidth
+                    disabled={submitting || sent}
                     label="Duration"
                     name="duration"
                     required
@@ -154,6 +158,7 @@ const ProgramPostForm = () => {
                   <Field
                     component={RFTextField}
                     fullWidth
+                    disabled={submitting || sent}
                     label="Compensation (per hour)"
                     name="compensation"
                     required
@@ -163,6 +168,7 @@ const ProgramPostForm = () => {
                   <Field
                     component={RFTextField}
                     fullWidth
+                    required
                     disabled={submitting || sent}
                     select
                     name="type"
@@ -182,10 +188,10 @@ const ProgramPostForm = () => {
                   <Field
                     component={RFTextField}
                     fullWidth
+                    required
                     disabled={submitting || sent}
-                    select
                     name="number"
-                    label="Number of Participants required"
+                    label="Participants required"
                     margin="normal"
                   />
                 </Grid>
