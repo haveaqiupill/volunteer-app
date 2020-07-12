@@ -1,5 +1,6 @@
 import withRoot from './modules/withRoot';
 // --- Post bootstrap -----
+<<<<<<< integrate-signup:src/onepirate/SignIn.js
 import React from 'react';
 import { Field, Form, FormSpy } from 'react-final-form';
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,8 +13,24 @@ import { email, required } from './modules/form/validation';
 import RFTextField from './modules/form/RFTextField';
 import FormButton from './modules/form/FormButton';
 import FormFeedback from './modules/form/FormFeedback';
+=======
+import React from "react";
+import { Field, Form, FormSpy } from "react-final-form";
+import { makeStyles } from "@material-ui/core/styles";
+import Link from "@material-ui/core/Link";
+import Typography from "../modules/components/Typography";
+import AppFooter from "../modules/views/AppFooter";
+import AppAppBar from "../modules/views/AppAppBar";
+import AppForm from "../modules/views/AppForm";
+import { email, required } from "../modules/form/validation";
+import RFTextField from "../modules/form/RFTextField";
+import FormButton from "../modules/form/FormButton";
+import FormFeedback from "../modules/form/FormFeedback";
+import Auth from "../util/Authentication";
+import { useNavigate } from "@reach/router";
+>>>>>>> local:src/pages/SignIn.js
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   form: {
     marginTop: theme.spacing(6),
   },
@@ -30,8 +47,15 @@ function SignIn() {
   const classes = useStyles();
   const [sent, setSent] = React.useState(false);
 
+<<<<<<< integrate-signup:src/onepirate/SignIn.js
   const validate = (values) => {
     const errors = required(['email', 'password'], values);
+=======
+  const navigate = useNavigate();
+
+  const validate = values => {
+    const errors = required(["email", "password"], values);
+>>>>>>> local:src/pages/SignIn.js
 
     if (!errors.email) {
       const emailError = email(values.email, values);
@@ -43,8 +67,20 @@ function SignIn() {
     return errors;
   };
 
+<<<<<<< integrate-signup:src/onepirate/SignIn.js
   const handleSubmit = () => {
     setSent(true);
+=======
+  const handleSubmit = values => {
+    const { email, password } = values;
+
+    Auth.signIn(email, password)
+      .then(() => {
+        setSent(true);
+        navigate("/");
+      })
+      .catch(error => console.log("Error while signing in", error));
+>>>>>>> local:src/pages/SignIn.js
   };
 
   return (

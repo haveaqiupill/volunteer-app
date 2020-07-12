@@ -9,6 +9,7 @@ import ProductSmokingHero from "./onepirate/modules/views/ProductSmokingHero";
 import AppFooter from "./onepirate/modules/views/AppFooter";
 
 import "./util/firebase.js";
+<<<<<<< integrate-signup
 import SignUp from "./onepirate/modules/views/SignUp";
 
 function App() {
@@ -22,6 +23,25 @@ function App() {
       <SignUp />
       <AppFooter />
     </Fragment>
+=======
+import UserProvider from "./util/UserProvider";
+import "./App.css";
+
+function App() {
+  return (
+    <UserProvider>
+      <Router>
+        <Home path="/" />
+
+        <SignUp path="/sign-up" />
+        <SignUpResearcher path="/sign-up/researcher" />
+        <SignUpVolunteer path="/sign-up/volunteer" />
+        <SignIn path="/sign-in" />
+
+        <ProgramsMain path="/programs/*" />
+      </Router>
+    </UserProvider>
+>>>>>>> local
   );
 }
 

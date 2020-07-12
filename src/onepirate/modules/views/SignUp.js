@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
 import { Field, Form, FormSpy } from "react-final-form";
+<<<<<<< integrate-signup:src/onepirate/modules/views/SignUp.js
 import Typography from "../components/Typography";
 import AppFooter from "./AppFooter";
 import AppAppBar from "./AppAppBar";
@@ -18,6 +19,21 @@ import Radio from "@material-ui/core/Radio";
 
 import Authentication from "../../../util/Authentication";
 
+=======
+import Typography from "../modules/components/Typography";
+import AppFooter from "../modules/views/AppFooter";
+import AppAppBar from "../modules/views/AppAppBar";
+import AppForm from "../modules/views/AppForm";
+import { email, required } from "../modules/form/validation";
+import RFTextField from "../modules/form/RFTextField";
+import FormButton from "../modules/form/FormButton";
+import FormFeedback from "../modules/form/FormFeedback";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Radio from "@material-ui/core/Radio";
+import Auth from "../util/Authentication";
+import { useNavigate } from "@reach/router";
+
+>>>>>>> local:src/pages/SignUp.js
 const useStyles = makeStyles(theme => ({
   form: {
     marginTop: theme.spacing(6),
@@ -51,6 +67,7 @@ function SignUp() {
     return errors;
   };
 
+<<<<<<< integrate-signup:src/onepirate/modules/views/SignUp.js
   const handleSubmit = values => {
     console.log(values); // TODO: get radio buttons value as userType
     const { email, password, firstName, lastName, userType } = values;
@@ -61,6 +78,28 @@ function SignUp() {
       // TODO: show the error message to user
     }
     setSent(true);
+=======
+  const [selectedValue, setSelectedValue] = React.useState("researcher");
+
+  const handleChange = event => setSelectedValue(event.target.value);
+
+  const navigate = useNavigate();
+
+  const handleSubmit = values => {
+    const { email, password, firstName, lastName } = values;
+
+    Auth.signUp(email, password, firstName, lastName, selectedValue)
+      .then(() => {
+        setSent(true);
+
+        if (selectedValue === "researcher") {
+          navigate(`/sign-up/researcher`);
+        } else {
+          navigate(`/sign-up/volunteer`);
+        }
+      })
+      .catch(error => console.log("Error while signing up", error));
+>>>>>>> local:src/pages/SignUp.js
   };
 
   return (
@@ -89,6 +128,7 @@ function SignUp() {
                   <Typography variant="h5">I am a...</Typography>
                 </Grid>
                 <Grid item xs={3} sm={12}>
+<<<<<<< integrate-signup:src/onepirate/modules/views/SignUp.js
                   <Field
                     autoFocus
                     component={CheckBox}
@@ -97,6 +137,29 @@ function SignUp() {
                     label="First name"
                     name="firstName"
                     required
+=======
+                  <FormControlLabel
+                    value="researcher"
+                    control={
+                      <Radio
+                        checked={selectedValue === "researcher"}
+                        onChange={handleChange}
+                        inputProps={{ "aria-label": "A" }}
+                      />
+                    }
+                    label="Researcher"
+                  />
+                  <FormControlLabel
+                    value="volunteer"
+                    control={
+                      <Radio
+                        checked={selectedValue === "volunteer"}
+                        onChange={handleChange}
+                        inputProps={{ "aria-label": "B" }}
+                      />
+                    }
+                    label="Volunteer"
+>>>>>>> local:src/pages/SignUp.js
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
