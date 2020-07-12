@@ -72,9 +72,6 @@ const ListItem = ({ item, showModal }) => {
         }
         description={item.description}
       />
-      {item.content}
-      <br />
-      <br />
       {Object.entries(item.details).map(([key, value]) => {
         key = key.charAt(0).toUpperCase() + key.slice(1);
         return (

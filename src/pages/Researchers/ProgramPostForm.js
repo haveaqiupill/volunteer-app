@@ -5,11 +5,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Field, Form, FormSpy } from "react-final-form";
 import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
-import TextField from "@material-ui/core/TextField";
-import { Tag } from "antd";
+import { notification } from "antd";
 import { required } from "../../modules/form/validation";
-import { tagMapping } from "../ProgramsList/ListItem";
-import { categories } from "../ProgramsList/ProgramItemsSider";
+import { categories, locations } from "../ProgramsList/ProgramItemsSider";
 import AppForm from "../../modules/views/AppForm";
 import Typography from "../../modules/components/Typography";
 import RFTextField from "../../modules/form/RFTextField";
@@ -17,6 +15,9 @@ import FormFeedback from "../../modules/form/FormFeedback";
 import FormButton from "../../modules/form/FormButton";
 import AppFooter from "../../modules/views/AppFooter";
 
+const allTags = [...categories, ...locations];
+const programType = ["Survey", "Activity", "Others"];
+notification.config({ placement: "bottomRight" });
 const useStyles = makeStyles((theme) => ({
   form: {
     marginTop: theme.spacing(6),
@@ -39,22 +40,32 @@ const ProgramPostForm = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const [sent, setSent] = useState(false);
-  const [selectedTags, setSelectedTags] = useState("");
+  const [selectedTags, setSelectedTags] = useState([]);
 
   const validate = (values) => {
     return required(
-      ["title", "date", "venue", "duration", "compensation", "description"],
+      [
+        "title",
+        "date",
+        "venue",
+        "duration",
+        "compensation",
+        "type",
+        "number",
+        "description",
+      ],
       values
     );
   };
 
-  const handleTags = (tag) => {
-    setSelectedTags(tag);
+  const handleTags = (event) => {
+    event.persist();
+    setSelectedTags(
+      event.target.type === "checkbox"
+        ? event.target.checked
+        : event.target.value
+    );
   };
-
-  React.useEffect(() => {
-    console.log(selectedTags);
-  }, [selectedTags]);
 
   const handleSubmit = (values) => {
     const {
@@ -63,17 +74,26 @@ const ProgramPostForm = () => {
       venue,
       duration,
       compensation,
+      type,
+      number,
       description,
-      tags,
     } = values;
 
     try {
       console.log(values);
+      console.log(selectedTags);
       // TODO: POST program details
     } catch (error) {
-      // TODO: show the error message to user
+      notification.open({
+        message: "Error!",
+        description: error.message,
+      });
     }
     setSent(true);
+    notification.open({
+      message: "Success!",
+      description: "New post created.",
+    });
     navigate(`/programs`);
   };
   return (
@@ -139,6 +159,36 @@ const ProgramPostForm = () => {
                     required
                   />
                 </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Field
+                    component={RFTextField}
+                    fullWidth
+                    disabled={submitting || sent}
+                    select
+                    name="type"
+                    label="Type of Program"
+                    margin="normal"
+                  >
+                    {programType.map((type, i) => {
+                      return (
+                        <MenuItem key={i} value={type}>
+                          {type}
+                        </MenuItem>
+                      );
+                    })}
+                  </Field>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Field
+                    component={RFTextField}
+                    fullWidth
+                    disabled={submitting || sent}
+                    select
+                    name="number"
+                    label="Number of Participants required"
+                    margin="normal"
+                  />
+                </Grid>
               </Grid>
 
               <Field
@@ -152,24 +202,28 @@ const ProgramPostForm = () => {
                 name="description"
                 required
               />
-              <TextField
+              <Field
+                component={RFTextField}
                 fullWidth
                 disabled={submitting || sent}
                 select
                 name="tags"
                 label="Tags"
                 margin="normal"
-                value={selectedTags}
-                onChange={(e) => handleTags(e.target.value)}
+                SelectProps={{
+                  multiple: true,
+                  onChange: handleTags,
+                  value: selectedTags,
+                }}
               >
-                {categories.map((tagName, i) => {
+                {allTags.map((tagName, i) => {
                   return (
                     <MenuItem key={i} value={tagName}>
-                      <Tag color={tagMapping[tagName]}>{tagName}</Tag>
+                      {tagName}
                     </MenuItem>
                   );
                 })}
-              </TextField>
+              </Field>
               <FormSpy subscription={{ submitError: true }}>
                 {({ submitError }) =>
                   submitError ? (

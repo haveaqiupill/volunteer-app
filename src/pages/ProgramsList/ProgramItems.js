@@ -30,12 +30,10 @@ for (let i = 0; i < 23; i++) {
   dummyData.push({
     id: i,
     title: `Survey ${i}`,
-    avatar: "https://image.flaticon.com/icons/svg/3163/3163231.svg",
-    image: Math.floor(Math.random() * 3),
+    avatar: "https://image.flaticon.com/icons/svg/3163/3163231.svg", //depends on type of program
+    image: Math.floor(Math.random() * 3), //depends on organization of researcher
     description:
       "This is part of a research study to investigate the correlation between eating habits and stress levels.",
-    content:
-      "A team of student researchers from the Faculty of Science of XXX University wants to investigate the correlation between eating habits and stress levels as part of their FYP.",
     details: {
       date: "2020-11-12",
       compensation: "$10/hr",
@@ -46,8 +44,8 @@ for (let i = 0; i < 23; i++) {
       categories[Math.floor(Math.random() * categories.length)],
       locations[Math.floor(Math.random() * locations.length)],
     ],
+    number: 50,
     researcher: "Student ABC",
-    confirmed_participants: [],
   });
 }
 // The data above is for testing and will be deleted once the API is up
