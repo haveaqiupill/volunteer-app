@@ -1,19 +1,5 @@
-import withRoot from './modules/withRoot';
+import withRoot from "../modules/withRoot";
 // --- Post bootstrap -----
-<<<<<<< integrate-signup:src/onepirate/SignIn.js
-import React from 'react';
-import { Field, Form, FormSpy } from 'react-final-form';
-import { makeStyles } from '@material-ui/core/styles';
-import Link from '@material-ui/core/Link';
-import Typography from './modules/components/Typography';
-import AppFooter from './modules/views/AppFooter';
-import AppAppBar from './modules/views/AppAppBar';
-import AppForm from './modules/views/AppForm';
-import { email, required } from './modules/form/validation';
-import RFTextField from './modules/form/RFTextField';
-import FormButton from './modules/form/FormButton';
-import FormFeedback from './modules/form/FormFeedback';
-=======
 import React from "react";
 import { Field, Form, FormSpy } from "react-final-form";
 import { makeStyles } from "@material-ui/core/styles";
@@ -28,7 +14,6 @@ import FormButton from "../modules/form/FormButton";
 import FormFeedback from "../modules/form/FormFeedback";
 import Auth from "../util/Authentication";
 import { useNavigate } from "@reach/router";
->>>>>>> local:src/pages/SignIn.js
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -47,15 +32,10 @@ function SignIn() {
   const classes = useStyles();
   const [sent, setSent] = React.useState(false);
 
-<<<<<<< integrate-signup:src/onepirate/SignIn.js
-  const validate = (values) => {
-    const errors = required(['email', 'password'], values);
-=======
   const navigate = useNavigate();
 
   const validate = values => {
     const errors = required(["email", "password"], values);
->>>>>>> local:src/pages/SignIn.js
 
     if (!errors.email) {
       const emailError = email(values.email, values);
@@ -67,10 +47,6 @@ function SignIn() {
     return errors;
   };
 
-<<<<<<< integrate-signup:src/onepirate/SignIn.js
-  const handleSubmit = () => {
-    setSent(true);
-=======
   const handleSubmit = values => {
     const { email, password } = values;
 
@@ -80,7 +56,6 @@ function SignIn() {
         navigate("/");
       })
       .catch(error => console.log("Error while signing in", error));
->>>>>>> local:src/pages/SignIn.js
   };
 
   return (
@@ -92,15 +67,19 @@ function SignIn() {
             Sign In
           </Typography>
           <Typography variant="body2" align="center">
-            {'Not a member yet? '}
-            <Link href="/premium-themes/onepirate/sign-up/" align="center" underline="always">
+            {"Not a member yet? "}
+            <Link href="/sign-up" align="center" underline="always">
               Sign Up here
             </Link>
           </Typography>
         </React.Fragment>
-        <Form onSubmit={handleSubmit} subscription={{ submitting: true }} validate={validate}>
-          {({ handleSubmit2, submitting }) => (
-            <form onSubmit={handleSubmit2} className={classes.form} noValidate>
+        <Form
+          onSubmit={handleSubmit}
+          subscription={{ submitting: true }}
+          validate={validate}
+        >
+          {({ handleSubmit, submitting }) => (
+            <form onSubmit={handleSubmit} className={classes.form} noValidate>
               <Field
                 autoComplete="email"
                 autoFocus
@@ -141,13 +120,13 @@ function SignIn() {
                 color="secondary"
                 fullWidth
               >
-                {submitting || sent ? 'In progress…' : 'Sign In'}
+                {submitting || sent ? "In progress…" : "Sign In"}
               </FormButton>
             </form>
           )}
         </Form>
         <Typography align="center">
-          <Link underline="always" href="/premium-themes/onepirate/forgot-password/">
+          <Link underline="always" href="/forgot-password">
             Forgot password?
           </Link>
         </Typography>

@@ -1,29 +1,14 @@
-import React, { Fragment } from "react";
-import withRoot from "./onepirate/modules/withRoot";
+import React from "react";
+import withRoot from "./modules/withRoot";
+import { Router } from "@reach/router";
 
-import NavbarView from "./onepirate/modules/views/NavbarView";
-import ProductHero from "./onepirate/modules/views/ProductHero";
-import ProductValues from "./onepirate/modules/views/ProductValues";
-import ProductCategories from "./onepirate/modules/views/ProductCategories";
-import ProductSmokingHero from "./onepirate/modules/views/ProductSmokingHero";
-import AppFooter from "./onepirate/modules/views/AppFooter";
-
+import Home from "./pages/Home";
+import SignUp from "./pages/SignUp";
+import SignIn from "./pages/SignIn";
+import SignUpResearcher from "./pages/SignUpResearcher";
+import SignUpVolunteer from "./pages/SignUpVolunteer";
+import ProgramsMain from "./pages/ProgramsList/ProgramsMain";
 import "./util/firebase.js";
-<<<<<<< integrate-signup
-import SignUp from "./onepirate/modules/views/SignUp";
-
-function App() {
-  return (
-    <Fragment>
-      <NavbarView title="RSearchV" />
-      <ProductHero />
-      <ProductValues />
-      <ProductCategories />
-      <ProductSmokingHero />
-      <SignUp />
-      <AppFooter />
-    </Fragment>
-=======
 import UserProvider from "./util/UserProvider";
 import "./App.css";
 
@@ -41,7 +26,6 @@ function App() {
         <ProgramsMain path="/programs/*" />
       </Router>
     </UserProvider>
->>>>>>> local
   );
 }
 

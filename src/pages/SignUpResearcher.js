@@ -127,4 +127,5 @@ function SignUpResearcher() {
     </React.Fragment>
   );
 }
+
 export default withRoot(SignUpResearcher);

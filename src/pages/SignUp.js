@@ -1,20 +1,24 @@
-import withRoot from './modules/withRoot';
+import withRoot from "../modules/withRoot";
 // --- Post bootstrap -----
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
-import { Field, Form, FormSpy } from 'react-final-form';
-import Typography from './modules/components/Typography';
-import AppFooter from './modules/views/AppFooter';
-import AppAppBar from './modules/views/AppAppBar';
-import AppForm from './modules/views/AppForm';
-import { email, required } from './modules/form/validation';
-import RFTextField from './modules/form/RFTextField';
-import FormButton from './modules/form/FormButton';
-import FormFeedback from './modules/form/FormFeedback';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
+import { Field, Form, FormSpy } from "react-final-form";
+import Typography from "../modules/components/Typography";
+import AppFooter from "../modules/views/AppFooter";
+import AppAppBar from "../modules/views/AppAppBar";
+import AppForm from "../modules/views/AppForm";
+import { email, required } from "../modules/form/validation";
+import RFTextField from "../modules/form/RFTextField";
+import FormButton from "../modules/form/FormButton";
+import FormFeedback from "../modules/form/FormFeedback";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Radio from "@material-ui/core/Radio";
+import Auth from "../util/Authentication";
+import { useNavigate } from "@reach/router";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   form: {
     marginTop: theme.spacing(6),
   },
@@ -31,8 +35,11 @@ function SignUp() {
   const classes = useStyles();
   const [sent, setSent] = React.useState(false);
 
-  const validate = (values) => {
-    const errors = required(['firstName', 'lastName', 'email', 'password'], values);
+  const validate = values => {
+    const errors = required(
+      ["firstName", "lastName", "email", "password"],
+      values
+    );
 
     if (!errors.email) {
       const emailError = email(values.email, values);
@@ -44,8 +51,26 @@ function SignUp() {
     return errors;
   };
 
-  const handleSubmit = () => {
-    setSent(true);
+  const [selectedValue, setSelectedValue] = React.useState("researcher");
+
+  const handleChange = event => setSelectedValue(event.target.value);
+
+  const navigate = useNavigate();
+
+  const handleSubmit = values => {
+    const { email, password, firstName, lastName } = values;
+
+    Auth.signUp(email, password, firstName, lastName, selectedValue)
+      .then(() => {
+        setSent(true);
+
+        if (selectedValue === "researcher") {
+          navigate(`/sign-up/researcher`);
+        } else {
+          navigate(`/sign-up/volunteer`);
+        }
+      })
+      .catch(error => console.log("Error while signing up", error));
   };
 
   return (
@@ -62,10 +87,41 @@ function SignUp() {
             </Link>
           </Typography>
         </React.Fragment>
-        <Form onSubmit={handleSubmit} subscription={{ submitting: true }} validate={validate}>
-          {({ handleSubmit2, submitting }) => (
-            <form onSubmit={handleSubmit2} className={classes.form} noValidate>
+        <Form
+          onSubmit={handleSubmit}
+          subscription={{ submitting: true }}
+          validate={validate}
+        >
+          {({ handleSubmit, submitting }) => (
+            <form onSubmit={handleSubmit} className={classes.form} noValidate>
               <Grid container spacing={2}>
+                <Grid item xs={12} sm={7}>
+                  <Typography variant="h5">I am a...</Typography>
+                </Grid>
+                <Grid item xs={3} sm={12}>
+                  <FormControlLabel
+                    value="researcher"
+                    control={
+                      <Radio
+                        checked={selectedValue === "researcher"}
+                        onChange={handleChange}
+                        inputProps={{ "aria-label": "A" }}
+                      />
+                    }
+                    label="Researcher"
+                  />
+                  <FormControlLabel
+                    value="volunteer"
+                    control={
+                      <Radio
+                        checked={selectedValue === "volunteer"}
+                        onChange={handleChange}
+                        inputProps={{ "aria-label": "B" }}
+                      />
+                    }
+                    label="Volunteer"
+                  />
+                </Grid>
                 <Grid item xs={12} sm={6}>
                   <Field
                     autoFocus
@@ -88,6 +144,7 @@ function SignUp() {
                   />
                 </Grid>
               </Grid>
+
               <Field
                 autoComplete="email"
                 component={RFTextField}
@@ -124,7 +181,7 @@ function SignUp() {
                 color="secondary"
                 fullWidth
               >
-                {submitting || sent ? 'In progress…' : 'Sign Up'}
+                {submitting || sent ? "In progress…" : "Next"}
               </FormButton>
             </form>
           )}
