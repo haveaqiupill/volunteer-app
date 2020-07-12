@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Space, Input, Layout, List, Tabs, PageHeader, Col } from "antd";
+import { Space, Input, Layout, List, Tabs, PageHeader } from "antd";
 import { useNavigate } from "@reach/router";
 
 import ItemDetailsModal from "./ItemDetailsModal";
@@ -12,6 +12,7 @@ const { TabPane } = Tabs;
 const { Search } = Input;
 
 // The data below is for testing and will be deleted once the API is up
+//TODO Replace dummyData with actual data
 const dummyData = [];
 const categories = [
   "Psychology",
@@ -90,6 +91,7 @@ const ProgramItems = () => {
           title="Programs"
           className="site-page-header"
           subTitle={
+            //TODO Render this button conditionally for researchers only
             <Space>
               <Button
                 color="secondary"

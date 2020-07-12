@@ -10,22 +10,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+export const categories = [
+  "Psychology",
+  "Healthcare",
+  "Sports",
+  "Food",
+  "Education",
+  "Arts & Heritage",
+  "Lifestyle",
+  "Environment",
+  "Elderly",
+];
+export const locations = ["North", "South", "East", "West", "Central"];
+
 const ProgramsItemsSider = ({ items, isFiltered, setIsFiltered, setItems }) => {
   const { SubMenu } = Menu;
   const { Sider } = Layout;
 
-  const categories = [
-    "Psychology",
-    "Healthcare",
-    "Sports",
-    "Food",
-    "Education",
-    "Arts & Heritage",
-    "Lifestyle",
-    "Environment",
-    "Elderly",
-  ];
-  const locations = ["North", "South", "East", "West", "Central"];
   const joinedMenuItems = ["All Programs", ...categories, ...locations];
 
   const [tag, setTag] = useState("");
