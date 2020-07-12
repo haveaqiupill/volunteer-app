@@ -12,6 +12,7 @@ import { email, required } from "../modules/form/validation";
 import RFTextField from "../modules/form/RFTextField";
 import FormButton from "../modules/form/FormButton";
 import FormFeedback from "../modules/form/FormFeedback";
+import Authentication from "../util/Authentication";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -43,7 +44,15 @@ function SignIn() {
     return errors;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (values) => {
+    console.log(values); // TODO: get radio buttons value as userType
+    const { email, password, firstName, lastName, userType } = values;
+
+    try {
+      Authentication.signIn(email, password);
+    } catch (error) {
+      // TODO: show the error message to user
+    }
     setSent(true);
   };
 
@@ -67,8 +76,8 @@ function SignIn() {
           subscription={{ submitting: true }}
           validate={validate}
         >
-          {({ handleSubmit2, submitting }) => (
-            <form onSubmit={handleSubmit2} className={classes.form} noValidate>
+          {({ handleSubmit, submitting }) => (
+            <form onSubmit={handleSubmit} className={classes.form} noValidate>
               <Field
                 autoComplete="email"
                 autoFocus
