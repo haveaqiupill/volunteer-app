@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useContext } from "react";
 import { useNavigate } from "@reach/router";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -14,11 +14,13 @@ import RFTextField from "../../modules/form/RFTextField";
 import FormFeedback from "../../modules/form/FormFeedback";
 import FormButton from "../../modules/form/FormButton";
 import AppFooter from "../../modules/views/AppFooter";
+import Db from "../../util/Database";
+import { UserContext } from "../../util/UserProvider";
 
 const allTags = [...categories, ...locations];
 const programType = ["Survey", "Activity", "Others"];
 notification.config({ placement: "bottomRight" });
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   form: {
     marginTop: theme.spacing(6),
   },
@@ -41,8 +43,9 @@ const ProgramPostForm = () => {
   const navigate = useNavigate();
   const [sent, setSent] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
+  const userId = useContext(UserContext)?.uid;
 
-  const validate = (values) => {
+  const validate = values => {
     return required(
       [
         "title",
@@ -58,7 +61,7 @@ const ProgramPostForm = () => {
     );
   };
 
-  const handleTags = (event) => {
+  const handleTags = event => {
     event.persist();
     setSelectedTags(
       event.target.type === "checkbox"
@@ -67,22 +70,12 @@ const ProgramPostForm = () => {
     );
   };
 
-  const handleSubmit = (values) => {
-    const {
-      title,
-      date,
-      venue,
-      duration,
-      compensation,
-      type,
-      number,
-      description,
-    } = values;
-
+  const handleSubmit = async values => {
     try {
       console.log(values);
       console.log(selectedTags);
-      // TODO: POST program details
+
+      await Db.addProgram(userId, values, selectedTags).then;
     } catch (error) {
       notification.open({
         message: "Error!",

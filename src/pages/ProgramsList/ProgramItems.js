@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Space, Input, Layout, List, Tabs, PageHeader } from "antd";
 import { useNavigate } from "@reach/router";
 
@@ -6,6 +6,7 @@ import ItemDetailsModal from "./ItemDetailsModal";
 import ListItem from "./ListItem";
 import ProgramsItemsSider from "./ProgramItemsSider";
 import Button from "../../modules/components/Button";
+import Db from "../../util/Database";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -62,7 +63,7 @@ const ProgramItems = () => {
   const [filteredItems, setFilteredItems] = useState();
   const [isFiltered, setIsFiltered] = useState(false);
 
-  const handleClick = (key) => {
+  const handleClick = key => {
     setCurrentTab(key);
     if (key === "1") {
       setItems(dummyData);
@@ -73,10 +74,17 @@ const ProgramItems = () => {
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [modalItem, setModalItem] = useState();
-  const showModal = (item) => {
+  const showModal = item => {
     setModalItem(item);
     setModalVisible(true);
   };
+
+  useEffect(() => {
+    (async () => {
+      const programs = await Db.getAllPrograms();
+      setItems(programs);
+    })();
+  }, []);
 
   return (
     <Fragment>
@@ -117,7 +125,7 @@ const ProgramItems = () => {
         >
           <Search
             placeholder="input search text"
-            onSearch={(value) => console.log(value)}
+            onSearch={value => console.log(value)}
             style={{ width: 700 }}
           />
           <Content
@@ -134,7 +142,7 @@ const ProgramItems = () => {
                 pageSize: 7,
               }}
               dataSource={isFiltered ? filteredItems : items}
-              renderItem={(item) => (
+              renderItem={item => (
                 <ListItem item={item} showModal={showModal} />
               )}
             />
