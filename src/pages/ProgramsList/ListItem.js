@@ -3,6 +3,18 @@ import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
 import Button from "../../modules/components/Button";
 import { Tag, Avatar, List, Space } from "antd";
 
+export const tagMapping = {
+  Psychology: "magenta",
+  Healthcare: "red",
+  Sports: "volcano",
+  Food: "orange",
+  Education: "lime",
+  "Arts & Heritage": "green",
+  Lifestyle: "cyan",
+  Environment: "blue",
+  Elderly: "purple",
+};
+
 const ListItem = ({ item, showModal }) => {
   const IconText = ({ icon, text }) => (
     <Space>
@@ -10,18 +22,6 @@ const ListItem = ({ item, showModal }) => {
       {text}
     </Space>
   );
-
-  const tagMapping = {
-    Psychology: "magenta",
-    Healthcare: "red",
-    Sports: "volcano",
-    Food: "orange",
-    Education: "lime",
-    "Arts & Heritage": "green",
-    Lifestyle: "cyan",
-    Environment: "blue",
-    Elderly: "purple",
-  };
 
   return (
     <List.Item
@@ -72,9 +72,6 @@ const ListItem = ({ item, showModal }) => {
         }
         description={item.description}
       />
-      {item.content}
-      <br />
-      <br />
       {Object.entries(item.details).map(([key, value]) => {
         key = key.charAt(0).toUpperCase() + key.slice(1);
         return (

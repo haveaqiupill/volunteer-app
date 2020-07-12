@@ -8,7 +8,7 @@ const ItemDetailsModal = ({ isModalVisible, setModalVisible, item }) => {
   const handleOk = (e) => {
     console.log(e);
     setModalVisible(false);
-    navigate(`/programs/${item.id}`);
+    navigate(`/programs/apply/${item.id}`);
   };
 
   const handleCancel = (e) => {

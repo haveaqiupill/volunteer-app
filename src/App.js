@@ -5,7 +5,6 @@ import { Router } from "@reach/router";
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
-import ListView from "./pages/ListView";
 import SignUpResearcher from "./pages/SignUpResearcher";
 import SignUpVolunteer from "./pages/SignUpVolunteer";
 import ProgramsMain from "./pages/ProgramsList/ProgramsMain";
@@ -17,8 +16,8 @@ function App() {
     <Router>
       <Home path="/" />
 
-      <SignUp path="/sign-up"/>
-      <SignUpResearcher path="/sign-up/researcher"/>
+      <SignUp path="/sign-up" />
+      <SignUpResearcher path="/sign-up/researcher" />
       <SignUpVolunteer path="/sign-up/volunteer" />
       <SignIn path="/sign-in" />
 
