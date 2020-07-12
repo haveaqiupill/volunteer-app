@@ -4,6 +4,7 @@ import { Layout } from "antd";
 import AppAppBar from "../../modules/views/AppAppBar";
 import ProgramsItems from "./ProgramItems";
 import ProgramAppForm from "./ProgramAppForm";
+import ProgramPostForm from "../Researchers/ProgramPostForm";
 import { Router } from "@reach/router";
 
 const ProgramsMain = () => {
@@ -13,7 +14,8 @@ const ProgramsMain = () => {
       <Layout>
         <Router>
           <ProgramsItems path="/" />
-          <ProgramAppForm path=":id" />
+          <ProgramAppForm path="apply/:id" />
+          <ProgramPostForm path="create" />
         </Router>
       </Layout>
     </Fragment>

@@ -1,8 +1,11 @@
 import React, { Fragment, useState } from "react";
-import { Input, Layout, List, Tabs, PageHeader } from "antd";
+import { Space, Input, Layout, List, Tabs, PageHeader, Col } from "antd";
+import { useNavigate } from "@reach/router";
+
 import ItemDetailsModal from "./ItemDetailsModal";
 import ListItem from "./ListItem";
 import ProgramsItemsSider from "./ProgramItemsSider";
+import Button from "../../modules/components/Button";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -26,6 +29,12 @@ for (let i = 0; i < 23; i++) {
   dummyData.push({
     id: i,
     title: `Survey ${i}`,
+    avatar: "https://image.flaticon.com/icons/svg/3163/3163231.svg",
+    image: Math.floor(Math.random() * 3),
+    description:
+      "This is part of a research study to investigate the correlation between eating habits and stress levels.",
+    content:
+      "A team of student researchers from the Faculty of Science of XXX University wants to investigate the correlation between eating habits and stress levels as part of their FYP.",
     details: {
       date: "2020-11-12",
       compensation: "$10/hr",
@@ -36,17 +45,15 @@ for (let i = 0; i < 23; i++) {
       categories[Math.floor(Math.random() * categories.length)],
       locations[Math.floor(Math.random() * locations.length)],
     ],
-    avatar: "https://image.flaticon.com/icons/svg/3163/3163231.svg",
-    image: Math.floor(Math.random() * 3),
-    description:
-      "This is part of a research study to investigate the correlation between eating habits and stress levels.",
-    content:
-      "A team of student researchers from the Faculty of Science of XXX University wants to investigate the correlation between eating habits and stress levels as part of their FYP.",
+    researcher: "Student ABC",
+    confirmed_participants: [],
   });
 }
 // The data above is for testing and will be deleted once the API is up
 
 const ProgramItems = () => {
+  const navigate = useNavigate();
+
   const [currentTab, setCurrentTab] = useState("1");
   const [items, setItems] = useState(dummyData);
   const registeredPrograms = dummyData.slice(10, 16);
@@ -82,6 +89,19 @@ const ProgramItems = () => {
         <PageHeader
           title="Programs"
           className="site-page-header"
+          subTitle={
+            <Space>
+              <Button
+                color="secondary"
+                variant="contained"
+                size="small"
+                component="a"
+                onClick={() => navigate(`/programs/create`)}
+              >
+                Create Posting
+              </Button>
+            </Space>
+          }
           extra={
             <Tabs
               defaultActiveKey="1"
