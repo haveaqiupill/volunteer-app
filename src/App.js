@@ -8,6 +8,7 @@ import SignIn from "./pages/SignIn";
 import SignUpResearcher from "./pages/SignUpResearcher";
 import SignUpVolunteer from "./pages/SignUpVolunteer";
 import ProgramsMain from "./pages/ProgramsList/ProgramsMain";
+import Researcher from "./pages/Researchers/ResearcherMain";
 import "./util/firebase.js";
 import "./App.css";
 
@@ -20,7 +21,7 @@ function App() {
       <SignUpResearcher path="/sign-up/researcher" />
       <SignUpVolunteer path="/sign-up/volunteer" />
       <SignIn path="/sign-in" />
-
+      <Researcher path="/researcher/*" />
       <ProgramsMain path="/programs/*" />
     </Router>
   );
