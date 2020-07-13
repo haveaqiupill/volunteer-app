@@ -60,6 +60,7 @@ const ListItem = ({ item, showModal }) => {
       }
     >
       <List.Item.Meta
+        //TODO: Render avatar based on type of program
         avatar={<Avatar src={item.avatar} />}
         title={
           <Fragment>

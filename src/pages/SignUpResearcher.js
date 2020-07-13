@@ -79,7 +79,7 @@ function SignUpResearcher() {
                   <Field
                     autoFocus
                     component={RFTextField}
-                    halfWidth
+                    fullWidth
                     select
                     label="Organization"
                     name="organization"

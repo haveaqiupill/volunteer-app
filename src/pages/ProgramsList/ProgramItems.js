@@ -60,6 +60,7 @@ const ProgramItems = () => {
     (async () => {
       const programs = await Db.getAllPrograms();
       setAllPrograms(programs);
+      setItems(programs);
     })();
   }, []);
 
