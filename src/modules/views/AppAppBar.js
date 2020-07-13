@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
 import AppBar from "../components/AppBar";
 import Toolbar, { styles as toolbarStyles } from "../components/Toolbar";
+import { UserContext } from "../../util/UserProvider";
 
-const styles = (theme) => ({
+const styles = theme => ({
   title: {
     fontSize: 16,
   },
@@ -79,6 +80,16 @@ function AppAppBar(props) {
             </Link>
           </div>
           <div className={classes.right}>
+            {/* Feel free to change this, adding this here so I can easily see logged in user */}
+            <Link
+              color="inherit"
+              variant="h6"
+              underline="none"
+              className={classes.rightLink}
+              href="/sign-in"
+            >
+              {useContext(UserContext)?.email}
+            </Link>
             <Link
               color="inherit"
               variant="h6"

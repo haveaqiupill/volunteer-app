@@ -9,12 +9,13 @@ import Typography from "../modules/components/Typography";
 import AppFooter from "../modules/views/AppFooter";
 import AppAppBar from "../modules/views/AppAppBar";
 import AppForm from "../modules/views/AppForm";
-import {required } from "../modules/form/validation";
+import { required } from "../modules/form/validation";
 import RFTextField from "../modules/form/RFTextField";
 import FormButton from "../modules/form/FormButton";
 import FormFeedback from "../modules/form/FormFeedback";
+import Db from "../util/Database";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   form: {
     marginTop: theme.spacing(6),
   },
@@ -31,17 +32,21 @@ function SignUpResearcher() {
   const classes = useStyles();
   const [sent, setSent] = React.useState(false);
 
-  const validate = (values) => {
+  const validate = values => {
     const errors = required(
       ["organization", "researchArea", "shortIntroduction"],
       values
-    )
+    );
 
     return errors;
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = values => {
     //TODO: authenticate to allow login
+
+    // Db.addResearchData(useContext(UserContext)?.uid, ...); TODO
+    // navigate to next page
+
     setSent(true);
   };
 
@@ -121,6 +126,6 @@ function SignUpResearcher() {
       <AppFooter />
     </React.Fragment>
   );
-
 }
+
 export default withRoot(SignUpResearcher);

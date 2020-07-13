@@ -12,9 +12,10 @@ import { email, required } from "../modules/form/validation";
 import RFTextField from "../modules/form/RFTextField";
 import FormButton from "../modules/form/FormButton";
 import FormFeedback from "../modules/form/FormFeedback";
-import Authentication from "../util/Authentication";
+import Auth from "../util/Authentication";
+import { useNavigate } from "@reach/router";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   form: {
     marginTop: theme.spacing(6),
   },
@@ -31,7 +32,9 @@ function SignIn() {
   const classes = useStyles();
   const [sent, setSent] = React.useState(false);
 
-  const validate = (values) => {
+  const navigate = useNavigate();
+
+  const validate = values => {
     const errors = required(["email", "password"], values);
 
     if (!errors.email) {
@@ -44,16 +47,15 @@ function SignIn() {
     return errors;
   };
 
-  const handleSubmit = (values) => {
-    console.log(values); // TODO: get radio buttons value as userType
-    const { email, password, firstName, lastName, userType } = values;
+  const handleSubmit = values => {
+    const { email, password } = values;
 
-    try {
-      Authentication.signIn(email, password);
-    } catch (error) {
-      // TODO: show the error message to user
-    }
-    setSent(true);
+    Auth.signIn(email, password)
+      .then(() => {
+        setSent(true);
+        navigate("/");
+      })
+      .catch(error => console.log("Error while signing in", error));
   };
 
   return (
