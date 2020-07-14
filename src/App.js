@@ -10,20 +10,22 @@ import SignUpVolunteer from "./pages/SignUpVolunteer";
 import ProgramsMain from "./pages/ProgramsList/ProgramsMain";
 import Researcher from "./pages/Researchers/ResearcherMain";
 import "./util/firebase.js";
+import UserProvider from "./util/UserProvider";
 import "./App.css";
 
 function App() {
   return (
-    <Router>
-      <Home path="/" />
-
-      <SignUp path="/sign-up" />
-      <SignUpResearcher path="/sign-up/researcher" />
-      <SignUpVolunteer path="/sign-up/volunteer" />
-      <SignIn path="/sign-in" />
-      <Researcher path="/researcher/*" />
-      <ProgramsMain path="/programs/*" />
-    </Router>
+    <UserProvider>
+      <Router>
+        <Home path="/" />
+        <SignUp path="/sign-up" />
+        <SignUpResearcher path="/sign-up/researcher" />
+        <SignUpVolunteer path="/sign-up/volunteer" />
+        <SignIn path="/sign-in" />
+        <Researcher path="/researcher/*" />
+        <ProgramsMain path="/programs/*" />
+      </Router>
+    </UserProvider>
   );
 }
 

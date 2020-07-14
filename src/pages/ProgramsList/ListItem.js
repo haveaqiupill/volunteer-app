@@ -50,6 +50,7 @@ const ListItem = ({ item, showModal }) => {
         <img
           height={200}
           alt="logo"
+          //TODO: Render image based on organization of researcher who posted the program
           src={require(item.image === 0
             ? "../../images/nus_logo.png"
             : item.image === 1
@@ -59,6 +60,7 @@ const ListItem = ({ item, showModal }) => {
       }
     >
       <List.Item.Meta
+        //TODO: Render avatar based on type of program
         avatar={<Avatar src={item.avatar} />}
         title={
           <Fragment>

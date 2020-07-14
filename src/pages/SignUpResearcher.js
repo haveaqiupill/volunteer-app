@@ -9,10 +9,12 @@ import Typography from "../modules/components/Typography";
 import AppFooter from "../modules/views/AppFooter";
 import AppAppBar from "../modules/views/AppAppBar";
 import AppForm from "../modules/views/AppForm";
-import {required } from "../modules/form/validation";
+import { required } from "../modules/form/validation";
 import RFTextField from "../modules/form/RFTextField";
 import FormButton from "../modules/form/FormButton";
 import FormFeedback from "../modules/form/FormFeedback";
+import Db from "../util/Database";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -27,6 +29,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const organizations = ["NUS", "NTU", "SMU", "Others"];
+
 function SignUpResearcher() {
   const classes = useStyles();
   const [sent, setSent] = React.useState(false);
@@ -35,13 +39,17 @@ function SignUpResearcher() {
     const errors = required(
       ["organization", "researchArea", "shortIntroduction"],
       values
-    )
+    );
 
     return errors;
   };
 
   const handleSubmit = (values) => {
     //TODO: authenticate to allow login
+
+    // Db.addResearchData(useContext(UserContext)?.uid, ...); TODO
+    // navigate to next page
+
     setSent(true);
   };
 
@@ -71,11 +79,20 @@ function SignUpResearcher() {
                   <Field
                     autoFocus
                     component={RFTextField}
-                    halfWidth
+                    fullWidth
+                    select
                     label="Organization"
                     name="organization"
                     required
-                  />
+                  >
+                    {organizations.map((organization, i) => {
+                      return (
+                        <MenuItem key={i} value={organization}>
+                          {organization}
+                        </MenuItem>
+                      );
+                    })}
+                  </Field>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Field
@@ -121,6 +138,6 @@ function SignUpResearcher() {
       <AppFooter />
     </React.Fragment>
   );
-
 }
+
 export default withRoot(SignUpResearcher);

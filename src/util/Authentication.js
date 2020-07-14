@@ -1,27 +1,23 @@
 import * as firebase from "firebase/app";
 import "firebase/auth";
-import "firebase/firestore";
+
+import Database from "./Database";
 
 export default class Authentication {
   static signUp(email, password, firstName, lastName, userType = "") {
-    firebase
+    return firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        // TODO: update rules on firebase db console
-        firebase
-          .firestore()
-          .collection("users")
-          .add({
-            firstName,
-            lastName,
-            userType,
-            email,
-          })
-          .catch(error => console.error("Error adding user to DB: ", error));
+      .then(userCred => {
+        Database.addNewUser(userCred.user.uid, {
+          firstName,
+          lastName,
+          userType,
+          email,
+        });
       })
       .catch(error => {
-        console.log(error);
+        console.log("Error occured while signing up: ", error);
 
         switch (error.code) {
           case "auth/weak-password":
@@ -46,11 +42,11 @@ export default class Authentication {
   }
 
   static signIn(email, password) {
-    firebase
+    return firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .catch(error => {
-        console.log(error);
+        console.log("Error occured while signing in: ", error);
 
         switch (error.code) {
           case "auth/user-disabled":
@@ -71,5 +67,16 @@ export default class Authentication {
             throw error;
         }
       });
+  }
+
+  static signOut() {
+    firebase
+      .auth()
+      .signOut()
+      .catch(error => console.log("Error occured while signing out: ", error));
+  }
+
+  static observeAuthState(observer) {
+    firebase.auth().onAuthStateChanged(observer);
   }
 }
