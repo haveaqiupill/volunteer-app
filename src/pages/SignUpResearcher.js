@@ -64,7 +64,7 @@ function SignUpResearcher() {
     setSent(true);
     notification.open({
       message: "Success!",
-      description: "New post created.",
+      description: "Details Updated",
     });
     navigate(`/`);
   };
