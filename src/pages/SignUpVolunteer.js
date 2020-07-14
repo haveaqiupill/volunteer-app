@@ -1,6 +1,5 @@
 import withRoot from "../modules/withRoot";
 // --- Post bootstrap -----
-// import React from "react";
 import { useNavigate } from "@reach/router";
 import React, { Fragment, useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
@@ -59,7 +58,7 @@ function SignUpVolunteer() {
     setSent(true);
     notification.open({
       message: "Success!",
-      despcription: "New post created.",
+      despcription: "Details Updated.",
     });
     navigate("/");
   };
