@@ -14,8 +14,9 @@ import RFTextField from "../modules/form/RFTextField";
 import FormButton from "../modules/form/FormButton";
 import FormFeedback from "../modules/form/FormFeedback";
 import Db from "../util/Database";
+import MenuItem from "@material-ui/core/MenuItem";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   form: {
     marginTop: theme.spacing(6),
   },
@@ -28,11 +29,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const organizations = ["NUS", "NTU", "SMU", "Others"];
+
 function SignUpResearcher() {
   const classes = useStyles();
   const [sent, setSent] = React.useState(false);
 
-  const validate = values => {
+  const validate = (values) => {
     const errors = required(
       ["organization", "researchArea", "shortIntroduction"],
       values
@@ -41,7 +44,7 @@ function SignUpResearcher() {
     return errors;
   };
 
-  const handleSubmit = values => {
+  const handleSubmit = (values) => {
     //TODO: authenticate to allow login
 
     // Db.addResearchData(useContext(UserContext)?.uid, ...); TODO
@@ -76,11 +79,20 @@ function SignUpResearcher() {
                   <Field
                     autoFocus
                     component={RFTextField}
-                    halfWidth
+                    fullWidth
+                    select
                     label="Organization"
                     name="organization"
                     required
-                  />
+                  >
+                    {organizations.map((organization, i) => {
+                      return (
+                        <MenuItem key={i} value={organization}>
+                          {organization}
+                        </MenuItem>
+                      );
+                    })}
+                  </Field>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Field

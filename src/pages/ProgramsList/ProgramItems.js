@@ -13,7 +13,6 @@ const { TabPane } = Tabs;
 const { Search } = Input;
 
 // The data below is for testing and will be deleted once the API is up
-//TODO Replace dummyData with actual data
 const dummyData = [];
 const categories = [
   "Psychology",
@@ -56,35 +55,40 @@ for (let i = 0; i < 23; i++) {
 const ProgramItems = () => {
   const navigate = useNavigate();
 
+  const [allPrograms, setAllPrograms] = useState();
+  useEffect(() => {
+    (async () => {
+      const programs = await Db.getAllPrograms();
+      setAllPrograms(programs);
+      setItems(programs);
+    })();
+  }, []);
+
+  // Selected programs according to the tabs "All Programs" vs "Registered Programs"
+  const [items, setItems] = useState();
+  // TODO: Filter registered programs
+  const registeredPrograms = allPrograms ? allPrograms.slice(1, 2) : {};
   const [currentTab, setCurrentTab] = useState("1");
-  const [items, setItems] = useState(dummyData);
-  const registeredPrograms = dummyData.slice(10, 16);
 
-  const [filteredItems, setFilteredItems] = useState();
-  const [isFiltered, setIsFiltered] = useState(false);
-
-  const handleClick = key => {
+  const handleClick = (key) => {
     setCurrentTab(key);
     if (key === "1") {
-      setItems(dummyData);
+      setItems(allPrograms);
     } else {
       setItems(registeredPrograms);
     }
   };
 
+  // Filtered programs according to the categories in the sidebar
+  const [filteredItems, setFilteredItems] = useState();
+  const [isFiltered, setIsFiltered] = useState(false);
+
   const [isModalVisible, setModalVisible] = useState(false);
   const [modalItem, setModalItem] = useState();
-  const showModal = item => {
+  const showModal = (item) => {
     setModalItem(item);
     setModalVisible(true);
   };
-
-  useEffect(() => {
-    (async () => {
-      const programs = await Db.getAllPrograms();
-      setItems(programs);
-    })();
-  }, []);
 
   return (
     <Fragment>
@@ -125,7 +129,7 @@ const ProgramItems = () => {
         >
           <Search
             placeholder="input search text"
-            onSearch={value => console.log(value)}
+            onSearch={(value) => console.log(value)}
             style={{ width: 700 }}
           />
           <Content
@@ -142,7 +146,7 @@ const ProgramItems = () => {
                 pageSize: 7,
               }}
               dataSource={isFiltered ? filteredItems : items}
-              renderItem={item => (
+              renderItem={(item) => (
                 <ListItem item={item} showModal={showModal} />
               )}
             />
