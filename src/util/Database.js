@@ -12,8 +12,13 @@ export default class Database {
       .catch(error => console.error("Error adding user to DB: ", error));
   }
 
-  static addResearchData(userId, data) {
-    // TODO
+  static addResearchData(researcherUserId, researcherData) {
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(researcherUserId)
+      .update(researcherData)
+      .catch(error => console.error("Error adding researcher details to DB: ", error));
   }
 
   static addVolunteerData(userId, data) {

@@ -1,6 +1,7 @@
 import withRoot from "../modules/withRoot";
 // --- Post bootstrap -----
-import React from "react";
+import React, { useContext } from "react";
+import { useNavigate } from "@reach/router";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
@@ -14,7 +15,10 @@ import RFTextField from "../modules/form/RFTextField";
 import FormButton from "../modules/form/FormButton";
 import FormFeedback from "../modules/form/FormFeedback";
 import Db from "../util/Database";
+import { UserContext } from "../util/UserProvider";
 import MenuItem from "@material-ui/core/MenuItem";
+import { notification } from "antd";
+
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -34,6 +38,9 @@ const organizations = ["NUS", "NTU", "SMU", "Others"];
 function SignUpResearcher() {
   const classes = useStyles();
   const [sent, setSent] = React.useState(false);
+  const userId = useContext(UserContext)?.uid;
+  const navigate = useNavigate();
+
 
   const validate = (values) => {
     const errors = required(
@@ -44,13 +51,22 @@ function SignUpResearcher() {
     return errors;
   };
 
-  const handleSubmit = (values) => {
-    //TODO: authenticate to allow login
-
-    // Db.addResearchData(useContext(UserContext)?.uid, ...); TODO
-    // navigate to next page
-
+  const handleSubmit = async values => {
+    console.log(values);
+    try {
+      await Db.addResearchData(userId, values).then;
+    } catch (error) {
+      notification.open({
+        message: "Error!",
+        description: error.message,
+      });
+    }
     setSent(true);
+    notification.open({
+      message: "Success!",
+      description: "New post created.",
+    });
+    navigate(`/`);
   };
 
   return (
