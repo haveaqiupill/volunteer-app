@@ -19,7 +19,6 @@ import { UserContext } from "../util/UserProvider";
 import MenuItem from "@material-ui/core/MenuItem";
 import { notification } from "antd";
 
-
 const useStyles = makeStyles((theme) => ({
   form: {
     marginTop: theme.spacing(6),
@@ -41,7 +40,6 @@ function SignUpResearcher() {
   const userId = useContext(UserContext)?.uid;
   const navigate = useNavigate();
 
-
   const validate = (values) => {
     const errors = required(
       ["organization", "researchArea", "shortIntroduction"],
@@ -52,9 +50,8 @@ function SignUpResearcher() {
   };
 
   const handleSubmit = async values => {
-    console.log(values);
     try {
-      await Db.addResearchData(userId, values).then;
+      await Db.addResearchData(userId, values);
     } catch (error) {
       notification.open({
         message: "Error!",
@@ -66,7 +63,7 @@ function SignUpResearcher() {
       message: "Success!",
       description: "Details Updated",
     });
-    navigate(`/`);
+    navigate('/');
   };
 
   return (
