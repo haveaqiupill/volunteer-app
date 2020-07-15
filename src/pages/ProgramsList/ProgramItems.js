@@ -52,7 +52,7 @@ for (let i = 0; i < 23; i++) {
 }
 // The data above is for testing and will be deleted once the API is up
 
-const ProgramItems = () => {
+const ProgramItems = (category) => {
   const navigate = useNavigate();
 
   const [allPrograms, setAllPrograms] = useState();
@@ -109,7 +109,6 @@ const ProgramItems = () => {
                 color="secondary"
                 variant="contained"
                 size="small"
-                component="a"
                 onClick={() => navigate(`/programs/create`)}
               >
                 Create Posting

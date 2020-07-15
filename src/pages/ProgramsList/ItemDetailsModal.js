@@ -39,7 +39,7 @@ const ItemDetailsModal = ({ isModalVisible, setModalVisible, item }) => {
       onCancel={handleCancel}
       okText="Apply"
       cancelText="Back"
-      okButtonProps={{ type: "danger", disabled: isDisabled }}
+      okButtonProps={{ disabled: isDisabled }}
     >
       <Fragment>
         <h1>{item.title}</h1>
