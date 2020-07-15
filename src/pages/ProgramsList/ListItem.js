@@ -51,11 +51,13 @@ const ListItem = ({ item, showModal }) => {
           height={200}
           alt="logo"
           //TODO: Render image based on organization of researcher who posted the program
-          src={require(item.image === 0
+          src={require(item.details.venue === "NUS"
             ? "../../images/nus_logo.png"
-            : item.image === 1
+            : item.details.venue === "NTU"
             ? "../../images/ntu_logo.png"
-            : "../../images/smu_logo.png")}
+            : item.details.venue === "SMU"
+            ? "../../images/smu_logo.png"
+            : "../../images/questionmark.png")}
         />
       }
     >
