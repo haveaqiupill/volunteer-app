@@ -17,10 +17,7 @@ export default class Database {
       .firestore()
       .collection("users")
       .doc(researcherUserId)
-      .update(researcherData)
-      .catch(error =>
-        console.error("Error adding researcher details to DB: ", error)
-      );
+      .update(researcherData);
   }
 
   static addVolunteerData(userId, data) {
