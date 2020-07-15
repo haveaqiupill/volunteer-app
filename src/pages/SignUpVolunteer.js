@@ -49,18 +49,21 @@ function SignUpVolunteer() {
   const handleSubmit = async values => {
     try {
       await Db.addVolunteerData(userId, values);
+
+      setSent(true);
+      notification.open({
+        message: "Success!",
+        despcription: "Details Updated.",
+      });
+      navigate("/");
     } catch (error) {
+      console.log("Error adding volunteer details to DB: ", error);
+
       notification.open({
         message: "Error!",
         description: error.message,
       });
     }
-    setSent(true);
-    notification.open({
-      message: "Success!",
-      despcription: "Details Updated.",
-    });
-    navigate('/');
   };
 
   return (
