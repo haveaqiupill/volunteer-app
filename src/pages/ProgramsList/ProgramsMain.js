@@ -12,7 +12,7 @@ const ProgramsMain = () => {
       <AppAppBar />
       <Layout>
         <Router>
-          <ProgramsItems path="/" />
+          <ProgramsItems path="/*" />
           <ProgramPostForm path="create" />
         </Router>
       </Layout>
