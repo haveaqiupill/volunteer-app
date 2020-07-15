@@ -80,7 +80,7 @@ const ItemDetailsModal = ({ isModalVisible, setModalVisible, item }) => {
             will be kept confidential and be used only for the purpose of the
             research study. I understand that should I wish to withdraw my
             consent for the organising committee to contact me for the purposes
-            stated above, I could notify <b>{dummyData.researcher}</b>,{" "}
+            stated above, I could notify <b>{dummyData.researcher}</b> from{" "}
             <b>{dummyData.organization}</b>, in writing to{" "}
             <b>{dummyData.email}</b>. The organising committee will then remove
             my personal information from their database, and I allow 7 business
