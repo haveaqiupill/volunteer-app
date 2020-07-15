@@ -1,7 +1,7 @@
 import withRoot from "../modules/withRoot";
 // --- Post bootstrap -----
 import { useNavigate } from "@reach/router";
-import React, { Fragment, useState, useContext } from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
@@ -48,7 +48,7 @@ function SignUpVolunteer() {
 
   const handleSubmit = async values => {
     try {
-      await Db.addVolunteerData(userId, values).then;
+      await Db.addVolunteerData(userId, values);
     } catch (error) {
       notification.open({
         message: "Error!",
@@ -60,7 +60,7 @@ function SignUpVolunteer() {
       message: "Success!",
       despcription: "Details Updated.",
     });
-    navigate("/");
+    navigate('/');
   };
 
   return (

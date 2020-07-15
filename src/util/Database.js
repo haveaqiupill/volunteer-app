@@ -17,14 +17,13 @@ export default class Database {
   }
 
   static addVolunteerData(volunteerUserId, additionalData) {
-    // const querySnapshot = await firebase
     firebase
       .firestore()
       .collection("users")
       .doc(volunteerUserId)
       .update(additionalData)
       .catch(error => console.error("Error adding user details to DB: ", error));
-    }
+  }
 
   static addProgram(researcherUserId, programData, programTags) {
     const {
