@@ -75,19 +75,20 @@ const ProgramPostForm = () => {
       console.log(values);
       console.log(selectedTags);
 
-      await Db.addProgram(userId, values, selectedTags).then;
+      await Db.addProgram(userId, values, selectedTags);
+
+      setSent(true);
+      notification.open({
+        message: "Success!",
+        description: "New post created.",
+      });
+      navigate(`/programs`);
     } catch (error) {
       notification.open({
         message: "Error!",
         description: error.message,
       });
     }
-    setSent(true);
-    notification.open({
-      message: "Success!",
-      description: "New post created.",
-    });
-    navigate(`/programs`);
   };
   return (
     <Fragment>
