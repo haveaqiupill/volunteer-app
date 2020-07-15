@@ -57,6 +57,8 @@ function SignUpVolunteer() {
       });
       navigate("/");
     } catch (error) {
+      console.error("Error adding researcher details to DB: ", error);
+
       notification.open({
         message: "Error!",
         description: error.message,
