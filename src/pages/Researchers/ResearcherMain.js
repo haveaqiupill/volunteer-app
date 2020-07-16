@@ -4,12 +4,14 @@ import { Router } from "@reach/router";
 
 import AppAppBar from "../../modules/views/AppAppBar";
 import ResearcherProfile from "./ResearcherProfile";
-import ResearcherPostings from "./ResearcherPostings.js";
+import ResearcherPostings from "./ResearcherPostings";
+import ResearcherSider from "./ResearcherSider";
 
 const ResearcherMain = () => {
   return (
     <Fragment>
       <AppAppBar />
+      <ResearcherSider/>
       <Layout>
         <Router>
           <ResearcherProfile path="/" />
