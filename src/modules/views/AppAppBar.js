@@ -6,7 +6,7 @@ import AppBar from "../components/AppBar";
 import Toolbar, { styles as toolbarStyles } from "../components/Toolbar";
 import { UserContext } from "../../util/UserProvider";
 
-const styles = theme => ({
+const styles = (theme) => ({
   title: {
     fontSize: 16,
   },
@@ -51,11 +51,13 @@ function AppAppBar(props) {
       <AppBar position="fixed" style={{ height: "9vh" }}>
         <Toolbar className={classes.toolbar}>
           <div className={classes.left}>
-            <img
-              src={require("../../images/logo.png")}
-              alt="logo"
-              className={classes.logo}
-            />
+            <a href="/">
+              <img
+                src={require("../../images/logo.png")}
+                alt="logo"
+                className={classes.logo}
+              />
+            </a>
           </div>
           <div className={classes.item}>
             <Link

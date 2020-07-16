@@ -12,47 +12,7 @@ const { Content } = Layout;
 const { TabPane } = Tabs;
 const { Search } = Input;
 
-// The data below is for testing and will be deleted once the API is up
-const dummyData = [];
-const categories = [
-  "Psychology",
-  "Healthcare",
-  "Sports",
-  "Food",
-  "Education",
-  "Arts & Heritage",
-  "Lifestyle",
-  "Environment",
-  "Elderly",
-];
-const locations = ["North", "South", "East", "West", "Central"];
-for (let i = 0; i < 23; i++) {
-  dummyData.push({
-    id: i,
-    title: `Survey ${i}`,
-    //depends on type of program
-    avatar: "https://image.flaticon.com/icons/svg/3163/3163231.svg",
-    //depends on organization of researcher
-    image: Math.floor(Math.random() * 3),
-    description:
-      "This is part of a research study to investigate the correlation between eating habits and stress levels.",
-    details: {
-      date: "2020-11-12",
-      compensation: "$10/hr",
-      venue: "NTU North Spine ...",
-      duration: "2 hours",
-    },
-    tags: [
-      categories[Math.floor(Math.random() * categories.length)],
-      locations[Math.floor(Math.random() * locations.length)],
-    ],
-    number: 50,
-    researcher: "Student ABC",
-  });
-}
-// The data above is for testing and will be deleted once the API is up
-
-const ProgramItems = () => {
+const ProgramItems = ({ "*": cat }) => {
   const navigate = useNavigate();
 
   const [allPrograms, setAllPrograms] = useState();
@@ -65,7 +25,7 @@ const ProgramItems = () => {
   }, []);
 
   // Selected programs according to the tabs "All Programs" vs "Registered Programs"
-  const [items, setItems] = useState();
+  const [items, setItems] = useState([]);
   // TODO: Filter registered programs
   const registeredPrograms = allPrograms ? allPrograms.slice(1, 2) : {};
   const [currentTab, setCurrentTab] = useState("1");
@@ -81,7 +41,7 @@ const ProgramItems = () => {
 
   // Filtered programs according to the categories in the sidebar
   const [filteredItems, setFilteredItems] = useState();
-  const [isFiltered, setIsFiltered] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(!!cat);
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [modalItem, setModalItem] = useState();
@@ -97,7 +57,12 @@ const ProgramItems = () => {
           items={items}
           isFiltered={isFiltered}
           setIsFiltered={setIsFiltered}
-          setItems={setFilteredItems}
+          setFilteredItems={setFilteredItems}
+          cat={
+            cat === "arts & heritage"
+              ? "Arts & Heritage"
+              : cat.charAt(0).toUpperCase() + cat.slice(1)
+          }
         />
         <PageHeader
           title="Programs"
@@ -109,7 +74,6 @@ const ProgramItems = () => {
                 color="secondary"
                 variant="contained"
                 size="small"
-                component="a"
                 onClick={() => navigate(`/programs/create`)}
               >
                 Create Posting

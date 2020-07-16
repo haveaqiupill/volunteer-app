@@ -3,3 +3,13 @@
 .ant-page-header {
     width: 100%;
 }
+
+.ant-btn-primary {
+    background-color: black;
+    border-radius: 0;
+}
+
+.ant-btn-primary:hover {
+    background-color: #46484e;
+    border-radius: 0;
+}

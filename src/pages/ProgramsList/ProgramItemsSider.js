@@ -2,6 +2,7 @@ import React, { useEffect, useCallback, useState } from "react";
 import { BookOutlined, HomeOutlined } from "@ant-design/icons";
 import { Divider, Layout, Menu, Space } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
+import { navigate } from "@reach/router";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -23,23 +24,29 @@ export const categories = [
 ];
 export const locations = ["North", "South", "East", "West", "Central"];
 
-const ProgramsItemsSider = ({ items, isFiltered, setIsFiltered, setItems }) => {
+const ProgramsItemsSider = ({
+  items,
+  isFiltered,
+  setIsFiltered,
+  setFilteredItems,
+  cat,
+}) => {
   const { SubMenu } = Menu;
   const { Sider } = Layout;
 
   const joinedMenuItems = ["All Programs", ...categories, ...locations];
 
-  const [tag, setTag] = useState("");
+  const [tag, setTag] = useState(cat ? cat : "");
   const filterItems = useCallback(() => {
     if (tag === "All Programs") {
-      setItems(items);
+      setFilteredItems(items);
       setIsFiltered(false);
     } else {
       const filteredItems = items.filter((item) => item.tags.includes(tag));
-      setItems(filteredItems);
+      setFilteredItems(filteredItems);
       setIsFiltered(true);
     }
-  }, [items, setIsFiltered, setItems, tag]);
+  }, [items, setIsFiltered, setFilteredItems, tag]);
 
   useEffect(() => {
     if (isFiltered) {
@@ -66,8 +73,13 @@ const ProgramsItemsSider = ({ items, isFiltered, setIsFiltered, setItems }) => {
         onSelect={({ key }) => {
           setTag(joinedMenuItems[key]);
           filterItems();
+          if (cat) {
+            navigate("/programs");
+          }
         }}
-        defaultSelectedKeys={["0"]}
+        defaultSelectedKeys={
+          cat ? [joinedMenuItems.findIndex((e) => e === cat).toString()] : ["0"]
+        }
       >
         <Space className={classes.title}>
           <h4>FILTER BY</h4>
