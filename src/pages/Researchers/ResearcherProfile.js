@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { Layout, List, PageHeader, Divider} from "antd";
-import ResearcherSider from "./ResearcherSider";
 
 const { Content } = Layout;
 
@@ -20,7 +19,6 @@ const ResearcherProfile = () => {
    
     return (
         <Fragment>
-            <ResearcherSider/>
             <Layout style={{ marginLeft: 200 }}>
                 <Content
                     style={{
@@ -31,17 +29,23 @@ const ResearcherProfile = () => {
                 <PageHeader
                     title="Personal Details"
                 />
-                <Divider orientation="center">
+            </Layout>
+            <Layout style={{ marginLeft: 110 }}>
+                <Divider orientation="left">
                     <List
                     size="large"
                     dataSource={personal}
                     renderItem={item => <List.Item>{item}</List.Item>}
                     />
                 </Divider>
+            </Layout>
+            <Layout style={{ marginLeft: 200 }}>
                 <PageHeader
                     title="Security settings"
                 />
-                <Divider orientation="center">
+            </Layout>
+            <Layout style={{ marginLeft: 110 }}>
+                <Divider orientation="left">
                     <List
                     size="large"
                     dataSource={security}
