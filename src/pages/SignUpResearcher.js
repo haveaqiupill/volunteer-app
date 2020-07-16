@@ -19,7 +19,7 @@ import { UserContext } from "../util/UserProvider";
 import MenuItem from "@material-ui/core/MenuItem";
 import { notification } from "antd";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   form: {
     marginTop: theme.spacing(6),
   },
@@ -40,7 +40,7 @@ function SignUpResearcher() {
   const userId = useContext(UserContext)?.uid;
   const navigate = useNavigate();
 
-  const validate = (values) => {
+  const validate = values => {
     const errors = required(
       ["organization", "researchArea", "shortIntroduction"],
       values
@@ -52,18 +52,21 @@ function SignUpResearcher() {
   const handleSubmit = async values => {
     try {
       await Db.addResearchData(userId, values);
+
+      setSent(true);
+      notification.open({
+        message: "Success!",
+        description: "Details Updated",
+      });
+      navigate("/");
     } catch (error) {
+      console.error("Error adding researcher details to DB: ", error);
+
       notification.open({
         message: "Error!",
         description: error.message,
       });
     }
-    setSent(true);
-    notification.open({
-      message: "Success!",
-      description: "Details Updated",
-    });
-    navigate('/');
   };
 
   return (

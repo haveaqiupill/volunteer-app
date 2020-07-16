@@ -13,12 +13,11 @@ export default class Database {
   }
 
   static addResearchData(researcherUserId, researcherData) {
-    firebase
+    return firebase
       .firestore()
       .collection("users")
       .doc(researcherUserId)
-      .update(researcherData)
-      .catch(error => console.error("Error adding researcher details to DB: ", error));
+      .update(researcherData);
   }
 
   static addVolunteerData(volunteerUserId, additionalData) {
