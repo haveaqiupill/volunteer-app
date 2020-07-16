@@ -58,7 +58,11 @@ const ProgramItems = ({ "*": cat }) => {
           isFiltered={isFiltered}
           setIsFiltered={setIsFiltered}
           setFilteredItems={setFilteredItems}
-          cat={cat.charAt(0).toUpperCase() + cat.slice(1)}
+          cat={
+            cat === "arts & heritage"
+              ? "Arts & Heritage"
+              : cat.charAt(0).toUpperCase() + cat.slice(1)
+          }
         />
         <PageHeader
           title="Programs"
