@@ -28,6 +28,16 @@ export default class Database {
       .update(additionalData);
   }
 
+  static async getUserData(userId) {
+    const doc = await firebase
+      .firestore()
+      .collection("users")
+      .doc(userId)
+      .get();
+
+    return doc.data();
+  }
+
   static addProgram(researcherUserId, programData, programTags) {
     const {
       title,
@@ -75,6 +85,23 @@ export default class Database {
     const querySnapshot = await firebase
       .firestore()
       .collection("programs")
+      .get();
+    const programs = querySnapshot.docs.map(doc => {
+      return { id: doc.id, ...doc.data() };
+    });
+
+    return programs;
+  }
+
+  static async getResearchersPrograms(researcherUserId) {
+    if (researcherUserId == null) {
+      return;
+    }
+
+    const querySnapshot = await firebase
+      .firestore()
+      .collection("programs")
+      .where("researcherUserId", "==", researcherUserId)
       .get();
     const programs = querySnapshot.docs.map(doc => {
       return { id: doc.id, ...doc.data() };

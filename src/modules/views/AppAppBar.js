@@ -90,7 +90,6 @@ function AppAppBar(props) {
               variant="h6"
               underline="none"
               className={classes.rightLink}
-              href="/sign-in"
             >
               {user?.email}
             </Link>
