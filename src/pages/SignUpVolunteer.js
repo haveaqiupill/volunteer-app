@@ -1,6 +1,7 @@
 import withRoot from "../modules/withRoot";
 // --- Post bootstrap -----
-import React from "react";
+import { useNavigate } from "@reach/router";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
@@ -13,6 +14,9 @@ import { required } from "../modules/form/validation";
 import RFTextField from "../modules/form/RFTextField";
 import FormButton from "../modules/form/FormButton";
 import FormFeedback from "../modules/form/FormFeedback";
+import Db from "../util/Database";
+import { UserContext } from "../util/UserProvider";
+import { notification } from "antd";
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -27,9 +31,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function SignUpResearcher() {
+function SignUpVolunteer() {
   const classes = useStyles();
   const [sent, setSent] = React.useState(false);
+  const userId = useContext(UserContext)?.uid;
+  const navigate = useNavigate();
 
   const validate = values => {
     const errors = required(
@@ -40,13 +46,24 @@ function SignUpResearcher() {
     return errors;
   };
 
-  const handleSubmit = values => {
-    //TODO: authenticate to allow login
+  const handleSubmit = async values => {
+    try {
+      await Db.addVolunteerData(userId, values);
 
-    // Db.addVolunteerData(useContext(UserContext)?.uid, ...); TODO
-    // navigate to next page
+      setSent(true);
+      notification.open({
+        message: "Success!",
+        despcription: "Details Updated.",
+      });
+      navigate("/");
+    } catch (error) {
+      console.log("Error adding volunteer details to DB: ", error);
 
-    setSent(true);
+      notification.open({
+        message: "Error!",
+        description: error.message,
+      });
+    }
   };
 
   return (
@@ -147,4 +164,4 @@ function SignUpResearcher() {
   );
 }
 
-export default withRoot(SignUpResearcher);
+export default withRoot(SignUpVolunteer);

@@ -21,8 +21,12 @@ export default class Database {
       .catch(error => console.error("Error adding researcher details to DB: ", error));
   }
 
-  static addVolunteerData(userId, data) {
-    // TODO
+  static addVolunteerData(volunteerUserId, additionalData) {
+    return firebase
+      .firestore()
+      .collection("users")
+      .doc(volunteerUserId)
+      .update(additionalData);
   }
 
   static addProgram(researcherUserId, programData, programTags) {
