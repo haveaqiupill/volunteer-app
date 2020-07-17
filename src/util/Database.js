@@ -56,6 +56,7 @@ export default class Database {
       description,
       type,
       number,
+      applicantsId: 0,
       tags: programTags,
       details: {
         date,
@@ -108,5 +109,34 @@ export default class Database {
     });
 
     return programs;
+  }
+
+  static async addApplicantIdToResearchProgram(volunteerUserId, programId) {
+    if (volunteerUserId == null || programId == null) {
+      return;
+    }
+
+    return firebase
+      .firestore()
+      .collection("programs")
+      .doc(programId)
+      .update({
+        applicantsId: firebase.firestore.FieldValue.arrayUnion(volunteerUserId),
+      });
+  }
+
+  static async getNumberofApplicants(programId) {
+    if (programId == null) {
+      return;
+    }
+
+    const querySnapshot = await firebase
+      .firestore()
+      .collection("programs")
+      .doc(programId)
+      .get();
+
+    const numApplicants = querySnapshot.docs.length;
+    return numApplicants;
   }
 }
