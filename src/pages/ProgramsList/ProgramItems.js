@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useContext } from "react";
 import { Space, Input, Layout, List, Tabs, PageHeader } from "antd";
 import { useNavigate } from "@reach/router";
 
@@ -7,6 +7,7 @@ import ListItem from "./ListItem";
 import ProgramsItemsSider from "./ProgramItemsSider";
 import Button from "../../modules/components/Button";
 import Db from "../../util/Database";
+import { UserContext } from "../../util/UserProvider";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -14,6 +15,8 @@ const { Search } = Input;
 
 const ProgramItems = ({ "*": cat }) => {
   const navigate = useNavigate();
+
+  const user = useContext(UserContext);
 
   const [allPrograms, setAllPrograms] = useState();
   useEffect(() => {
@@ -30,7 +33,7 @@ const ProgramItems = ({ "*": cat }) => {
   const registeredPrograms = allPrograms ? allPrograms.slice(1, 2) : {};
   const [currentTab, setCurrentTab] = useState("1");
 
-  const handleClick = (key) => {
+  const handleClick = key => {
     setCurrentTab(key);
     if (key === "1") {
       setItems(allPrograms);
@@ -45,7 +48,7 @@ const ProgramItems = ({ "*": cat }) => {
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [modalItem, setModalItem] = useState();
-  const showModal = (item) => {
+  const showModal = item => {
     setModalItem(item);
     setModalVisible(true);
   };
@@ -68,17 +71,18 @@ const ProgramItems = ({ "*": cat }) => {
           title="Programs"
           className="site-page-header"
           subTitle={
-            //TODO Render this button conditionally for researchers only
-            <Space>
-              <Button
-                color="secondary"
-                variant="contained"
-                size="small"
-                onClick={() => navigate(`/programs/create`)}
-              >
-                Create Posting
-              </Button>
-            </Space>
+            user?.isResearcher() && (
+              <Space>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  size="small"
+                  onClick={() => navigate(`/programs/create`)}
+                >
+                  Create Posting
+                </Button>
+              </Space>
+            )
           }
           extra={
             <Tabs
@@ -93,7 +97,7 @@ const ProgramItems = ({ "*": cat }) => {
         >
           <Search
             placeholder="input search text"
-            onSearch={(value) => console.log(value)}
+            onSearch={value => console.log(value)}
             style={{ width: 700 }}
           />
           <Content
@@ -110,7 +114,7 @@ const ProgramItems = ({ "*": cat }) => {
                 pageSize: 7,
               }}
               dataSource={isFiltered ? filteredItems : items}
-              renderItem={(item) => (
+              renderItem={item => (
                 <ListItem item={item} showModal={showModal} />
               )}
             />

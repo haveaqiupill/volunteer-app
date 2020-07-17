@@ -104,7 +104,7 @@ function SignUpVolunteer() {
                     component={RFTextField}
                     fullWidth
                     label="Faculty"
-                    name="Faculty"
+                    name="faculty"
                     required
                   />
                 </Grid>

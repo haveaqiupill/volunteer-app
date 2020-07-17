@@ -5,8 +5,9 @@ import Link from "@material-ui/core/Link";
 import AppBar from "../components/AppBar";
 import Toolbar, { styles as toolbarStyles } from "../components/Toolbar";
 import { UserContext } from "../../util/UserProvider";
+import Auth from "../../util/Authentication";
 
-const styles = (theme) => ({
+const styles = theme => ({
   title: {
     fontSize: 16,
   },
@@ -45,6 +46,7 @@ const styles = (theme) => ({
 
 function AppAppBar(props) {
   const { classes } = props;
+  const user = useContext(UserContext);
 
   return (
     <div>
@@ -88,9 +90,8 @@ function AppAppBar(props) {
               variant="h6"
               underline="none"
               className={classes.rightLink}
-              href="/sign-in"
             >
-              {useContext(UserContext)?.email}
+              {user?.email}
             </Link>
             <Link
               color="inherit"
@@ -101,23 +102,37 @@ function AppAppBar(props) {
             >
               {"Profile"}
             </Link>
-            <Link
-              color="inherit"
-              variant="h6"
-              underline="none"
-              className={classes.rightLink}
-              href="/sign-in"
-            >
-              {"Login"}
-            </Link>
-            <Link
-              variant="h6"
-              underline="none"
-              className={classes.rightLink}
-              href="/sign-up"
-            >
-              {"Sign Up"}
-            </Link>
+            {!user && (
+              <>
+                <Link
+                  color="inherit"
+                  variant="h6"
+                  underline="none"
+                  className={classes.rightLink}
+                  href="/sign-in"
+                >
+                  {"Login"}
+                </Link>
+                <Link
+                  variant="h6"
+                  underline="none"
+                  className={classes.rightLink}
+                  href="/sign-up"
+                >
+                  {"Sign Up"}
+                </Link>
+              </>
+            )}
+            {user && (
+              <Link
+                variant="h6"
+                underline="none"
+                className={classes.rightLink}
+                onClick={Auth.signOut}
+              >
+                {"Sign Out"}
+              </Link>
+            )}
           </div>
         </Toolbar>
       </AppBar>
