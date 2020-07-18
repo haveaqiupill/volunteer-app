@@ -40,6 +40,12 @@ const ItemDetailsModal = ({
   };
 
   const handleOk = async () => {
+    if (user == null) {
+      // TODO: Show some prompt to ask user to sign up first before applying
+      console.log("User not logged in");
+      return;
+    }
+
     // TODO: Show some front end notification similar to that in SignUpVolunteer
     // when successfully applied for program or error?
     try {

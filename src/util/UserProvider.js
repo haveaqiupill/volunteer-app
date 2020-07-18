@@ -8,19 +8,19 @@ function UserProvider(props) {
   const [user, setUser] = React.useState(null);
 
   useEffect(() => {
-    Auth.observeAuthState(async user => {
-      if (user === null) {
-        setUser(user);
+    Auth.observeAuthState(async firebaseUser => {
+      if (firebaseUser == null) {
+        setUser(firebaseUser);
         return;
       }
 
-      const userData = await Db.getUserData(user.uid);
+      const userData = await Db.getUserData(firebaseUser.uid);
 
-      user.data = userData;
-      user.isResearcher = () => userData.userType === "researcher";
-      user.isVolunteer = () => userData.userType === "volunteer";
+      firebaseUser.data = userData;
+      firebaseUser.isResearcher = () => userData.userType === "researcher";
+      firebaseUser.isVolunteer = () => userData.userType === "volunteer";
 
-      setUser(user);
+      setUser(firebaseUser);
     });
   }, []);
 
