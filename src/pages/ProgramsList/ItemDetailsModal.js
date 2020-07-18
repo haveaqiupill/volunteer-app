@@ -1,23 +1,56 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect, useContext } from "react";
 import { Modal, Tag, Checkbox } from "antd";
 import { tagMapping } from "./ListItem";
+import Db from "../../util/Database";
+import { UserContext } from "../../util/UserProvider";
 
-const dummyData = {
-  researcher: "Mcflurry",
-  organization: "National University of Pots and Pans",
-  email: "researcher@gmail.com",
-  participants: 15,
-};
-
-const ItemDetailsModal = ({ isModalVisible, setModalVisible, item }) => {
+const ItemDetailsModal = ({
+  isModalVisible,
+  setModalVisible,
+  fetchAllPrograms,
+  item,
+}) => {
   const [isDisabled, setIsDisabled] = useState(true);
-  //TODO: Check if user has registered for the event
   const [isRegistered, setIsRegistered] = useState(false);
+  const [programsResearcher, setProgramsResearcher] = useState({
+    firstName: "the",
+    lastName: "Researcher",
+    organization: "the Researcher's Organization",
+    email: "the Researcher's email",
+  });
 
-  const handleOk = () => {
-    //TODO: +1 to "participants" property of the item
-    //TODO: Add program to "registered programs" of volunteer
-    setModalVisible(false);
+  const user = useContext(UserContext);
+
+  useEffect(() => {
+    getResearcherData();
+    checkIfUserIsRegisted();
+  }, []);
+
+  const getResearcherData = async () => {
+    try {
+      const researcherData = await Db.getUserData(item.researcherUserId);
+      setProgramsResearcher(researcherData);
+    } catch (error) {
+      console.log("Error getting researcher's data", error);
+    }
+  };
+
+  const checkIfUserIsRegisted = async () => {
+    setIsRegistered(item.volunteerUserIds?.includes(user?.uid) ?? false);
+  };
+
+  const handleOk = async () => {
+    // TODO: Show some front end notification similar to that in SignUpVolunteer
+    // when successfully applied for program or error?
+    try {
+      await Db.applyProgram(item.id, user?.uid);
+      // fetch all program data from backend again
+      // to ensure user cannot apply for the same program again
+      fetchAllPrograms();
+      setModalVisible(false);
+    } catch (error) {
+      console.log("Error while applying for program", error);
+    }
   };
 
   const handleCancel = () => {
@@ -49,7 +82,7 @@ const ItemDetailsModal = ({ isModalVisible, setModalVisible, item }) => {
           </p>
         )}
         <p>
-          {item.tags.map((tag) => {
+          {item.tags.map(tag => {
             return <Tag color={tagMapping[tag]}>{tag}</Tag>;
           })}
           <br />
@@ -68,8 +101,8 @@ const ItemDetailsModal = ({ isModalVisible, setModalVisible, item }) => {
         </p>
 
         <p>
-          {/*TODO: Add property "participants" to each item*/}
-          <b>No. of Participants: </b> {dummyData.participants} / {item.number}
+          <b>No. of Participants: </b>
+          {item.volunteerUserIds?.length ?? 0} / {item.number}
         </p>
 
         <div>
@@ -80,11 +113,12 @@ const ItemDetailsModal = ({ isModalVisible, setModalVisible, item }) => {
             will be kept confidential and be used only for the purpose of the
             research study. I understand that should I wish to withdraw my
             consent for the organising committee to contact me for the purposes
-            stated above, I could notify <b>{dummyData.researcher}</b> from{" "}
-            <b>{dummyData.organization}</b>, in writing to{" "}
-            <b>{dummyData.email}</b>. The organising committee will then remove
-            my personal information from their database, and I allow 7 business
-            days for my withdrawal of consent to take effect.
+            stated above, I could notify{" "}
+            <b>{`${programsResearcher.firstName} ${programsResearcher.lastName}`}</b>{" "}
+            from <b>{programsResearcher.organization}</b>, in writing to{" "}
+            <b>{programsResearcher.email}</b>. The organising committee will
+            then remove my personal information from their database, and I allow
+            7 business days for my withdrawal of consent to take effect.
           </Checkbox>
         </div>
       </Fragment>

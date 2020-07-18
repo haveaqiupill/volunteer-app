@@ -109,4 +109,23 @@ export default class Database {
 
     return programs;
   }
+
+  static async applyProgram(programId, volunteerUserId) {
+    const db = firebase.firestore();
+    const batch = db.batch();
+
+    const programRef = db.collection("programs").doc(programId);
+    batch.update(programRef, {
+      volunteerUserIds: firebase.firestore.FieldValue.arrayUnion(
+        volunteerUserId
+      ),
+    });
+
+    const userRef = db.collection("users").doc(volunteerUserId);
+    batch.update(userRef, {
+      registeredProgramIds: firebase.firestore.FieldValue.arrayUnion(programId),
+    });
+
+    return batch.commit();
+  }
 }
