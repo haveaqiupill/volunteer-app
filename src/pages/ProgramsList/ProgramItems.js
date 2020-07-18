@@ -36,8 +36,9 @@ const ProgramItems = ({ "*": cat }) => {
 
   // Selected programs according to the tabs "All Programs" vs "Registered Programs"
   const [items, setItems] = useState([]);
-  // TODO: Filter registered programs
-  const registeredPrograms = allPrograms ? allPrograms.slice(1, 2) : {};
+  const registeredPrograms = allPrograms?.filter(
+    program => program.volunteerUserIds?.includes(user?.uid) ?? false
+  );
   const [currentTab, setCurrentTab] = useState("1");
 
   const handleClick = key => {
