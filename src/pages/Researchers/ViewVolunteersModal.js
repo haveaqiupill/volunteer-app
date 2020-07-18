@@ -32,13 +32,13 @@ const data = [];
 const ViewVolunteersModal = ({ isModalVisible, setModalVisible, item }) => {
     
     const handleOk = () => {
-    //TODO: +1 to "participants" property of the item
-    //TODO: Add program to "registered programs" of volunteer
-    setModalVisible(false);
+        //TODO: +1 to "participants" property of the item
+        //TODO: Add program to "registered programs" of volunteer
+        setModalVisible(false);
     };
 
     const handleCancel = () => {
-    setModalVisible(false);
+        setModalVisible(false);
     };
 
     const [selectedRows, setRowKeys] = useState([]);
@@ -46,25 +46,21 @@ const ViewVolunteersModal = ({ isModalVisible, setModalVisible, item }) => {
     const finalSelect = [];
 
     const onSelectChange = (selectedRowKeys_1) => {
-    setRowKeys( selectedRowKeys_1 );
-    const finalSelect = selectedRowKeys_1;
-    console.log('selectedRows changed: ', selectedRows);
-    console.log('selectedRowKeys changed_1: ', selectedRowKeys_1);
-    console.log('selectedRowKeys changed_all: ', finalSelect);
+        setRowKeys( selectedRowKeys_1 );
+        const finalSelect = selectedRowKeys_1;
     }
 
     const rowSelection = {
-    selectedRows,
-    onChange: onSelectChange,
-    hideDefaultSelections: true,
-    selections: [{
-        key: 'all-data',
-        text: 'Select All Data',
-        onSelect: () => {
-        setRowKeys( [...Array(46).keys()], // 0...45
-        );
-        },
-    },],
+        selectedRows,
+        onChange: onSelectChange,
+        hideDefaultSelections: true,
+        selections: [{
+            key: 'all-data',
+            text: 'Select All Data',
+            onSelect: () => {
+            setRowKeys( [...Array(46).keys()], // 0...45
+            );},
+        },],
     };
 
     return (
@@ -86,8 +82,6 @@ const ViewVolunteersModal = ({ isModalVisible, setModalVisible, item }) => {
             </Fragment>
         </Modal>
         );
-
-    
 };
 
 export default ViewVolunteersModal;
