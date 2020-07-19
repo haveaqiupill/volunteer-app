@@ -10,7 +10,12 @@ const ViewVolunteersModal = ({ isModalVisible, setModalVisible, item }) => {
   }, []);
 
   const getData = async () => {
-    const volunteersData = await Db.getUsersData(item.volunteerUserIds);
+    const numOfVolunteers = item.volunteerUserIds?.length ?? 0;
+    const volunteersData = [];
+    for (var x=0;x<numOfVolunteers;x++) {
+      var tmp = await Db.getUserData(item.volunteerUserIds[x]);
+      volunteersData.push(tmp);
+    }
     setData(parseVolunteersData(volunteersData));
   };
 
