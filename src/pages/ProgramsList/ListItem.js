@@ -1,7 +1,9 @@
-import React, { Fragment } from "react";
-import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
+import React, { Fragment, useState, useContext, useEffect } from "react";
+import { MessageOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
 import Button from "../../modules/components/Button";
 import { Tag, Avatar, List, Space } from "antd";
+import Db from "../../util/Database";
+import { UserContext } from "../../util/UserProvider";
 
 export const tagMapping = {
   Psychology: "magenta",
@@ -16,24 +18,48 @@ export const tagMapping = {
 };
 
 const ListItem = ({ item, showModal }) => {
-  const IconText = ({ icon, text }) => (
-    <Space>
-      {React.createElement(icon)}
-      {text}
-    </Space>
-  );
+  const user = useContext(UserContext);
+
+  const getInitialIsLikedByUser = () =>
+    item.likedBy?.includes(user?.uid) ?? false;
+  const getInitialLikeCount = () => item.likedBy?.length ?? 0;
+
+  const [liked, setLiked] = useState(getInitialIsLikedByUser());
+  const [likeCount, setLikeCount] = useState(getInitialLikeCount());
+
+  // re-render after getting user context
+  useEffect(() => {
+    setLiked(getInitialIsLikedByUser());
+    setLikeCount(getInitialLikeCount());
+  }, [user]);
+
+  // liked and likeCount are local states so that user actions update UI immediately
+  // and does not depend on when the db is updated
+  // users who press like but are not signed in will not affect backend
+  const toggleLike = () => {
+    liked
+      ? Db.unlikeProgram(item.id, user?.uid)
+      : Db.likeProgram(item.id, user?.uid);
+
+    const newLikeCount = liked ? likeCount - 1 : likeCount + 1;
+    setLikeCount(newLikeCount);
+    setLiked(!liked);
+  };
 
   return (
     <List.Item
       key={item.id}
       actions={[
-        <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
-        <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
-        <IconText
-          icon={MessageOutlined}
-          text="2"
-          key="list-vertical-message"
-        />,
+        <div onClick={toggleLike}>
+          <Space>
+            {liked ? <StarFilled /> : <StarOutlined />}
+            {likeCount}
+          </Space>
+        </div>,
+        <Space>
+          <MessageOutlined />
+          {"0, be the first!"}
+        </Space>,
         <Fragment>
           <Button
             color="primary"
@@ -68,7 +94,7 @@ const ListItem = ({ item, showModal }) => {
           <Fragment>
             <Space>
               {item.title}
-              {item.tags.map((tag) => {
+              {item.tags.map(tag => {
                 return <Tag color={tagMapping[tag]}>{tag}</Tag>;
               })}
             </Space>
