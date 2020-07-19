@@ -10,7 +10,7 @@ const ProgramsMain = () => {
   return (
     <Fragment>
       <AppAppBar />
-      <Layout>
+      <Layout style={{ minHeight: "100vh" }}>
         <Router>
           <ProgramsItems path="/*" />
           <ProgramPostForm path="create" />

@@ -5,8 +5,9 @@ import React, {
   useContext,
   useCallback,
 } from "react";
-import { Space, Input, Layout, List, Tabs, PageHeader } from "antd";
+import { Space, Input, Layout, List, Tabs, PageHeader, Row, Col } from "antd";
 import { useNavigate } from "@reach/router";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import ItemDetailsModal from "./ItemDetailsModal";
 import ListItem from "./ListItem";
@@ -152,19 +153,33 @@ const ProgramItems = ({ "*": cat }) => {
               margin: 0,
             }}
           >
-            <List
-              itemLayout="vertical"
-              size="large"
-              pagination={{
-                pageSize: 7,
-              }}
-              dataSource={
-                isSearched ? searchedItems : isFiltered ? filteredItems : items
-              }
-              renderItem={item => (
-                <ListItem item={item} showModal={showModal} />
-              )}
-            />
+            {!allPrograms ? (
+              <Col>
+                <Row align="middle" style={{ minHeight: "100vh" }}>
+                  <Col span={8} offset={10}>
+                    <CircularProgress size="9rem" thickness="3" />
+                  </Col>
+                </Row>
+              </Col>
+            ) : (
+              <List
+                itemLayout="vertical"
+                size="large"
+                pagination={{
+                  pageSize: 7,
+                }}
+                dataSource={
+                  isSearched
+                    ? searchedItems
+                    : isFiltered
+                    ? filteredItems
+                    : items
+                }
+                renderItem={item => (
+                  <ListItem item={item} showModal={showModal} />
+                )}
+              />
+            )}
             {isModalVisible && (
               <ItemDetailsModal
                 isModalVisible={isModalVisible}
