@@ -1,4 +1,10 @@
-import React, { Fragment, useState, useEffect, useContext } from "react";
+import React, {
+  Fragment,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+} from "react";
 import { Space, Input, Layout, List, Tabs, PageHeader } from "antd";
 import { useNavigate } from "@reach/router";
 
@@ -42,6 +48,7 @@ const ProgramItems = ({ "*": cat }) => {
   const [currentTab, setCurrentTab] = useState("1");
 
   const handleClick = key => {
+    resetSearchBar();
     setCurrentTab(key);
     if (key === "1") {
       setItems(allPrograms);
@@ -50,9 +57,18 @@ const ProgramItems = ({ "*": cat }) => {
     }
   };
 
+  const resetSearchBar = useCallback(() => {
+    setIsSearched(false);
+    setSearchValue("");
+  }, []);
+
   // Filtered programs according to the categories in the sidebar
-  const [filteredItems, setFilteredItems] = useState();
+  const [filteredItems, setFilteredItems] = useState([]);
   const [isFiltered, setIsFiltered] = useState(!!cat);
+
+  const [searchValue, setSearchValue] = useState("");
+  const [isSearched, setIsSearched] = useState(false);
+  const [searchedItems, setSearchedItems] = useState([]);
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [modalItem, setModalItem] = useState();
@@ -69,6 +85,7 @@ const ProgramItems = ({ "*": cat }) => {
           isFiltered={isFiltered}
           setIsFiltered={setIsFiltered}
           setFilteredItems={setFilteredItems}
+          reset={resetSearchBar}
           cat={
             cat === "arts & heritage"
               ? "Arts & Heritage"
@@ -104,8 +121,28 @@ const ProgramItems = ({ "*": cat }) => {
           }
         >
           <Search
+            size="large"
             placeholder="input search text"
-            onSearch={value => console.log(value)}
+            value={searchValue}
+            onChange={e => setSearchValue(e.target.value)}
+            onSearch={_ => {
+              setIsSearched(true);
+              isFiltered
+                ? setSearchedItems(
+                    filteredItems.filter(item =>
+                      item.title
+                        .toLowerCase()
+                        .includes(searchValue.toLowerCase())
+                    )
+                  )
+                : setSearchedItems(
+                    allPrograms.filter(item =>
+                      item.title
+                        .toLowerCase()
+                        .includes(searchValue.toLowerCase())
+                    )
+                  );
+            }}
             style={{ width: 700 }}
           />
           <Content
@@ -121,7 +158,9 @@ const ProgramItems = ({ "*": cat }) => {
               pagination={{
                 pageSize: 7,
               }}
-              dataSource={isFiltered ? filteredItems : items}
+              dataSource={
+                isSearched ? searchedItems : isFiltered ? filteredItems : items
+              }
               renderItem={item => (
                 <ListItem item={item} showModal={showModal} />
               )}

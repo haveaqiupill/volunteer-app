@@ -4,7 +4,7 @@ import { Divider, Layout, Menu, Space } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import { navigate } from "@reach/router";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   title: {
     marginLeft: theme.spacing(3),
     marginTop: theme.spacing(2),
@@ -29,6 +29,7 @@ const ProgramsItemsSider = ({
   isFiltered,
   setIsFiltered,
   setFilteredItems,
+  reset,
   cat,
 }) => {
   const { SubMenu } = Menu;
@@ -38,15 +39,16 @@ const ProgramsItemsSider = ({
 
   const [tag, setTag] = useState(cat ? cat : "");
   const filterItems = useCallback(() => {
+    reset();
     if (tag === "All Programs") {
       setFilteredItems(items);
       setIsFiltered(false);
     } else {
-      const filteredItems = items.filter((item) => item.tags.includes(tag));
+      const filteredItems = items.filter(item => item.tags.includes(tag));
       setFilteredItems(filteredItems);
       setIsFiltered(true);
     }
-  }, [items, setIsFiltered, setFilteredItems, tag]);
+  }, [items, setIsFiltered, setFilteredItems, tag, reset]);
 
   useEffect(() => {
     if (isFiltered) {
@@ -78,7 +80,7 @@ const ProgramsItemsSider = ({
           }
         }}
         defaultSelectedKeys={
-          cat ? [joinedMenuItems.findIndex((e) => e === cat).toString()] : ["0"]
+          cat ? [joinedMenuItems.findIndex(e => e === cat).toString()] : ["0"]
         }
       >
         <Space className={classes.title}>
