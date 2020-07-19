@@ -1,8 +1,7 @@
-import React, { Fragment, useState, useEffect, useContext } from "react";
+import React, { Fragment, useState } from "react";
 import { Layout, List, PageHeader } from "antd";
 import ResearcherItem from "./ResearcherItem";
-import Db from "../../util/Database";
-import { UserContext } from "../../util/UserProvider";
+import ViewVolunteersModal from "./ViewVolunteersModal";
 
 // The data below is for testing and will be deleted once the API is up
 const dummyData = [];
@@ -50,39 +49,47 @@ for (let i = 0; i < 3; i++) {
 // The data above is for testing and will be deleted once the API is up
 
 const ResearcherPostings = () => {
-  const user = useContext(UserContext);
+    const [isModalVisible, setModalVisible] = useState(false);
+    const [modalItem, setModalItem] = useState();
+    const showModal = (item) => {
+      setModalItem(item);
+      setModalVisible(true);
+    };
 
-  const [postings, setPostings] = useState();
-
-  useEffect(() => {
-    (async () => {
-      const programs = await Db.getResearchersPrograms(user?.uid);
-      setPostings(programs);
-    })();
-  }, []);
-
-  return (
-    <Fragment>
-      <Layout style={{ marginLeft: 200 }}>
-        <Content
-          style={{
-            padding: 24,
-            margin: 0,
-          }}
-        />
-        <PageHeader title="Your postings" />
-        <List
-          itemLayout="vertical"
-          size="large"
-          pagination={{
-            pageSize: 7,
-          }}
-          dataSource={postings}
-          renderItem={item => <ResearcherItem item={item} />}
-        />
-      </Layout>
-    </Fragment>
-  );
-};
-
+    return (
+        <Fragment>
+            <Layout style={{ marginLeft: 200 }}>
+                <Content
+                    style={{
+                    padding: 24,
+                    margin: 0,
+                    }}
+                />
+                <PageHeader
+                    title="Your postings"
+                />
+                <List
+                    itemLayout="vertical"
+                    size="large"
+                    pagination={{
+                        pageSize: 7,
+                    }}
+                    dataSource={dummyData}
+                    renderItem={(item) => (
+                        <ResearcherItem item={item} showModal={showModal} />
+                    )}
+                />
+                {isModalVisible && (
+                <ViewVolunteersModal
+                  isModalVisible={isModalVisible}
+                  setModalVisible={setModalVisible}
+                  item={modalItem}
+                />
+            )}
+            </Layout>
+        </Fragment>
+    );
+}
 export default ResearcherPostings;
+
+
