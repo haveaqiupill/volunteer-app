@@ -48,8 +48,8 @@ const ResearcherItem = ({ item, showModal }) => {
             variant="contained"
             size="small"
             component="a"
-            // onClick={() => showModal(item)}
-            onClick={printVolunteersData}
+            onClick={() => showModal(item)}
+            // onClick={printVolunteersData}
           >
             View volunteers
           </Button>
@@ -78,7 +78,11 @@ const ResearcherItem = ({ item, showModal }) => {
             <Space>
               {item.title}
               {item.tags.map(tag => {
-                return <Tag color={tagMapping[tag]}>{tag}</Tag>;
+                return (
+                  <Tag key={tag} color={tagMapping[tag]}>
+                    {tag}
+                  </Tag>
+                );
               })}
             </Space>
           </Fragment>
