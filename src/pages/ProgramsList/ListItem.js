@@ -50,7 +50,6 @@ const ListItem = ({ item, showModal }) => {
         <img
           height={200}
           alt="logo"
-          //TODO: Render image based on organization of researcher who posted the program
           src={require(item.details.venue === "NUS"
             ? "../../images/nus_logo.png"
             : item.details.venue === "NTU"
@@ -62,13 +61,22 @@ const ListItem = ({ item, showModal }) => {
       }
     >
       <List.Item.Meta
-        //TODO: Render avatar based on type of program
-        avatar={<Avatar src={item.avatar} />}
+        avatar={
+          <Avatar
+            src={
+              item.type === "Activity"
+                ? "https://image.flaticon.com/icons/svg/3057/3057223.svg"
+                : item.type === "Survey"
+                ? "https://image.flaticon.com/icons/svg/1632/1632670.svg"
+                : "https://image.flaticon.com/icons/svg/3203/3203867.svg"
+            }
+          />
+        }
         title={
           <Fragment>
             <Space>
               {item.title}
-              {item.tags.map((tag) => {
+              {item.tags.map(tag => {
                 return <Tag color={tagMapping[tag]}>{tag}</Tag>;
               })}
             </Space>
