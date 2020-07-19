@@ -3,7 +3,7 @@ import { Divider, Layout, Menu, Space } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
 import { useNavigate } from "@reach/router";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   title: {
     marginLeft: theme.spacing(3),
     marginTop: theme.spacing(2),
@@ -14,13 +14,11 @@ const ResearcherSider = () => {
   const { Sider } = Layout;
 
   const navigate = useNavigate();
-  
-  const handleTag = (key) => {
-    if (key === "0"){
+
+  const handleTag = key => {
+    if (key === "0") {
       navigate(`/researcher`);
-    }
-    else {
-      //TODO: List down postings by the same researcher
+    } else {
       navigate(`/researcher/postings`);
     }
   };
@@ -42,7 +40,7 @@ const ResearcherSider = () => {
         defaultOpenKeys={["sub1"]}
         style={{ height: "100%", borderRight: 0 }}
         onSelect={({ key }) => {
-          handleTag(key)
+          handleTag(key);
         }}
         defaultSelectedKeys={["0"]}
       >

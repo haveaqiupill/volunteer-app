@@ -19,18 +19,26 @@ const ProgramItems = ({ "*": cat }) => {
   const user = useContext(UserContext);
 
   const [allPrograms, setAllPrograms] = useState();
+
   useEffect(() => {
-    (async () => {
+    fetchAllPrograms();
+  }, []);
+
+  const fetchAllPrograms = async () => {
+    try {
       const programs = await Db.getAllPrograms();
       setAllPrograms(programs);
       setItems(programs);
-    })();
-  }, []);
+    } catch (error) {
+      console.log("Error fetching all programs", error);
+    }
+  };
 
   // Selected programs according to the tabs "All Programs" vs "Registered Programs"
   const [items, setItems] = useState([]);
-  // TODO: Filter registered programs
-  const registeredPrograms = allPrograms ? allPrograms.slice(1, 2) : {};
+  const registeredPrograms = allPrograms?.filter(
+    program => program.volunteerUserIds?.includes(user?.uid) ?? false
+  );
   const [currentTab, setCurrentTab] = useState("1");
 
   const handleClick = key => {
@@ -122,6 +130,7 @@ const ProgramItems = ({ "*": cat }) => {
               <ItemDetailsModal
                 isModalVisible={isModalVisible}
                 setModalVisible={setModalVisible}
+                fetchAllPrograms={fetchAllPrograms}
                 item={modalItem}
               />
             )}

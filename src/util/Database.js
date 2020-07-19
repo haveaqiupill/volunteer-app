@@ -28,6 +28,7 @@ export default class Database {
       .update(additionalData);
   }
 
+  // returns an object containing user's data
   static async getUserData(userId) {
     const doc = await firebase
       .firestore()
@@ -36,6 +37,23 @@ export default class Database {
       .get();
 
     return doc.data();
+  }
+
+  // userIds: array of userIds
+  // returns an object where key is userId and value is userData
+  static async getUsersData(userIds) {
+    const querySnapshot = await firebase
+      .firestore()
+      .collection("users")
+      .where(firebase.firestore.FieldPath.documentId(), "in", userIds)
+      .get();
+
+    const usersData = {};
+    querySnapshot.docs.forEach(doc => {
+      usersData[doc.id] = doc.data();
+    });
+
+    return usersData;
   }
 
   static addProgram(researcherUserId, programData, programTags) {
@@ -81,6 +99,7 @@ export default class Database {
       });
   }
 
+  // returns an array of all programs
   static async getAllPrograms() {
     const querySnapshot = await firebase
       .firestore()
@@ -93,6 +112,7 @@ export default class Database {
     return programs;
   }
 
+  // returns an array of researcher's programs
   static async getResearchersPrograms(researcherUserId) {
     if (researcherUserId == null) {
       return;
@@ -108,5 +128,24 @@ export default class Database {
     });
 
     return programs;
+  }
+
+  static async applyProgram(programId, volunteerUserId) {
+    const db = firebase.firestore();
+    const batch = db.batch();
+
+    const programRef = db.collection("programs").doc(programId);
+    batch.update(programRef, {
+      volunteerUserIds: firebase.firestore.FieldValue.arrayUnion(
+        volunteerUserId
+      ),
+    });
+
+    const userRef = db.collection("users").doc(volunteerUserId);
+    batch.update(userRef, {
+      registeredProgramIds: firebase.firestore.FieldValue.arrayUnion(programId),
+    });
+
+    return batch.commit();
   }
 }
