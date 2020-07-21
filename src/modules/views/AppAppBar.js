@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, Fragment } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
@@ -93,15 +93,17 @@ function AppAppBar(props) {
             >
               {user?.email}
             </Link>
-            <Link
-              color="inherit"
-              variant="h6"
-              underline="none"
-              className={classes.rightLink}
-              href="/researcher"
-            >
-              {"Profile"}
-            </Link>
+            {user && user?.researcher && (
+              <Link
+                color="inherit"
+                variant="h6"
+                underline="none"
+                className={classes.rightLink}
+                href="/researcher"
+              >
+                {"Profile"}
+              </Link>
+            )}
             {!user && (
               <>
                 <Link
