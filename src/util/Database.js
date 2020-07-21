@@ -152,4 +152,38 @@ export default class Database {
 
     return batch.commit();
   }
+
+  static async programLikesActionHelper(isLike, programId, userId) {
+    if (userId == null) {
+      return;
+    }
+
+    const db = firebase.firestore();
+    const batch = db.batch();
+
+    const programRef = db.collection("programs").doc(programId);
+
+    batch.update(programRef, {
+      likedBy: isLike
+        ? firebase.firestore.FieldValue.arrayUnion(userId)
+        : firebase.firestore.FieldValue.arrayRemove(userId),
+    });
+
+    const userRef = db.collection("users").doc(userId);
+    batch.update(userRef, {
+      likedProgramIds: isLike
+        ? firebase.firestore.FieldValue.arrayUnion(programId)
+        : firebase.firestore.FieldValue.arrayRemove(programId),
+    });
+
+    return batch.commit();
+  }
+
+  static async likeProgram(programId, userId) {
+    return this.programLikesActionHelper(true, programId, userId);
+  }
+
+  static async unlikeProgram(programId, userId) {
+    return this.programLikesActionHelper(false, programId, userId);
+  }
 }
