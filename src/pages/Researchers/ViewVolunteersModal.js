@@ -1,89 +1,102 @@
-import React, { Fragment, useState } from "react";
-import { Modal, Table} from "antd";
-
-const dummyData = {
-  researcher: "Mcflurry",
-  organization: "National University of Pots and Pans",
-  email: "researcher@gmail.com",
-  participants: 15,
-};
-
-const columns = [{
-    title: 'Name',
-    dataIndex: 'name',
-  }, {
-    title: 'Age',
-    dataIndex: 'age',
-  }, {
-    title: 'Faculty',
-    dataIndex: 'faculty',
-  }];
-  
-const data = [];
-  for (let i = 0; i < 45; i++) {
-    data.push({
-      key: i,
-      name: `John ${i}`,
-      age: 18,
-      faculty: `Psychology`,
-    });
-}
+import React, { Fragment, useState, useEffect } from "react";
+import { Modal, Table } from "antd";
+import Db from "../../util/Database";
 
 const ViewVolunteersModal = ({ isModalVisible, setModalVisible, item }) => {
-    
-    const handleOk = () => {
-        //TODO: +1 to "participants" property of the item
-        //TODO: Add program to "registered programs" of volunteer
-        setModalVisible(false);
-    };
+  const [data, setData] = useState(null);
 
-    const handleCancel = () => {
-        setModalVisible(false);
-    };
+  useEffect(() => {
+    getData();
+  }, []);
 
-    const [selectedRows, setRowKeys] = useState([]);
-
-    const finalSelect = [];
-
-    const onSelectChange = (selectedRowKeys_1) => {
-        setRowKeys( selectedRowKeys_1 );
-        const finalSelect = selectedRowKeys_1;
+  const getData = async () => {
+    const numOfVolunteers = item.volunteerUserIds?.length ?? 0;
+    const volunteersData = [];
+    for (var x=0;x<numOfVolunteers;x++) {
+      var tmp = await Db.getUserData(item.volunteerUserIds[x]);
+      volunteersData.push(tmp);
     }
+    setData(parseVolunteersData(volunteersData));
+  };
 
-    const rowSelection = {
-        selectedRows,
-        onChange: onSelectChange,
-        hideDefaultSelections: true,
-        selections: [{
-            key: 'all-data',
-            text: 'Select All Data',
-            onSelect: () => {
-            setRowKeys( [...Array(46).keys()], // 0...45
-            );},
-        },],
-    };
+  const parseVolunteersData = data => {
+    return Object.entries(data).map(([uid, data]) => {
+      return { uid, name: `${data.firstName} ${data.lastName}`, ...data };
+    });
+  };
 
-    return (
-        <Modal
-            width="600"
-            visible={isModalVisible}
-            onOk={handleOk}
-            onCancel={handleCancel}
-            okText="Add selected volunteers"
-            cancelText="Back"
-        >
-            <Fragment>
-            <h1>{item.title}</h1>
-            <p>
-                {/*TODO: Add property "participants" to each item*/}
-                <b>No. of Participants: </b> {dummyData.participants} / {item.number}
-            </p>
-            <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
-            </Fragment>
-        </Modal>
-        );
+  const handleOk = () => {
+    // TODO: do something about selected volunteers
+    console.log("Selected volunteers: ", selectedRows);
+    setModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setModalVisible(false);
+  };
+
+  const [selectedRows, setSelectedRows] = useState([]);
+
+  const onSelectChange = (selectedRowKeys, selectedRows) => {
+    setSelectedRows(selectedRows);
+  };
+
+  const rowSelection = {
+    onChange: onSelectChange,
+  };
+
+  const tableColumns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+    },
+    {
+      title: "Age",
+      dataIndex: "age",
+    },
+    {
+      title: "Organization",
+      dataIndex: "organization",
+    },
+    {
+      title: "Faculty",
+      dataIndex: "faculty",
+    },
+    {
+      title: "Nationality",
+      dataIndex: "nationality",
+    },
+  ];
+
+  return (
+    <Modal
+      width="600"
+      visible={isModalVisible}
+      onOk={handleOk}
+      onCancel={handleCancel}
+      okText="Add selected volunteers"
+      cancelText="Back"
+    >
+      <Fragment>
+        <h1>{item.title}</h1>
+        <p>
+          <b>No. of Participants: </b> {item.volunteerUserIds?.length ?? 0} /{" "}
+          {item.number}
+        </p>
+        <Table
+          rowSelection={rowSelection}
+          columns={tableColumns}
+          rowKey={rowData => rowData.uid}
+          dataSource={data}
+          loading={data == null}
+        />
+      </Fragment>
+    </Modal>
+  );
 };
 
 export default ViewVolunteersModal;
-
-

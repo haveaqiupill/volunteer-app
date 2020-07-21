@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
 import Button from "../../modules/components/Button";
 import { Tag, Avatar, List, Space } from "antd";
-import Db from "../../util/Database";
 
 export const tagMapping = {
   Psychology: "magenta",
@@ -24,13 +23,6 @@ const ResearcherItem = ({ item, showModal }) => {
     </Space>
   );
 
-  // TODO: Remove this and show the stuff in modal
-  const printVolunteersData = async () => {
-    const volunteersData = await Db.getUsersData(item.volunteerUserIds);
-    console.log(volunteersData);
-    window.alert(JSON.stringify(volunteersData));
-  };
-
   return (
     <List.Item
       key={item.id}
@@ -48,8 +40,7 @@ const ResearcherItem = ({ item, showModal }) => {
             variant="contained"
             size="small"
             component="a"
-            // onClick={() => showModal(item)}
-            onClick={printVolunteersData}
+            onClick={() => showModal(item)}
           >
             View volunteers
           </Button>
@@ -78,7 +69,11 @@ const ResearcherItem = ({ item, showModal }) => {
             <Space>
               {item.title}
               {item.tags.map(tag => {
-                return <Tag color={tagMapping[tag]}>{tag}</Tag>;
+                return (
+                  <Tag key={tag} color={tagMapping[tag]}>
+                    {tag}
+                  </Tag>
+                );
               })}
             </Space>
           </Fragment>

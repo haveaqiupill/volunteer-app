@@ -42,6 +42,10 @@ export default class Database {
   // userIds: array of userIds
   // returns an object where key is userId and value is userData
   static async getUsersData(userIds) {
+    if (userIds == null) {
+      return {};
+    }
+
     const querySnapshot = await firebase
       .firestore()
       .collection("users")
