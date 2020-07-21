@@ -1,11 +1,11 @@
 import React, { Fragment, useState, useContext } from "react";
-import { useNavigate } from "@reach/router";
+import { useNavigate, globalHistory } from "@reach/router";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { Field, Form, FormSpy } from "react-final-form";
 import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
-import { notification } from "antd";
+import { notification, DatePicker } from "antd";
 import { required } from "../../modules/form/validation";
 import { categories, locations } from "../ProgramsList/ProgramItemsSider";
 import AppForm from "../../modules/views/AppForm";
@@ -30,6 +30,14 @@ const useStyles = makeStyles(theme => ({
   },
   feedback: {
     marginTop: theme.spacing(2),
+  },
+  dateText: {
+    color:'#787878',
+  },
+  date: {
+    height: 53,
+    width: 220,
+    marginTop: theme.spacing(0.5),
   },
 }));
 
@@ -68,6 +76,10 @@ const ProgramPostForm = () => {
         ? event.target.checked
         : event.target.value
     );
+  };
+
+  const onChange = (date, dateString) => {
+    console.log(date, dateString);
   };
 
   const handleSubmit = async values => {
@@ -118,13 +130,13 @@ const ProgramPostForm = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Field
-                    autoFocus
-                    component={RFTextField}
-                    fullWidth
-                    disabled={submitting || sent}
-                    label="Date"
-                    name="date"
+                  <Typography variant="h7" className={classes.dateText}>
+                    Date *
+                  </Typography>
+                  <DatePicker 
+                    onChange={onChange} 
+                    size="large"
+                    className={classes.date}
                     required
                   />
                 </Grid>
