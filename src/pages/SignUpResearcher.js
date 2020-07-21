@@ -56,7 +56,7 @@ function SignUpResearcher() {
       setSent(true);
       notification.open({
         message: "Success!",
-        description: "Details Updated",
+        description: "Account created.",
       });
       navigate("/");
     } catch (error) {
