@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Link from "@material-ui/core/Link";
 import Container from "@material-ui/core/Container";
 import Typography from "../components/Typography";
 
@@ -14,7 +13,7 @@ function Copyright() {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
     backgroundColor: theme.palette.secondary.light,
@@ -76,20 +75,6 @@ export default function AppFooter() {
                 <Copyright />
               </Grid>
             </Grid>
-          </Grid>
-
-          <Grid item xs={6} sm={4} md={2}>
-            <Typography variant="h6" marked="left" gutterBottom>
-              Legal
-            </Typography>
-            <ul className={classes.list}>
-              <li className={classes.listItem}>
-                <Link href="/terms">Terms</Link>
-              </li>
-              <li className={classes.listItem}>
-                <Link href="/privacy">Privacy</Link>
-              </li>
-            </ul>
           </Grid>
         </Grid>
       </Container>

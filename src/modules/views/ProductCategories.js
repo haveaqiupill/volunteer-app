@@ -6,7 +6,7 @@ import Container from "@material-ui/core/Container";
 import Typography from "../components/Typography";
 import { navigate } from "@reach/router";
 
-const styles = (theme) => ({
+const styles = theme => ({
   root: {
     marginTop: theme.spacing(8),
     marginBottom: theme.spacing(4),
@@ -147,10 +147,10 @@ function ProductCategories(props) {
   return (
     <Container className={classes.root} component="section">
       <Typography variant="h4" marked="center" align="center" component="h2">
-        Surveys for Everyone
+        Programs for Everyone
       </Typography>
       <div className={classes.images}>
-        {images.map((image) => (
+        {images.map(image => (
           <ButtonBase
             key={image.title}
             className={classes.imageWrapper}

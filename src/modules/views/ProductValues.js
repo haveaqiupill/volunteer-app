@@ -8,7 +8,7 @@ import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined"
 import AssignmentOutlinedIcon from "@material-ui/icons/AssignmentOutlined";
 import MonetizationOnOutlinedIcon from "@material-ui/icons/MonetizationOnOutlined";
 
-const styles = (theme) => ({
+const styles = theme => ({
   root: {
     display: "flex",
     overflow: "hidden",
@@ -64,7 +64,7 @@ function ProductValues(props) {
               </Typography>
               <Typography variant="h5">
                 {
-                  "Join Singapore's very own centralised survey platform. It's fast, easy and 100% free!"
+                  "Join Singapore's very own centralised researcher-volunteer platform!"
                 }
               </Typography>
             </div>
@@ -73,10 +73,12 @@ function ProductValues(props) {
             <div className={classes.item}>
               <AssignmentOutlinedIcon className={classes.largeIcon} />
               <Typography variant="h6" className={classes.title}>
-                Complete Surveys Online
+                Complete Programs
               </Typography>
               <Typography variant="h5">
-                {"Receive surveys by email and complete them online."}
+                {
+                  "Receive surveys by email and complete them online or take part in low commitment activities offline."
+                }
               </Typography>
             </div>
           </Grid>
@@ -87,7 +89,7 @@ function ProductValues(props) {
                 Get Rewarded!
               </Typography>
               <Typography variant="h5">
-                {"Earn cold hard cash for each survey you complete."}
+                {"Earn cold hard cash for each program you complete."}
               </Typography>
             </div>
           </Grid>
