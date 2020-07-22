@@ -1,88 +1,77 @@
 import React, { Fragment, useEffect, useState, useContext } from "react";
-import { Layout, List, PageHeader, Divider} from "antd";
+import { Layout, List, PageHeader, Divider, Col, Row } from "antd";
 import { UserContext } from "../../util/UserProvider";
+import CircularProgress from "@material-ui/core/CircularProgress";
 const { Content } = Layout;
 
 const personal = [
-    'Name: ',
-    'Organization: ',
-    'Research Area: ',
-    'Short Introduction: '
+  ["Name: ", "firstName"],
+  ["Organization: ", "organization"],
+  ["Research Area: ", "researchArea"],
+  ["Short Introduction: ", "shortIntroduction"],
 ];
 
-const security = [
-    'Email Address: ',
-    'Password: '
-]
+const security = ["Email Address: ", "Password: "];
+
 const ResearcherProfile = () => {
-    const user = useContext(UserContext);
-    const [userData, setUserData] = useState(user?.data);
+  const user = useContext(UserContext);
+  const [data, setData] = useState({});
+  console.log(data);
 
-    useEffect(() => {
-        getUserData();
-    }, [user]);
+  useEffect(() => {
+    setData(user ? user.data : {});
+  }, [user]);
 
-    const getUserData = async () => {
-        try {
-            const tmp = await user?.data;
-            setUserData(tmp);
-        } catch (error) {
-            console.log("Error getting researcher's data", error);
-        }
-    };
-
-    const holdDetails = [
-        userData?.firstName,
-        userData?.organization,
-        userData?.researchArea,
-        userData?.shortIntroduction
-    ];
-
-
-    console.log(holdDetails);
-
-    return (
-        <Fragment>
-            <Layout style={{ marginLeft: 200 }}>
-                <Content
-                    style={{
-                    padding: 24,
-                    margin: 0,
-                    }}
-                />
-                <PageHeader
-                    title="Personal Details"
-                />
-            </Layout>
-            <Layout style={{ marginLeft: 110 }}>
-                <Divider orientation="left">
-                    <List
-                    size="large"
-                    //TODO: Feed appropriate data into holdDetails and renderItem for the information of the user to be displayed on the profile page.
-                    dataSource={holdDetails}
-                    renderItem={item => <List.Item>{item}</List.Item>}
-                    />
-                </Divider>
-            </Layout>
-                <div>
-                    Information:
-                <b>{console.log(user?.email)}</b>
-                </div>
-            <Layout style={{ marginLeft: 200 }}>
-                <PageHeader
-                    title="Security settings"
-                />
-            </Layout>
-            <Layout style={{ marginLeft: 110 }}>
-                <Divider orientation="left">
-                    <List
-                    size="large"
-                    dataSource={security}
-                    renderItem={item => <List.Item>{item}</List.Item>}
-                    />
-                </Divider>
-            </Layout>
-        </Fragment>
-    );
-}
+  return (
+    <Fragment>
+      <Layout style={{ marginLeft: 200 }}>
+        <Content style={{ padding: 24 }} />
+        <PageHeader title="Personal Details" />
+      </Layout>
+      <Layout style={{ marginLeft: 200 }}>
+        <Content style={{ padding: 24 }}>
+          {!data ? (
+            <Col>
+              <Row align="middle" style={{ minHeight: "100vh" }}>
+                <Col span={8} offset={10}>
+                  <CircularProgress size="9rem" thickness="3" />
+                </Col>
+              </Row>
+            </Col>
+          ) : (
+            <div>
+              {personal.map(title => {
+                return (
+                  <Fragment>
+                    <h3>
+                      <b>{title[0]}</b>
+                      {data[title[1]]}
+                    </h3>
+                    <br />
+                  </Fragment>
+                );
+              })}
+            </div>
+          )}
+        </Content>
+      </Layout>
+      <div>
+        Information:
+        <b>{console.log(data?.email)}</b>
+      </div>
+      <Layout style={{ marginLeft: 200 }}>
+        <PageHeader title="Security settings" />
+      </Layout>
+      <Layout style={{ marginLeft: 110 }}>
+        <Divider orientation="left">
+          {/*<List*/}
+          {/*  size="large"*/}
+          {/*  dataSource={security}*/}
+          {/*  renderItem={item => <List.Item>{item}</List.Item>}*/}
+          {/*/>*/}
+        </Divider>
+      </Layout>
+    </Fragment>
+  );
+};
 export default ResearcherProfile;
