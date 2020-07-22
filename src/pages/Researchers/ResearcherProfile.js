@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState, useContext } from "react";
-import { Layout, List, PageHeader, Divider, Col, Row } from "antd";
+import { Layout, PageHeader, Col, Row } from "antd";
 import { UserContext } from "../../util/UserProvider";
 import CircularProgress from "@material-ui/core/CircularProgress";
 const { Content } = Layout;
@@ -11,12 +11,9 @@ const personal = [
   ["Short Introduction: ", "shortIntroduction"],
 ];
 
-const security = ["Email Address: ", "Password: "];
-
 const ResearcherProfile = () => {
   const user = useContext(UserContext);
   const [data, setData] = useState(undefined);
-  console.log(data);
 
   useEffect(() => {
     setData(user ? user.data : undefined);
@@ -54,22 +51,6 @@ const ResearcherProfile = () => {
             </div>
           )}
         </Content>
-      </Layout>
-      <div>
-        Information:
-        <b>{console.log(data?.email)}</b>
-      </div>
-      <Layout style={{ marginLeft: 200 }}>
-        <PageHeader title="Security settings" />
-      </Layout>
-      <Layout style={{ marginLeft: 110 }}>
-        <Divider orientation="left">
-          {/*<List*/}
-          {/*  size="large"*/}
-          {/*  dataSource={security}*/}
-          {/*  renderItem={item => <List.Item>{item}</List.Item>}*/}
-          {/*/>*/}
-        </Divider>
       </Layout>
     </Fragment>
   );
