@@ -15,11 +15,11 @@ const security = ["Email Address: ", "Password: "];
 
 const ResearcherProfile = () => {
   const user = useContext(UserContext);
-  const [data, setData] = useState({});
+  const [data, setData] = useState(undefined);
   console.log(data);
 
   useEffect(() => {
-    setData(user ? user.data : {});
+    setData(user ? user.data : undefined);
   }, [user]);
 
   return (
