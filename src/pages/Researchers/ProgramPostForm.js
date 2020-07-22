@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Field, Form, FormSpy } from "react-final-form";
 import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
-import { notification, DatePicker } from "antd";
+import { notification } from "antd";
 import { required } from "../../modules/form/validation";
 import { categories, locations } from "../ProgramsList/ProgramItemsSider";
 import AppForm from "../../modules/views/AppForm";
@@ -16,6 +16,10 @@ import FormButton from "../../modules/form/FormButton";
 import AppFooter from "../../modules/views/AppFooter";
 import Db from "../../util/Database";
 import { UserContext } from "../../util/UserProvider";
+import 'date-fns';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import { DatePicker } from 'mui-rff';
 
 const allTags = [...categories, ...locations];
 const programType = ["Survey", "Activity", "Others"];
@@ -35,9 +39,7 @@ const useStyles = makeStyles(theme => ({
     color:'#787878',
   },
   date: {
-    height: 53,
-    width: 220,
-    marginTop: theme.spacing(0.5),
+    marginTop: theme.spacing(3),
   },
 }));
 
@@ -76,10 +78,6 @@ const ProgramPostForm = () => {
         ? event.target.checked
         : event.target.value
     );
-  };
-
-  const onChange = (date, dateString) => {
-    console.log(date, dateString);
   };
 
   const handleSubmit = async values => {
@@ -133,12 +131,15 @@ const ProgramPostForm = () => {
                   <Typography variant="h7" className={classes.dateText}>
                     Date *
                   </Typography>
-                  <DatePicker 
-                    onChange={onChange} 
-                    size="large"
-                    className={classes.date}
-                    required
-                  />
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <DatePicker 
+                      className={classes.date} 
+                      name="date" 
+                      required={true} 
+                      dateFunsUtils={DateFnsUtils} 
+                      format="dd/MM/yyyy"
+                    />
+                  </MuiPickersUtilsProvider>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Field
