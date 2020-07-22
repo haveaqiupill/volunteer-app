@@ -53,7 +53,7 @@ function SignUpVolunteer() {
       setSent(true);
       notification.open({
         message: "Success!",
-        despcription: "Details Updated.",
+        description: "Account created.",
       });
       navigate("/");
     } catch (error) {

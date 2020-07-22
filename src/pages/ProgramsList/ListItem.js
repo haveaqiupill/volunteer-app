@@ -110,15 +110,19 @@ const ListItem = ({ item, showModal }) => {
         }
         description={item.description}
       />
-      {Object.entries(item.details).map(([key, value]) => {
-        key = key.charAt(0).toUpperCase() + key.slice(1);
-        return (
-          <Fragment>
-            <b>{key}:</b> {value}
-            <br />
-          </Fragment>
-        );
-      })}
+      {Object.entries(item.details)
+        .sort((a, b) => {
+          return a[0].localeCompare(b[0]);
+        })
+        .map(([key, value]) => {
+          key = key.charAt(0).toUpperCase() + key.slice(1);
+          return (
+            <Fragment>
+              <b>{key}:</b> {value}
+              <br />
+            </Fragment>
+          );
+        })}
     </List.Item>
   );
 };
