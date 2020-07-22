@@ -11,8 +11,8 @@ const ResearcherMain = () => {
   return (
     <Fragment>
       <AppAppBar />
-      <ResearcherSider/>
-      <Layout>
+      <ResearcherSider />
+      <Layout style={{ minHeight: "100vh" }}>
         <Router>
           <ResearcherProfile path="/" />
           <ResearcherPostings path="postings" />
