@@ -116,6 +116,10 @@ const ListItem = ({ item, showModal }) => {
         })
         .map(([key, value]) => {
           key = key.charAt(0).toUpperCase() + key.slice(1);
+          if (typeof value === "object"){
+            var options = {  year: 'numeric', month: 'long', day: 'numeric' };
+            value = value.toDate().toLocaleString('en-GB', options);
+          }
           return (
             <Fragment>
               <b>{key}:</b> {value}
