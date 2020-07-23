@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useContext } from "react";
-import { useNavigate } from "@reach/router";
+import { useNavigate, globalHistory } from "@reach/router";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { Field, Form, FormSpy } from "react-final-form";
@@ -16,6 +16,10 @@ import FormButton from "../../modules/form/FormButton";
 import AppFooter from "../../modules/views/AppFooter";
 import Db from "../../util/Database";
 import { UserContext } from "../../util/UserProvider";
+import 'date-fns';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import { DatePicker } from 'mui-rff';
 
 const allTags = [...categories, ...locations];
 const programType = ["Survey", "Activity", "Others"];
@@ -30,6 +34,12 @@ const useStyles = makeStyles(theme => ({
   },
   feedback: {
     marginTop: theme.spacing(2),
+  },
+  dateText: {
+    color:'#787878',
+  },
+  date: {
+    marginTop: theme.spacing(3),
   },
 }));
 
@@ -118,15 +128,18 @@ const ProgramPostForm = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <Field
-                    autoFocus
-                    component={RFTextField}
-                    fullWidth
-                    disabled={submitting || sent}
-                    label="Date"
-                    name="date"
-                    required
-                  />
+                  <Typography variant="h7" className={classes.dateText}>
+                    Date *
+                  </Typography>
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <DatePicker 
+                      className={classes.date} 
+                      name="date" 
+                      required={true} 
+                      dateFunsUtils={DateFnsUtils} 
+                      format="dd/MM/yyyy"
+                    />
+                  </MuiPickersUtilsProvider>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Field
