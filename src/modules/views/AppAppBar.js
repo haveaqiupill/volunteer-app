@@ -93,7 +93,7 @@ function AppAppBar(props) {
             >
               {user?.email}
             </Link>
-            {user && user?.researcher && (
+            {user && user?.isResearcher && (
               <Link
                 color="inherit"
                 variant="h6"
