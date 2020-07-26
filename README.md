@@ -1,3 +1,25 @@
+# RSEARCHV
+
+Visit RSEARCHV's website [here](https://volunteer-app-3c0ae.web.app/)!
+
+## Tech Stack
+
+- React for Frontend
+- Firebase for Backend
+
+## Contribution Guide
+
+- Please contact any one of us to obtain a copy of our Firebase API keys that are needed to run the project locally!
+
+1. Clone the repo with `git clone https://github.com/haveaqiupill/volunteer-app.git`
+2. In the root directory of the project, run `yarn install` to install all the dependencies
+3. Copy and paste the `.env` file containing our API keys into the root directory
+4. Run `yarn start` to start the app on localhost!
+
+___
+
+# React
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
