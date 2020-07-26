@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
+import { MessageOutlined, StarOutlined } from "@ant-design/icons";
 import Button from "../../modules/components/Button";
 import { Tag, Avatar, List, Space } from "antd";
 
@@ -16,24 +16,31 @@ export const tagMapping = {
 };
 
 const ResearcherItem = ({ item, showModal }) => {
-  const IconText = ({ icon, text }) => (
-    <Space>
-      {React.createElement(icon)}
-      {text}
-    </Space>
-  );
+  const getDateString = date => {
+    if (typeof date === "string") {
+      return date;
+    } else {
+      let options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      };
+      return date.toDate().toLocaleString("en-GB", options);
+    }
+  };
 
   return (
     <List.Item
       key={item.id}
       actions={[
-        <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
-        <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
-        <IconText
-          icon={MessageOutlined}
-          text="2"
-          key="list-vertical-message"
-        />,
+        <Space>
+          <StarOutlined />
+          {item.likedBy?.length ?? 0}
+        </Space>,
+        <Space>
+          <MessageOutlined />
+          {0}
+        </Space>,
         <Fragment>
           <Button
             color="primary"
@@ -80,19 +87,14 @@ const ResearcherItem = ({ item, showModal }) => {
         }
         description={item.description}
       />
-      {Object.entries(item.details)
-        .sort((a, b) => {
-          return a[0].localeCompare(b[0]);
-        })
-        .map(([key, value]) => {
-          key = key.charAt(0).toUpperCase() + key.slice(1);
-          return (
-            <Fragment>
-              <b>{key}:</b> {value}
-              <br />
-            </Fragment>
-          );
-        })}
+      <b>Date:</b> {getDateString(item.details.date)}
+      <br />
+      <b>Duration:</b> {item.details.duration}
+      <br />
+      <b>Venue:</b> {item.details.venue}
+      <br />
+      <b>Compensation:</b> {item.details.compensation}
+      <br />
     </List.Item>
   );
 };

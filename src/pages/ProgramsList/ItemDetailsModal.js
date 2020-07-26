@@ -71,6 +71,19 @@ const ItemDetailsModal = ({
     }
   };
 
+  const getDateString = date => {
+    if (typeof date === "string") {
+      return date;
+    } else {
+      let options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      };
+      return date.toDate().toLocaleString("en-GB", options);
+    }
+  };
+
   return (
     <Modal
       visible={isModalVisible}
@@ -95,19 +108,14 @@ const ItemDetailsModal = ({
         </p>
 
         <p>
-          {Object.entries(item.details)
-            .sort((a, b) => {
-              return a[0].localeCompare(b[0]);
-            })
-            .map(([key, value]) => {
-              key = key.charAt(0).toUpperCase() + key.slice(1);
-              return (
-                <Fragment>
-                  <b>{key}:</b> {value}
-                  <br />
-                </Fragment>
-              );
-            })}
+          <b>Date:</b> {getDateString(item.details.date)}
+          <br />
+          <b>Duration:</b> {item.details.duration}
+          <br />
+          <b>Venue:</b> {item.details.venue}
+          <br />
+          <b>Compensation:</b> {item.details.compensation}
+          <br />
         </p>
 
         <p>
