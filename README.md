@@ -1,6 +1,6 @@
-# RSEARCHV
+# RSearchV
 
-Visit RSEARCHV's website [here](https://volunteer-app-3c0ae.web.app/)!
+Visit RSearchV's website [here](https://volunteer-app-3c0ae.web.app/)!
 
 ## Tech Stack
 
