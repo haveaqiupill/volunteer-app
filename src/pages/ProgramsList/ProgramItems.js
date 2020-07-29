@@ -11,10 +11,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import ItemDetailsModal from "./ItemDetailsModal";
 import ListItem from "./ListItem";
-import ProgramsItemsSider from "./ProgramItemsSider";
+import ProgramsItemsSider, { categories, locations } from "./ProgramItemsSider";
 import Button from "../../modules/components/Button";
 import Db from "../../util/Database";
-import { joinedMenuItems } from "./ProgramItemsSider";
 import { UserContext } from "../../util/UserProvider";
 
 const { Content } = Layout;
@@ -22,6 +21,7 @@ const { TabPane } = Tabs;
 const { Search } = Input;
 
 const ProgramItems = ({ "*": cat }) => {
+  const joinedMenuItems = [...categories, ...locations];
   const navigate = useNavigate();
 
   const user = useContext(UserContext);
