@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useCallback, useState, useContext } from "react";
 import { BookOutlined, HomeOutlined } from "@ant-design/icons";
 import { Divider, Layout, Menu, Space } from "antd";
 import { makeStyles } from "@material-ui/core/styles";
@@ -23,9 +23,16 @@ export const categories = [
   "Elderly",
 ];
 export const locations = ["North", "South", "East", "West", "Central"];
+export const joinedMenuItems = [
+  "All Programs",
+  "Recommended",
+  ...categories,
+  ...locations,
+];
 
 const ProgramsItemsSider = ({
   items,
+  recommendedItems,
   isFiltered,
   setIsFiltered,
   setFilteredItems,
@@ -35,13 +42,14 @@ const ProgramsItemsSider = ({
   const { SubMenu } = Menu;
   const { Sider } = Layout;
 
-  const joinedMenuItems = ["All Programs", ...categories, ...locations];
-
   const [tag, setTag] = useState(cat ? cat : "");
   const filterItems = useCallback(() => {
     reset();
     if (tag === "All Programs") {
       setFilteredItems(items);
+      setIsFiltered(false);
+    } else if (tag === "Recommended") {
+      setFilteredItems(recommendedItems);
       setIsFiltered(false);
     } else {
       const filteredItems = items.filter(item => item.tags.includes(tag));
@@ -88,15 +96,16 @@ const ProgramsItemsSider = ({
           <Divider />
         </Space>
         <Menu.Item key="0">All Programs</Menu.Item>
+        <Menu.Item key="1">Recommended</Menu.Item>
         <SubMenu key="sub1" title="Categories" icon={<BookOutlined />}>
           {categories.map((category, i) => {
-            return <Menu.Item key={i + 1}>{category}</Menu.Item>;
+            return <Menu.Item key={i + 2}>{category}</Menu.Item>;
           })}
         </SubMenu>
         <SubMenu key="sub2" title="Location" icon={<HomeOutlined />}>
           {locations.map((location, i) => {
             return (
-              <Menu.Item key={i + categories.length + 1}>{location}</Menu.Item>
+              <Menu.Item key={i + categories.length + 2}>{location}</Menu.Item>
             );
           })}
         </SubMenu>

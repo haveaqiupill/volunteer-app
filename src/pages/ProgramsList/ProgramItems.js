@@ -14,6 +14,7 @@ import ListItem from "./ListItem";
 import ProgramsItemsSider from "./ProgramItemsSider";
 import Button from "../../modules/components/Button";
 import Db from "../../util/Database";
+import { joinedMenuItems } from "./ProgramItemsSider";
 import { UserContext } from "../../util/UserProvider";
 
 const { Content } = Layout;
@@ -47,6 +48,19 @@ const ProgramItems = ({ "*": cat }) => {
     program => program.volunteerUserIds?.includes(user?.uid) ?? false
   );
   const [currentTab, setCurrentTab] = useState("1");
+
+  // Randomly generate recommended programs based on tags related of "Registered Programs"
+  const counter = Array(joinedMenuItems.length).fill(0);
+  const dummyVariable = registeredPrograms
+    ?.map(program => program.tags)
+    .flat(1)
+    .forEach(tag => counter[joinedMenuItems.indexOf(tag)]++);
+  const mostFrequentTag =
+    joinedMenuItems[counter.indexOf(Math.max.apply(null, counter))];
+
+  const recommendedItems = allPrograms
+    ?.filter(program => !registeredPrograms.includes(program))
+    .filter(program => program.tags.includes(mostFrequentTag));
 
   const handleClick = key => {
     resetSearchBar();
@@ -83,6 +97,7 @@ const ProgramItems = ({ "*": cat }) => {
       <Layout style={{ marginLeft: 200 }}>
         <ProgramsItemsSider
           items={items}
+          recommendedItems={recommendedItems}
           isFiltered={isFiltered}
           setIsFiltered={setIsFiltered}
           setFilteredItems={setFilteredItems}
