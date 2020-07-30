@@ -46,6 +46,19 @@ const ListItem = ({ item, showModal }) => {
     setLiked(!liked);
   };
 
+  const getDateString = date => {
+    if (typeof date === "string") {
+      return date;
+    } else {
+      let options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      };
+      return date.toDate().toLocaleString("en-GB", options);
+    }
+  };
+
   return (
     <List.Item
       key={item.id}
@@ -110,23 +123,14 @@ const ListItem = ({ item, showModal }) => {
         }
         description={item.description}
       />
-      {Object.entries(item.details)
-        .sort((a, b) => {
-          return a[0].localeCompare(b[0]);
-        })
-        .map(([key, value]) => {
-          key = key.charAt(0).toUpperCase() + key.slice(1);
-          if (typeof value === "object"){
-            var options = {  year: 'numeric', month: 'long', day: 'numeric' };
-            value = value.toDate().toLocaleString('en-GB', options);
-          }
-          return (
-            <Fragment>
-              <b>{key}:</b> {value}
-              <br />
-            </Fragment>
-          );
-        })}
+      <b>Date:</b> {getDateString(item.details.date)}
+      <br />
+      <b>Duration:</b> {item.details.duration}
+      <br />
+      <b>Venue:</b> {item.details.venue}
+      <br />
+      <b>Compensation:</b> {item.details.compensation}
+      <br />
     </List.Item>
   );
 };
