@@ -26,7 +26,7 @@ const ProgramItems = ({ "*": cat }) => {
 
   const user = useContext(UserContext);
 
-  const [allPrograms, setAllPrograms] = useState();
+  const [masterList, setMasterList] = useState();
 
   useEffect(() => {
     fetchAllPrograms();
@@ -35,7 +35,7 @@ const ProgramItems = ({ "*": cat }) => {
   const fetchAllPrograms = async () => {
     try {
       const programs = await Db.getAllPrograms();
-      setAllPrograms(programs);
+      setMasterList(programs);
       setItems(programs);
     } catch (error) {
       console.log("Error fetching all programs", error);
@@ -44,29 +44,16 @@ const ProgramItems = ({ "*": cat }) => {
 
   // Selected programs according to the tabs "All Programs" vs "Registered Programs"
   const [items, setItems] = useState([]);
-  const registeredPrograms = allPrograms?.filter(
+  const registeredPrograms = masterList?.filter(
     program => program.volunteerUserIds?.includes(user?.uid) ?? false
   );
   const [currentTab, setCurrentTab] = useState("1");
-
-  // Randomly generate recommended programs based on tags related of "Registered Programs"
-  const counter = Array(joinedMenuItems.length).fill(0);
-  const dummyVariable = registeredPrograms
-    ?.map(program => program.tags)
-    .flat(1)
-    .forEach(tag => counter[joinedMenuItems.indexOf(tag)]++);
-  const mostFrequentTag =
-    joinedMenuItems[counter.indexOf(Math.max.apply(null, counter))];
-
-  const recommendedItems = allPrograms
-    ?.filter(program => !registeredPrograms.includes(program))
-    .filter(program => program.tags.includes(mostFrequentTag));
 
   const handleClick = key => {
     resetSearchBar();
     setCurrentTab(key);
     if (key === "1") {
-      setItems(allPrograms);
+      setItems(masterList);
     } else {
       setItems(registeredPrograms);
     }
@@ -97,7 +84,7 @@ const ProgramItems = ({ "*": cat }) => {
       <Layout style={{ marginLeft: 200 }}>
         <ProgramsItemsSider
           items={items}
-          recommendedItems={recommendedItems}
+          recommendedItems={masterList}
           isFiltered={isFiltered}
           setIsFiltered={setIsFiltered}
           setFilteredItems={setFilteredItems}
@@ -152,7 +139,7 @@ const ProgramItems = ({ "*": cat }) => {
                     )
                   )
                 : setSearchedItems(
-                    allPrograms.filter(item =>
+                    masterList.filter(item =>
                       item.title
                         .toLowerCase()
                         .includes(searchValue.toLowerCase())
@@ -168,7 +155,7 @@ const ProgramItems = ({ "*": cat }) => {
               margin: 0,
             }}
           >
-            {!allPrograms ? (
+            {!masterList ? (
               <Col>
                 <Row align="middle" style={{ minHeight: "100vh" }}>
                   <Col span={8} offset={10}>

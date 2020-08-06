@@ -43,25 +43,32 @@ const ProgramsItemsSider = ({
   const { Sider } = Layout;
 
   const [tag, setTag] = useState(cat ? cat : "");
-  const filterItems = useCallback(() => {
-    reset();
-    if (tag === "All Programs") {
-      setFilteredItems(items);
-      setIsFiltered(false);
-    } else if (tag === "Recommended") {
-      setFilteredItems(recommendedItems);
-      setIsFiltered(false);
-    } else {
-      const filteredItems = items.filter(item => item.tags.includes(tag));
-      setFilteredItems(filteredItems);
-      setIsFiltered(true);
-    }
-  }, [items, setIsFiltered, setFilteredItems, tag, reset]);
+  const filterItems = useCallback(
+    newTag => {
+      reset();
+      if (newTag === "All Programs") {
+        setFilteredItems(items);
+        setIsFiltered(false);
+        console.log(tag);
+      } else if (newTag === "Recommended") {
+        setFilteredItems(recommendedItems);
+        setIsFiltered(false);
+        console.log(tag);
+      } else {
+        const filteredItems = items.filter(item => item.tags.includes(newTag));
+        setFilteredItems(filteredItems);
+        setIsFiltered(true);
+        console.log(tag);
+      }
+    },
+    [recommendedItems, items, setIsFiltered, setFilteredItems, tag, reset]
+  );
 
   useEffect(() => {
     if (isFiltered) {
-      filterItems();
+      filterItems(tag);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterItems, isFiltered, items]);
 
   const classes = useStyles();
@@ -81,8 +88,9 @@ const ProgramsItemsSider = ({
         defaultOpenKeys={["sub1"]}
         style={{ height: "100%", borderRight: 0 }}
         onSelect={({ key }) => {
-          setTag(joinedMenuItems[key]);
-          filterItems();
+          const newTag = joinedMenuItems[key];
+          setTag(newTag);
+          filterItems(newTag);
           if (cat) {
             navigate("/programs");
           }
