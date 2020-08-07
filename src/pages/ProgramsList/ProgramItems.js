@@ -49,6 +49,24 @@ const ProgramItems = ({ "*": cat }) => {
   );
   const [currentTab, setCurrentTab] = useState("1");
 
+  // Randomly generate recommended programs based on tags related of "Registered Programs"
+  const counter = Array(joinedMenuItems.length).fill(0);
+  const dummyVariable = registeredPrograms
+    ?.map(program => program.tags)
+    .flat(1)
+    .forEach(tag => counter[joinedMenuItems.indexOf(tag)]++);
+  const mostFrequentTag =
+    joinedMenuItems[counter.indexOf(Math.max.apply(null, counter))];
+
+  const recommendedItems = masterList
+    ?.filter(
+      program =>
+        !registeredPrograms.find(
+          registeredProgram => registeredProgram.id === program.id
+        )
+    )
+    .filter(program => program.tags.some(tag => tag === mostFrequentTag));
+
   const handleClick = key => {
     resetSearchBar();
     setCurrentTab(key);
@@ -66,7 +84,7 @@ const ProgramItems = ({ "*": cat }) => {
 
   // Filtered programs according to the categories in the sidebar
   const [filteredItems, setFilteredItems] = useState([]);
-  const [isFiltered, setIsFiltered] = useState(!!cat);
+  const [isFiltered, setIsFiltered] = useState(false);
 
   const [searchValue, setSearchValue] = useState("");
   const [isSearched, setIsSearched] = useState(false);
@@ -84,7 +102,7 @@ const ProgramItems = ({ "*": cat }) => {
       <Layout style={{ marginLeft: 200 }}>
         <ProgramsItemsSider
           items={items}
-          recommendedItems={masterList}
+          recommendedItems={recommendedItems}
           isFiltered={isFiltered}
           setIsFiltered={setIsFiltered}
           setFilteredItems={setFilteredItems}

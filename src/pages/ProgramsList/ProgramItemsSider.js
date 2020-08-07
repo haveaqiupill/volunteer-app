@@ -42,34 +42,36 @@ const ProgramsItemsSider = ({
   const { SubMenu } = Menu;
   const { Sider } = Layout;
 
-  const [tag, setTag] = useState(cat ? cat : "");
   const filterItems = useCallback(
     newTag => {
       reset();
       if (newTag === "All Programs") {
         setFilteredItems(items);
         setIsFiltered(false);
-        console.log(tag);
       } else if (newTag === "Recommended") {
+        setIsFiltered(true);
         setFilteredItems(recommendedItems);
-        setIsFiltered(false);
-        console.log(tag);
       } else {
         const filteredItems = items.filter(item => item.tags.includes(newTag));
+        setIsFiltered(items !== []);
         setFilteredItems(filteredItems);
-        setIsFiltered(true);
-        console.log(tag);
       }
     },
-    [recommendedItems, items, setIsFiltered, setFilteredItems, tag, reset]
+    [
+      isFiltered,
+      recommendedItems,
+      items,
+      setIsFiltered,
+      setFilteredItems,
+      reset,
+    ]
   );
 
   useEffect(() => {
-    if (isFiltered) {
-      filterItems(tag);
+    if (cat) {
+      filterItems(cat);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterItems, isFiltered, items]);
+  }, [items, cat]);
 
   const classes = useStyles();
 
@@ -89,7 +91,6 @@ const ProgramsItemsSider = ({
         style={{ height: "100%", borderRight: 0 }}
         onSelect={({ key }) => {
           const newTag = joinedMenuItems[key];
-          setTag(newTag);
           filterItems(newTag);
           if (cat) {
             navigate("/programs");
